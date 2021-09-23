@@ -1,0 +1,9 @@
+Question
+
+*C'est quoi les roles dans votre hopital
+	-infirmiere,docteur,thr
+
+*Qui a le droit de consulter les dossiers des patients,
+est-ce que c'est tout le monde qui est employé ou c'est juste certaines personnes
+qui on un certain role.
+	-Ex: une péposé aura probablement pas les mêmes accès qu'une infirmière ou un docteur

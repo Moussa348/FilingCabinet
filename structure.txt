@@ -1,0 +1,9 @@
+/----------------------------------
+	STRUCTURE
+---------------------------------/
+
+*Quelle technologies utilisées
+	-> Base de données = MySQL ou MongoDB
+	->Spring Boot
+	-> Angular
+	->Amazon AWS ?? ou un ordi fixe avec socketxp

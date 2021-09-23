@@ -1,0 +1,35 @@
+/-----------------------------------
+	BACK_LOG
+-----------------------------------/
+
+*PersonalService
+	-> createPersonal
+	-> updatePersonal
+		-email,picture,password,cellNumber,address
+	->addRole
+	->removeRole
+
+*RoleService
+	->createRole
+	->getListRole
+
+*CategoryService
+	->createCategory
+	->disableCategory
+	->enableCategory
+	->getListCategory
+
+*FolderService
+	->createFolder
+	->changeCategory
+	->getListFile
+	
+
+*FileService
+	-storeFile
+	->getFile
+	->downloadFile
+
+*LogService
+	-addLog
+	
