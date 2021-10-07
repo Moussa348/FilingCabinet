@@ -1,6 +1,7 @@
 package com.keita.filingcabinet.service;
 
 import com.keita.filingcabinet.exception.AppropriateFileException;
+import com.keita.filingcabinet.exception.FileNotFoundException;
 import com.keita.filingcabinet.mockData.FileMockData;
 import com.keita.filingcabinet.model.entity.File;
 import com.mongodb.client.gridfs.model.GridFSFile;
@@ -11,12 +12,13 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.core.io.ByteArrayResource;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.gridfs.GridFsResource;
 import org.springframework.data.mongodb.gridfs.GridFsTemplate;
 import org.springframework.mock.web.MockMultipartFile;
 
 import java.io.IOException;
-import java.io.InputStream;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.any;
@@ -49,21 +51,21 @@ public class FileServiceTest {
     }
 
     @Test
-    void shouldNotUpload(){
+    void shouldNotUpload() {
         //ARRANGE
         String id = "5399aba6e4b0ae375bfdca88";
         ObjectId objectId = new ObjectId(id);
         MockMultipartFile wrongMockMultipartFile = FileMockData.getWrongMockMultipartFile();
 
         //ASSERT
-        assertThrows(AppropriateFileException.class,()->fileService.upload(wrongMockMultipartFile));
+        assertThrows(AppropriateFileException.class, () -> fileService.upload(wrongMockMultipartFile));
     }
 
     @Test
     void download() throws IOException {
         //ARRANGE
         GridFSFile gridFSFile = FileMockData.getGridFsFile();
-        GridFsResource gridFsResource = new GridFsResource(gridFSFile,FileMockData.getMockMultipartFile().getInputStream());
+        GridFsResource gridFsResource = new GridFsResource(gridFSFile, FileMockData.getMockMultipartFile().getInputStream());
 
         when(gridFsTemplate.getResource(gridFSFile)).thenReturn(gridFsResource);
 
@@ -75,12 +77,28 @@ public class FileServiceTest {
     }
 
     @Test
-    void getGridFsFile() {
+    void shouldGetGridFsFile() throws FileNotFoundException {
         //ARRANGE
+        String id = "5399aba6e4b0ae375bfdca88";
+        GridFSFile gridFSFile = FileMockData.getGridFsFile();
+
+        when(gridFsTemplate.findOne(new Query(Criteria.where("_id").is(id)))).thenReturn(gridFSFile);
 
         //ACT
+        GridFSFile returnedGridFsFile = fileService.getGridFsFile(id);
 
         //ASSERT
+        assertEquals(gridFSFile.getFilename(), returnedGridFsFile.getFilename());
+    }
 
+    @Test
+    void shouldNotGetGridFsFile() {
+        //ARRANGE
+        String id = "5399aba6e4b0ae375bfdca88";
+
+        when(gridFsTemplate.findOne(new Query(Criteria.where("_id").is(id)))).thenReturn(null);
+
+        //ASSERT
+        assertThrows(FileNotFoundException.class, () -> fileService.getGridFsFile(id));
     }
 }

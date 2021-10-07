@@ -1,6 +1,7 @@
 package com.keita.filingcabinet.service;
 
 import com.keita.filingcabinet.exception.AppropriateFileException;
+import com.keita.filingcabinet.exception.FileNotFoundException;
 import com.keita.filingcabinet.model.entity.File;
 import com.keita.filingcabinet.util.FileUtil;
 import com.mongodb.client.gridfs.model.GridFSFile;
@@ -39,8 +40,13 @@ public class FileService {
         return new ByteArrayResource(IOUtils.toByteArray(gridFsTemplate.getResource(gridFSFile).getInputStream()));
     }
 
-    public GridFSFile getGridFsFile(String id) {
-        return gridFsTemplate.findOne(new Query(Criteria.where("_id").is(id)));
+    public GridFSFile getGridFsFile(String id) throws FileNotFoundException {
+        GridFSFile gridFSFile = gridFsTemplate.findOne(new Query(Criteria.where("_id").is(id)));
+
+        if(gridFSFile != null)
+            return gridFSFile;
+
+        throw new FileNotFoundException("the file requested can't be found");
     }
 
 }

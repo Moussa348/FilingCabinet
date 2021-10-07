@@ -1,6 +1,7 @@
 package com.keita.filingcabinet.controller;
 
 import com.keita.filingcabinet.exception.AppropriateFileException;
+import com.keita.filingcabinet.exception.FileNotFoundException;
 import com.keita.filingcabinet.service.FileService;
 import com.mongodb.client.gridfs.model.GridFSFile;
 import lombok.extern.java.Log;
@@ -32,7 +33,7 @@ public class FileController {
     }
 
     @GetMapping("/download/{id}")
-    public ResponseEntity<ByteArrayResource> download(@PathVariable String id) throws IOException {
+    public ResponseEntity<ByteArrayResource> download(@PathVariable String id) throws IOException, FileNotFoundException {
         GridFSFile gridFSFile = fileService.getGridFsFile(id);
 
         return ResponseEntity.ok()
