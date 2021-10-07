@@ -26,9 +26,9 @@ public class FileController {
         this.fileService = fileService;
     }
 
-    @PostMapping("/save")
-    public String saveMultipartFile(@RequestParam("file") @NotNull @Valid MultipartFile multipartFile) throws IOException, AppropriateFileException {
-        return fileService.save(multipartFile);
+    @PostMapping("/upload")
+    public String upload(@RequestParam("file") @NotNull @Valid MultipartFile multipartFile) throws IOException, AppropriateFileException {
+        return fileService.upload(multipartFile);
     }
 
     @GetMapping("/download/{id}")

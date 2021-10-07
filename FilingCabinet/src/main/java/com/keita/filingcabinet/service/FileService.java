@@ -22,7 +22,7 @@ public class FileService {
     @Autowired
     private GridFsTemplate gridFsTemplate;
 
-    public String save(MultipartFile multipartFile) throws IOException, AppropriateFileException {
+    public String upload(MultipartFile multipartFile) throws IOException, AppropriateFileException {
 
         if (FileUtil.isAnAcceptableFile(Objects.requireNonNull(multipartFile.getOriginalFilename()))) {
             File file = new File();
