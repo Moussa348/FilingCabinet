@@ -4,7 +4,12 @@ spring:
       host: localhost
       port: 27017
       database: FilingCabinet
+  servlet:
+    multipart:
+      max-file-size: 50MB
+      max-request-size: 50MB
 
 server:
   error:
     include-stacktrace: never
+

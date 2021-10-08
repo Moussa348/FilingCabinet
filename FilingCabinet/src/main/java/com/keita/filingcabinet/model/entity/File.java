@@ -1,7 +1,9 @@
 package com.keita.filingcabinet.model.entity;
 
+import com.keita.filingcabinet.validator.FolderExistConstraint;
 import com.mongodb.DBObject;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.bson.BSONObject;
@@ -14,6 +16,7 @@ import java.util.Map;
 import java.util.Set;
 
 @Data
+@Builder
 @Document("files")
 @NoArgsConstructor
 @AllArgsConstructor
