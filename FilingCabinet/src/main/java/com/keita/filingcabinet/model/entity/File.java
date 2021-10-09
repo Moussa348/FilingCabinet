@@ -1,6 +1,5 @@
 package com.keita.filingcabinet.model.entity;
 
-import com.keita.filingcabinet.validator.FolderExistConstraint;
 import com.mongodb.DBObject;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

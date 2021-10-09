@@ -1,5 +1,6 @@
 package com.keita.filingcabinet.mockData;
 
+import com.keita.filingcabinet.model.dto.FileCreation;
 import com.mongodb.client.gridfs.model.GridFSFile;
 import org.bson.BsonArray;
 import org.bson.Document;
@@ -12,6 +13,16 @@ public abstract class FileMockData {
 
     public static MockMultipartFile getMockMultipartFile(){
         return new MockMultipartFile("file.pdf","file.pdf","applicaiton/pdf","".getBytes());
+    }
+
+    public static FileCreation getFileCreation(MockMultipartFile mockMultipartFile){
+        return FileCreation.builder()
+                .folderId("1231332erw")
+                .description("test")
+                .uploadBy("employee1")
+                .multipartFile(mockMultipartFile)
+                .build();
+
     }
 
     public static MockMultipartFile getWrongMockMultipartFile(){

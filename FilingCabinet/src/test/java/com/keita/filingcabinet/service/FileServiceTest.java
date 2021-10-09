@@ -3,6 +3,7 @@ package com.keita.filingcabinet.service;
 import com.keita.filingcabinet.exception.AppropriateFileException;
 import com.keita.filingcabinet.exception.FileNotFoundException;
 import com.keita.filingcabinet.mockData.FileMockData;
+import com.keita.filingcabinet.model.dto.FileCreation;
 import com.keita.filingcabinet.model.entity.File;
 import com.mongodb.client.gridfs.model.GridFSFile;
 import org.bson.types.ObjectId;
@@ -16,7 +17,6 @@ import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.gridfs.GridFsResource;
 import org.springframework.data.mongodb.gridfs.GridFsTemplate;
-import org.springframework.mock.web.MockMultipartFile;
 
 import java.io.IOException;
 
@@ -37,14 +37,14 @@ public class FileServiceTest {
     void shouldUpload() throws IOException, AppropriateFileException {
         //ARRANGE
         String id = "5399aba6e4b0ae375bfdca88";
+        FileCreation fileCreation = FileMockData.getFileCreation(FileMockData.getMockMultipartFile());
         ObjectId objectId = new ObjectId(id);
-        MockMultipartFile mockMultipartFile = FileMockData.getMockMultipartFile();
 
         when(gridFsTemplate.store(any(), any(), any(), any(File.class)))
                 .thenReturn(objectId);
 
         //ACT
-        String returnedId = fileService.upload(mockMultipartFile);
+        String returnedId = fileService.upload(fileCreation);
 
         //ASSERT
         assertEquals(id, returnedId);
@@ -54,11 +54,11 @@ public class FileServiceTest {
     void shouldNotUpload() {
         //ARRANGE
         String id = "5399aba6e4b0ae375bfdca88";
+        FileCreation fileCreation = FileMockData.getFileCreation(FileMockData.getWrongMockMultipartFile());
         ObjectId objectId = new ObjectId(id);
-        MockMultipartFile wrongMockMultipartFile = FileMockData.getWrongMockMultipartFile();
 
         //ASSERT
-        assertThrows(AppropriateFileException.class, () -> fileService.upload(wrongMockMultipartFile));
+        assertThrows(AppropriateFileException.class, () -> fileService.upload(fileCreation));
     }
 
     @Test

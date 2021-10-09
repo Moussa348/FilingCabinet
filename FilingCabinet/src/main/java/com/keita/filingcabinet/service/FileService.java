@@ -6,7 +6,6 @@ import com.keita.filingcabinet.mapping.FileMapper;
 import com.keita.filingcabinet.model.dto.FileCreation;
 import com.keita.filingcabinet.model.entity.File;
 import com.keita.filingcabinet.util.FileUtil;
-import com.keita.filingcabinet.validator.FolderExistConstraint;
 import com.mongodb.client.gridfs.model.GridFSFile;
 import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,19 +31,7 @@ public class FileService {
         if (FileUtil.isAnAcceptableFile(Objects.requireNonNull(multipartFile.getOriginalFilename()))) {
             File file = FileMapper.toFile(fileCreation);
 
-            return gridFsTemplate.store(multipartFile.getInputStream(), multipartFile.getOriginalFilename(), multipartFile.getContentType(), file).toString();
-        }
-
-        throw new AppropriateFileException("This is not an appropriate file!");
-    }
-
-    public String upload(MultipartFile multipartFile) throws IOException, AppropriateFileException {
-
-        if (FileUtil.isAnAcceptableFile(Objects.requireNonNull(multipartFile.getOriginalFilename()))) {
-            File file = new File();
-
-            file.setUploadBy("Massou");
-
+            //TODO add LogService.addLog(OperationType.WRITE)
             return gridFsTemplate.store(multipartFile.getInputStream(), multipartFile.getOriginalFilename(), multipartFile.getContentType(), file).toString();
         }
 
@@ -52,6 +39,7 @@ public class FileService {
     }
 
     public ByteArrayResource download(GridFSFile gridFSFile) throws IOException {
+        //TODO add LogService.addLog(OperationType.READ)
         return new ByteArrayResource(IOUtils.toByteArray(gridFsTemplate.getResource(gridFSFile).getInputStream()));
     }
 
