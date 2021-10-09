@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
+import javax.validation.Valid;
 
 public class FolderExistValidator implements ConstraintValidator<FolderExistConstraint,String> {
 
@@ -12,7 +13,7 @@ public class FolderExistValidator implements ConstraintValidator<FolderExistCons
     private FolderRepository folderRepository;
 
     @Override
-    public boolean isValid(String id, ConstraintValidatorContext constraintValidatorContext) {
+    public boolean isValid(@Valid String id, ConstraintValidatorContext constraintValidatorContext) {
         return folderRepository.existsById(id);
     }
 }

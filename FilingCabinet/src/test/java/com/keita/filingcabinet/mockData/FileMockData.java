@@ -1,6 +1,9 @@
 package com.keita.filingcabinet.mockData;
 
 import com.keita.filingcabinet.model.dto.FileCreation;
+import com.keita.filingcabinet.model.dto.PagingRequest;
+import com.mongodb.client.MongoIterable;
+import com.mongodb.client.gridfs.GridFSFindIterable;
 import com.mongodb.client.gridfs.model.GridFSFile;
 import org.bson.BsonArray;
 import org.bson.Document;
@@ -41,5 +44,12 @@ public abstract class FileMockData {
         );
     }
 
+    public static PagingRequest getPagingRequest(){
+        return PagingRequest.builder()
+                .folderId("89dasuhjk32madjasd")
+                .noPage(3)
+                .size(10)
+                .build();
+    }
 
 }

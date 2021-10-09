@@ -22,6 +22,6 @@ public class Log implements Serializable {
     private String id;
     private String fileId;
     private OperationType operationType;
-    private LocalDateTime visualizedDate;
-    private String visualizedBy;
+    private LocalDateTime date;
+    private String by;
 }

@@ -6,6 +6,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 public class FilingCabinetApplication {
 
+    @ExcludeCoverage
     public static void main(String[] args) {
         SpringApplication.run(FilingCabinetApplication.class, args);
     }

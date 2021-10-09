@@ -4,6 +4,8 @@ import com.keita.filingcabinet.exception.AppropriateFileException;
 import com.keita.filingcabinet.exception.FileNotFoundException;
 import com.keita.filingcabinet.mockData.FileMockData;
 import com.keita.filingcabinet.model.dto.FileCreation;
+import com.keita.filingcabinet.model.dto.FileDetail;
+import com.keita.filingcabinet.model.dto.PagingRequest;
 import com.keita.filingcabinet.model.entity.File;
 import com.mongodb.client.gridfs.model.GridFSFile;
 import org.bson.types.ObjectId;
@@ -13,12 +15,15 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.core.io.ByteArrayResource;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.gridfs.GridFsResource;
 import org.springframework.data.mongodb.gridfs.GridFsTemplate;
 
 import java.io.IOException;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.any;
@@ -101,4 +106,19 @@ public class FileServiceTest {
         //ASSERT
         assertThrows(FileNotFoundException.class, () -> fileService.getGridFsFile(id));
     }
+
+    @Test
+    void shouldGetListFileDetail(){
+        //ARRANGE
+        PagingRequest pagingRequest = FileMockData.getPagingRequest();
+        Query query = new Query(Criteria.where("metadata.folderId").is(pagingRequest.getFolderId()))
+                .with(PageRequest.of(pagingRequest.getNoPage(), pagingRequest.getSize(), Sort.by("uploadDate")));
+
+        //ACT
+        List<FileDetail> fileDetails = fileService.getListFileDetail(pagingRequest);
+
+        //ASSERT
+
+    }
+
 }

@@ -25,7 +25,6 @@ public class File implements Serializable, DBObject {
     private String id;
     private String folderId;
     private String fileName, uploadBy, description;
-    private LocalDateTime uploadDate;
     private Boolean isActive;
 
     @Override
