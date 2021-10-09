@@ -24,9 +24,6 @@ public class FileCreation implements Serializable {
     @NotNull(message = "the description can't be null") @NotEmpty(message = "the description can't be empty") @NotBlank(message = "the description can't be blank")
     private String description;
 
-    @NotNull(message = "the category can't be null") @NotEmpty(message = "the description can't be empty") @NotBlank(message = "the description can't be blank")
-    private String categoryName;
-
     @NotNull(message = "the name of upload can't be null") @NotEmpty(message = "the name of upload can't be empty") @NotBlank(message = "the name of upload can't be blank")
     private String uploadBy;
 

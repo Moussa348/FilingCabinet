@@ -13,6 +13,6 @@ public class CategoryExistValidator implements ConstraintValidator<CategoryExist
 
     @Override
     public boolean isValid(String name, ConstraintValidatorContext constraintValidatorContext) {
-        return false;
+        return categoryRepository.existsByName(name);
     }
 }
