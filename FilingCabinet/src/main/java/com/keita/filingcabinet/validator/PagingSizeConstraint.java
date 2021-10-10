@@ -9,8 +9,8 @@ import java.lang.annotation.Target;
 
 @Retention(RetentionPolicy.RUNTIME)
 @Target( { ElementType.METHOD, ElementType.FIELD,ElementType.PARAMETER })
-@Constraint(validatedBy = PagingValidator.class)
-public @interface PagingConstraint {
+@Constraint(validatedBy = PagingSizeValidator.class)
+public @interface PagingSizeConstraint {
     String message() default "Invalid Paging request";
 
     Class<?>[] groups() default {};

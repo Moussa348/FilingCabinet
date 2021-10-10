@@ -1,6 +1,7 @@
 package com.keita.filingcabinet.model.dto;
 
-import com.keita.filingcabinet.validator.PagingConstraint;
+import com.keita.filingcabinet.validator.PagingNumberConstraint;
+import com.keita.filingcabinet.validator.PagingSizeConstraint;
 import com.keita.filingcabinet.validator.folder.FolderExistConstraint;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -18,6 +19,9 @@ public class PagingRequest implements Serializable {
     @FolderExistConstraint
     private String folderId;
 
-    @PagingConstraint
-    private Integer noPage,size;
+    @PagingNumberConstraint
+    private Integer noPage;
+
+    @PagingSizeConstraint
+    private Integer size;
 }

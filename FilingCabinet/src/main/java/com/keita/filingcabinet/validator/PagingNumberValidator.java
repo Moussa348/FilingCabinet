@@ -6,7 +6,7 @@ import lombok.SneakyThrows;
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 
-public class PagingValidator implements ConstraintValidator<PagingConstraint,Integer> {
+public class PagingNumberValidator implements ConstraintValidator<PagingNumberConstraint,Integer> {
 
     @Override
     @SneakyThrows
