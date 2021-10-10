@@ -1,5 +1,6 @@
 package com.keita.filingcabinet.controller;
 
+import com.keita.filingcabinet.ExcludeCoverage;
 import com.keita.filingcabinet.exception.AppropriateFileException;
 import com.keita.filingcabinet.exception.FileNotFoundException;
 import com.keita.filingcabinet.model.dto.FileCreation;
@@ -30,7 +31,7 @@ public class FileController {
     }
 
 
-    @PostMapping(value = "/upload")
+    @PostMapping("/upload")
     public String upload(@Valid @ModelAttribute FileCreation fileCreation) throws IOException, AppropriateFileException {
         return fileService.upload(fileCreation);
     }

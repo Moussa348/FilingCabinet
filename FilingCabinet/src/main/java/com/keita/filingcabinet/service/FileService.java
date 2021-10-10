@@ -38,25 +38,26 @@ public class FileService {
         if (FileUtil.isAnAcceptableFile(Objects.requireNonNull(multipartFile.getOriginalFilename()))) {
             File file = FileMapper.toFile(fileCreation);
 
+            String id = gridFsTemplate.store(multipartFile.getInputStream(), multipartFile.getOriginalFilename(), multipartFile.getContentType(), file).toString();
+
             //TODO add LogService.addLog(OperationType.WRITE)
-            return gridFsTemplate.store(multipartFile.getInputStream(), multipartFile.getOriginalFilename(), multipartFile.getContentType(), file).toString();
+            return id;
         }
 
-        throw new AppropriateFileException("This is not an appropriate file!");
+        throw new AppropriateFileException("THIS IS NOT AN APPROPRIATE FILE!");
     }
 
     public ByteArrayResource download(GridFSFile gridFSFile) throws IOException {
-        //TODO add LogService.addLog(OperationType.READ)
         return new ByteArrayResource(IOUtils.toByteArray(gridFsTemplate.getResource(gridFSFile).getInputStream()));
     }
 
     public GridFSFile getGridFsFile(String id) throws FileNotFoundException {
         GridFSFile gridFSFile = gridFsTemplate.findOne(new Query(Criteria.where("_id").is(id)));
-
         if (gridFSFile != null)
+        //TODO add LogService.addLog(OperationType.READ)
             return gridFSFile;
 
-        throw new FileNotFoundException("the file requested can't be found");
+        throw new FileNotFoundException("THE FILE REQUESTED CAN NOT BE FOUND!");
     }
 
     //TODO add add validator for noPage and size

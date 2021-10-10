@@ -25,7 +25,7 @@ public abstract class FileMockData {
 
     public static FileCreation getFileCreation(MockMultipartFile mockMultipartFile){
         return FileCreation.builder()
-                .folderId("1231332erw")
+                .folderId("61621ca50545544ead443f75")
                 .description("test")
                 .uploadBy("employee1")
                 .multipartFile(mockMultipartFile)
@@ -35,7 +35,7 @@ public abstract class FileMockData {
 
     public static File getFile(){
         return File.builder()
-                .folderId("1231332erw")
+                .folderId("61621ca50545544ead443f75")
                 .description("test")
                 .uploadBy("employee1")
                 .build();
@@ -63,7 +63,7 @@ public abstract class FileMockData {
 
     public static PagingRequest getPagingRequest(){
         return PagingRequest.builder()
-                .folderId("89dasuhjk32madjasd")
+                .folderId("61621ca50545544ead443f75")
                 .noPage(3)
                 .size(10)
                 .build();
