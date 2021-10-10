@@ -50,4 +50,9 @@ public class FileController {
     public List<FileDetail> getListFileDetail(@Valid @ModelAttribute PagingRequest pagingRequest){
         return fileService.getListFileDetail(pagingRequest);
     }
+
+    @PatchMapping("/disable/{id}")
+    public void disable(@PathVariable String id) throws FileNotFoundException, IOException {
+        fileService.disable(id);
+    }
 }

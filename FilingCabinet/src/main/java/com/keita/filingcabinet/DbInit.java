@@ -45,6 +45,7 @@ public class DbInit implements CommandLineRunner {
                 .folderId("61621ca50545544ead443f75")
                 .description("none")
                 .uploadBy("employee1")
+                .isActive(true)
                 .build();
         gridFsTemplate.store(resourceLoader.getResource("classpath:static/cv.txt").getInputStream(),"cv.txt","text/plain",file);
     }

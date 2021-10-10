@@ -25,7 +25,7 @@ public class File implements Serializable, DBObject {
     private String id;
     private String folderId;
     private String fileName, uploadBy, description;
-    private Boolean isActive;
+    private Boolean isActive,hasBeenUpdated;
 
     @Override
     public void markAsPartialObject() {

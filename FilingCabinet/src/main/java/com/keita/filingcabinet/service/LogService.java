@@ -23,4 +23,5 @@ public class LogService {
                         .operationType(operationType)
                         .build());
     }
+
 }

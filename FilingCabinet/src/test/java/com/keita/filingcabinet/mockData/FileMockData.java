@@ -38,18 +38,21 @@ public abstract class FileMockData {
                 .folderId("61621ca50545544ead443f75")
                 .description("test")
                 .uploadBy("employee1")
+                .isActive(true)
                 .build();
     }
 
     public static MockMultipartFile getWrongMockMultipartFile(){
-        return new MockMultipartFile("malware.py","malware.py","application/json","".getBytes());
+        return new MockMultipartFile("malware.py","malware.py","application/json","a".getBytes());
     }
 
     public static GridFSFile getGridFsFile(){
         Map<String,Object> documentMap = new LinkedHashMap<>();
 
         documentMap.put("description","none");
-        documentMap.put("uploadBy", "marck");
+        documentMap.put("uploadBy", "mark");
+        documentMap.put("isActive", true);
+        documentMap.put("hasBeenUpdated", false);
 
         return new GridFSFile(
                 BsonUtils.simpleToBsonValue(new ObjectId("507f1f77bcf86cd799439011")),

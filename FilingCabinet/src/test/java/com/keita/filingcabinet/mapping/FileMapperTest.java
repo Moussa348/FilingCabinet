@@ -8,7 +8,7 @@ import com.keita.filingcabinet.util.DateUtil;
 import com.mongodb.client.gridfs.model.GridFSFile;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class FileMapperTest {
 
@@ -24,6 +24,8 @@ public class FileMapperTest {
         assertEquals(fileCreation.getFolderId(),file.getFolderId());
         assertEquals(fileCreation.getDescription(),file.getDescription());
         assertEquals(fileCreation.getUploadBy(),file.getUploadBy());
+        assertTrue(file.getIsActive());
+        assertFalse(file.getHasBeenUpdated());
     }
 
     @Test

@@ -13,6 +13,8 @@ public abstract class FileMapper {
                 .folderId(fileCreation.getFolderId())
                 .description(fileCreation.getDescription())
                 .uploadBy(fileCreation.getUploadBy())
+                .isActive(true)
+                .hasBeenUpdated(false)
                 .build();
 
     }

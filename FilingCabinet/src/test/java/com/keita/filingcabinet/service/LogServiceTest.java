@@ -22,13 +22,14 @@ public class LogServiceTest {
     LogService logService;
 
     @Test
-    void add(){
+    void add() {
         //ARRANGE
         Log log = LogMockData.getLog();
 
         when(logRepository.save(any(Log.class))).thenReturn(log);
         //ACT
 
-        logService.add(log.getBy(),log.getFileId(),log.getOperationType());
+        logService.add(log.getBy(), log.getFileId(), log.getOperationType());
     }
+
 }

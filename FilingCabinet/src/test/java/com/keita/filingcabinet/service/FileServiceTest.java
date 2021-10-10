@@ -7,6 +7,8 @@ import com.keita.filingcabinet.model.dto.FileCreation;
 import com.keita.filingcabinet.model.dto.FileDetail;
 import com.keita.filingcabinet.model.dto.PagingRequest;
 import com.keita.filingcabinet.model.entity.File;
+import com.keita.filingcabinet.model.enums.OperationType;
+import com.mongodb.client.gridfs.GridFSFindIterable;
 import com.mongodb.client.gridfs.model.GridFSFile;
 import org.bson.types.ObjectId;
 import org.junit.jupiter.api.Test;
@@ -23,17 +25,21 @@ import org.springframework.data.mongodb.gridfs.GridFsResource;
 import org.springframework.data.mongodb.gridfs.GridFsTemplate;
 
 import java.io.IOException;
+import java.io.InputStream;
+import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.any;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 public class FileServiceTest {
 
     @Mock
     GridFsTemplate gridFsTemplate;
+
+    @Mock
+    LogService logService;
 
     @InjectMocks
     FileService fileService;
@@ -48,6 +54,8 @@ public class FileServiceTest {
         when(gridFsTemplate.store(any(), any(), any(), any(File.class)))
                 .thenReturn(objectId);
 
+        doNothing().when(logService).add(anyString(), anyString(), any(OperationType.class));
+
         //ACT
         String returnedId = fileService.upload(fileCreation);
 
@@ -60,7 +68,6 @@ public class FileServiceTest {
         //ARRANGE
         String id = "5399aba6e4b0ae375bfdca88";
         FileCreation fileCreation = FileMockData.getFileCreation(FileMockData.getWrongMockMultipartFile());
-        ObjectId objectId = new ObjectId(id);
 
         //ASSERT
         assertThrows(AppropriateFileException.class, () -> fileService.upload(fileCreation));
@@ -72,6 +79,7 @@ public class FileServiceTest {
         GridFSFile gridFSFile = FileMockData.getGridFsFile();
         GridFsResource gridFsResource = new GridFsResource(gridFSFile, FileMockData.getMockMultipartFile().getInputStream());
 
+        doNothing().when(logService).add(anyString(), anyString(), any(OperationType.class));
         when(gridFsTemplate.getResource(gridFSFile)).thenReturn(gridFsResource);
 
         //ACT
@@ -88,6 +96,7 @@ public class FileServiceTest {
         GridFSFile gridFSFile = FileMockData.getGridFsFile();
 
         when(gridFsTemplate.findOne(new Query(Criteria.where("_id").is(id)))).thenReturn(gridFSFile);
+        doNothing().when(logService).add(anyString(), anyString(), any(OperationType.class));
 
         //ACT
         GridFSFile returnedGridFsFile = fileService.getGridFsFile(id);
@@ -100,12 +109,15 @@ public class FileServiceTest {
     void shouldNotGetGridFsFile() {
         //ARRANGE
         String id = "5399aba6e4b0ae375bfdca88";
+        ObjectId objectId = new ObjectId(id);
 
         when(gridFsTemplate.findOne(new Query(Criteria.where("_id").is(id)))).thenReturn(null);
 
         //ASSERT
         assertThrows(FileNotFoundException.class, () -> fileService.getGridFsFile(id));
     }
+
+
 
     @Test
     void shouldGetListFileDetail(){
@@ -119,6 +131,38 @@ public class FileServiceTest {
 
         //ASSERT
 
+    }
+    @Test
+    void shouldDisable() throws FileNotFoundException, IOException {
+        //ARRANGE
+        String id = "5399aba6e4b0ae375bfdca88";
+        ObjectId objectId = new ObjectId(id);
+        GridFSFile gridFSFile = FileMockData.getGridFsFile();
+        GridFsResource gridFsResource = new GridFsResource(gridFSFile, FileMockData.getMockMultipartFile().getInputStream());
+
+        when(gridFsTemplate.findOne(new Query(Criteria.where("_id").is(id)))).thenReturn(gridFSFile);
+        when(gridFsTemplate.getResource(gridFSFile)).thenReturn(gridFsResource);
+
+        lenient().when(gridFsTemplate.store(any(InputStream.class), any(String.class), any(String.class))).thenReturn(objectId);
+        lenient().doNothing().when(gridFsTemplate).delete(new Query(Criteria.where("_id").is(objectId)));
+
+        //ACT
+        fileService.disable(id);
+
+        //ASSERT
+        assertFalse(gridFSFile.getMetadata().getBoolean("isActive"));
+        assertTrue(gridFSFile.getMetadata().getBoolean("hasBeenUpdated"));
+    }
+
+    @Test
+    void shouldNotDisable() {
+        //ARRANGE
+        String id = "5399aba6e4b0ae375bfdca88";
+
+        when(gridFsTemplate.findOne(new Query(Criteria.where("_id").is(id)))).thenReturn(null);
+
+        //ASSERT
+        assertThrows(FileNotFoundException.class,()-> fileService.disable(id));
     }
 
 }
