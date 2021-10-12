@@ -62,7 +62,6 @@ public class DbInit implements CommandLineRunner {
                 Folder.builder()
                         .id("61621ca50545544ead443f75")
                         .categoryName("EVALUATION")
-                        .isActive(true)
                         .build()
         );
 
