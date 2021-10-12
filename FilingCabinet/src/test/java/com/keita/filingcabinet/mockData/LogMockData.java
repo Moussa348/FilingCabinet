@@ -14,7 +14,7 @@ public abstract class LogMockData {
                 .fileId("61627e75c97fd02ce1aaf592")
                 .by(Collections.singletonMap("employee1", Role.USER))
                 .date(LocalDateTime.now())
-                .operationType(OperationType.READ)
+                .operationType(OperationType.UPLOAD)
                 .build();
     }
 }

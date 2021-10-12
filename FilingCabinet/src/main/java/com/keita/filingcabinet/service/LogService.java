@@ -20,7 +20,7 @@ public class LogService {
         logRepository.save(
                 Log.builder()
                         .fileId(fileId)
-                        .by(Collections.singletonMap("", Role.USER))
+                        .by(Collections.singletonMap("", Role.USER))//TODO --> getLoggedUser
                         .date(LocalDateTime.now())
                         .operationType(operationType)
                         .build());

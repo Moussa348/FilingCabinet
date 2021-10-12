@@ -4,8 +4,6 @@ import com.keita.filingcabinet.exception.AppropriateFileException;
 import com.keita.filingcabinet.exception.FileNotFoundException;
 import com.keita.filingcabinet.mapping.FileMapper;
 import com.keita.filingcabinet.model.dto.FileCreation;
-import com.keita.filingcabinet.model.dto.FileDetailUserView;
-import com.keita.filingcabinet.model.dto.PagingRequest;
 import com.keita.filingcabinet.model.entity.File;
 import com.keita.filingcabinet.model.enums.OperationType;
 import com.keita.filingcabinet.util.FileUtil;
@@ -14,8 +12,6 @@ import lombok.extern.java.Log;
 import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ByteArrayResource;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.gridfs.GridFsTemplate;
@@ -28,7 +24,6 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import java.util.stream.Collectors;
 
 @Log
 @Service
@@ -48,7 +43,7 @@ public class FileService {
             String id = gridFsTemplate.store(multipartFile.getInputStream(), multipartFile.getOriginalFilename(), multipartFile.getContentType(), file).toString();
 
             //TODO --> getName from security context
-            logService.add(id, OperationType.WRITE);
+            logService.add(id, OperationType.UPLOAD);
 
             return id;
         }
@@ -57,7 +52,7 @@ public class FileService {
     }
 
     public ByteArrayResource download(GridFSFile gridFSFile) throws IOException {
-        logService.add(gridFSFile.getObjectId().toString(), OperationType.READ);
+        logService.add(gridFSFile.getObjectId().toString(), OperationType.DOWNLOAD);
 
         return new ByteArrayResource(IOUtils.toByteArray(getInputStreamFromResource(gridFSFile)));
     }
@@ -73,7 +68,6 @@ public class FileService {
         throw new FileNotFoundException("THE FILE REQUESTED CAN NOT BE FOUND!");
     }
 
-    //TODO --> pass a query in parameter to fetch, all file(enable,disable) for manager or all enable file for employee and return List<File>
     public List<GridFSFile> getListFile(Query query) {
 
         return gridFsTemplate.find(query).into(new ArrayList<>());

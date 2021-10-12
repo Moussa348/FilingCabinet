@@ -10,16 +10,19 @@ import org.bson.types.ObjectId;
 import org.springframework.data.mongodb.util.BsonUtils;
 import org.springframework.mock.web.MockMultipartFile;
 
-import java.util.*;
+import java.util.Collections;
+import java.util.Date;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 public abstract class FileMockData {
 
 
-    public static MockMultipartFile getMockMultipartFile(){
-        return new MockMultipartFile("file.pdf","file.pdf","applicaiton/pdf","".getBytes());
+    public static MockMultipartFile getMockMultipartFile() {
+        return new MockMultipartFile("file.pdf", "file.pdf", "applicaiton/pdf", "".getBytes());
     }
 
-    public static FileCreation getFileCreation(MockMultipartFile mockMultipartFile){
+    public static FileCreation getFileCreation(MockMultipartFile mockMultipartFile) {
         return FileCreation.builder()
                 .folderId("61621ca50545544ead443f75")
                 .description("test")
@@ -29,7 +32,7 @@ public abstract class FileMockData {
 
     }
 
-    public static File getFile(){
+    public static File getFile() {
         return File.builder()
                 .folderId("61621ca50545544ead443f75")
                 .description("test")
@@ -38,15 +41,15 @@ public abstract class FileMockData {
                 .build();
     }
 
-    public static MockMultipartFile getWrongMockMultipartFile(){
-        return new MockMultipartFile("malware.py","malware.py","application/json","a".getBytes());
+    public static MockMultipartFile getWrongMockMultipartFile() {
+        return new MockMultipartFile("malware.py", "malware.py", "application/json", "a".getBytes());
     }
 
-    public static GridFSFile getGridFsFile(){
-        Map<String,Object> documentMap = new LinkedHashMap<>();
+    public static GridFSFile getGridFsFile() {
+        Map<String, Object> documentMap = new LinkedHashMap<>();
 
-        documentMap.put("description","none");
-        documentMap.put("uploadBy", Collections.singletonMap("employee1",Role.USER.toString()));
+        documentMap.put("description", "none");
+        documentMap.put("uploadBy", Collections.singletonMap("employee1", Role.USER.toString()));
         documentMap.put("isActive", true);
 
         return new GridFSFile(
@@ -59,11 +62,11 @@ public abstract class FileMockData {
         );
     }
 
-    public static GridFSFile getGridFsFileDisable(){
-        Map<String,Object> documentMap = new LinkedHashMap<>();
+    public static GridFSFile getGridFsFileDisable() {
+        Map<String, Object> documentMap = new LinkedHashMap<>();
 
-        documentMap.put("description","none");
-        documentMap.put("uploadBy", Collections.singletonMap("employee1",Role.USER.toString()));
+        documentMap.put("description", "none");
+        documentMap.put("uploadBy", Collections.singletonMap("employee1", Role.USER.toString()));
         documentMap.put("isActive", false);
 
         return new GridFSFile(
@@ -76,7 +79,7 @@ public abstract class FileMockData {
         );
     }
 
-    public static PagingRequest getPagingRequest(){
+    public static PagingRequest getPagingRequest() {
         return PagingRequest.builder()
                 .folderId("61621ca50545544ead443f75")
                 .noPage(3)

@@ -7,7 +7,7 @@ import java.util.Date;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class PagingUtilTest {
+public class DateUtilTest {
 
     @Test
     void convertDateToLocalDateTime(){

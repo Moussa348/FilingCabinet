@@ -14,7 +14,7 @@ import java.util.List;
 
 @Log
 @RestController
-@RequestMapping("/file")
+@RequestMapping("/user")
 public class UserController {
 
     private final UserService userService;
