@@ -8,19 +8,17 @@ import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
-import java.util.Map;
 
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class FileDetailSuperUserView implements Serializable {
+public class FolderDetail implements Serializable {
 
-    private String id,filename,description;
-
-    private Map<String, String> uploadBy;
+    private String id;
+    private String categoryName;
 
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    private LocalDateTime uploadDate,deactivationDate;
+    private LocalDateTime creationDate;
 
 }

@@ -4,6 +4,8 @@ import com.keita.filingcabinet.exception.CategoryNotFoundException;
 import com.keita.filingcabinet.service.CategoryService;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/category")
 public class CategoryController {
@@ -27,6 +29,11 @@ public class CategoryController {
     @PatchMapping("/enable/{id}")
     public String enable(@PathVariable String id) throws CategoryNotFoundException {
         return categoryService.enable(id);
+    }
+
+    @GetMapping("/getListCategoryName")
+    public List<String> getListCategoryName(){
+        return categoryService.getListCategoryName();
     }
 
 }

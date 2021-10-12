@@ -16,7 +16,7 @@ import static org.junit.jupiter.api.Assertions.*;
 public class FileMapperTest {
 
     @Test
-    void toFile(){
+    void toFile() {
         //ARRANGE
         FileCreation fileCreation = FileMockData.getFileCreation(FileMockData.getMockMultipartFile());
 
@@ -24,14 +24,14 @@ public class FileMapperTest {
         File file = FileMapper.toFile(fileCreation);
 
         //ASSERT
-        assertEquals(fileCreation.getFolderId(),file.getFolderId());
-        assertEquals(fileCreation.getDescription(),file.getDescription());
-        assertEquals(fileCreation.getUploadBy(),file.getUploadBy());
+        assertEquals(fileCreation.getFolderId(), file.getFolderId());
+        assertEquals(fileCreation.getDescription(), file.getDescription());
+        assertEquals(fileCreation.getUploadBy(), file.getUploadBy());
         assertTrue(file.getIsActive());
     }
 
     @Test
-    void toFileDetailUserView(){
+    void toFileDetailUserView() {
         //ARRANGE
         GridFSFile gridFSFile = FileMockData.getGridFsFile();
 
@@ -47,7 +47,7 @@ public class FileMapperTest {
     }
 
     @Test
-    void toFileDetailSuperUserView(){
+    void toFileDetailSuperUserView() {
         //ARRANGE
         GridFSFile gridFSFile = FileMockData.getGridFsFile();
 

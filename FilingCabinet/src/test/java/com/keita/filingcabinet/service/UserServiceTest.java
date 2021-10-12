@@ -1,6 +1,8 @@
 package com.keita.filingcabinet.service;
 
+import com.keita.filingcabinet.mockData.CategoryMockData;
 import com.keita.filingcabinet.mockData.FileMockData;
+import com.keita.filingcabinet.model.dto.CategoryDetailUserView;
 import com.keita.filingcabinet.model.dto.FileDetailUserView;
 import com.keita.filingcabinet.model.dto.PagingRequest;
 import org.junit.jupiter.api.Test;
@@ -22,6 +24,9 @@ public class UserServiceTest {
     @Mock
     FileService fileService;
 
+    @Mock
+    CategoryService categoryService;
+
     @InjectMocks
     UserService userService;
 
@@ -38,4 +43,17 @@ public class UserServiceTest {
         //ASSERT
         assertEquals(1, fileDetailUserViews.size());
     }
+
+    @Test
+    void getListCategoryDetailUserView(){
+        //ARRANGE
+        when(categoryService.getListCategory(true)).thenReturn(CategoryMockData.getListCategoryForRepoTest());
+
+        //ACT
+        List<CategoryDetailUserView> categoryDetailUserViews = userService.getListCategoryDetailUserView();
+
+        //ASSERT
+        assertEquals(2,categoryDetailUserViews.size());
+    }
+
 }

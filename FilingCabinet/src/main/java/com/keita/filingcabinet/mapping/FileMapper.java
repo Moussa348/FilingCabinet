@@ -8,6 +8,7 @@ import com.keita.filingcabinet.util.DateUtil;
 import com.mongodb.client.gridfs.model.GridFSFile;
 
 import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.Map;
 
 public abstract class FileMapper {
@@ -27,22 +28,21 @@ public abstract class FileMapper {
         return FileDetailUserView.builder()
                 .id(gridFSFile.getObjectId().toString())
                 .filename(gridFSFile.getFilename())
-                .description(gridFSFile.getMetadata().get("description", String.class))
+                .description(gridFSFile.getMetadata().getString("description"))
                 .uploadBy(gridFSFile.getMetadata().get("uploadBy", Map.class))
                 .uploadDate(DateUtil.convertDateToLocalDateTime(gridFSFile.getUploadDate()))
                 .build();
     }
 
     public static FileDetailSuperUserView toFileDetailSuperUserView(GridFSFile gridFSFile) {
-        String deactivationDate = gridFSFile.getMetadata().get("deActivationDate", String.class);
-
+        Date deactivationDate = gridFSFile.getMetadata().getDate("deActivationDate");
         return FileDetailSuperUserView.builder()
                 .id(gridFSFile.getObjectId().toString())
                 .filename(gridFSFile.getFilename())
-                .description(gridFSFile.getMetadata().get("description", String.class))
+                .description(gridFSFile.getMetadata().getString("description"))
                 .uploadBy(gridFSFile.getMetadata().get("uploadBy", Map.class))
                 .uploadDate(DateUtil.convertDateToLocalDateTime(gridFSFile.getUploadDate()))
-                .deactivationDate(deactivationDate != null ? LocalDateTime.parse(deactivationDate) : null)
+                .deactivationDate(deactivationDate != null ?DateUtil.convertDateToLocalDateTime(deactivationDate):null)
                 .build();
 
     }

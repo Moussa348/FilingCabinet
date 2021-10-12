@@ -50,4 +50,15 @@ public class UserControllerTest {
         assertEquals(MockHttpServletResponse.SC_OK, mvcResult1.getResponse().getStatus());
     }
 
+    @Test
+    void getListCategoryDetailUserView() throws Exception {
+        //ACT
+        MvcResult mvcResult1 = mockMvc.perform(MockMvcRequestBuilders.get("/user/getListCategoryDetailUserView")
+                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk()).andReturn();
+
+        //ASSERT
+        assertEquals(MockHttpServletResponse.SC_OK, mvcResult1.getResponse().getStatus());
+    }
+
 }

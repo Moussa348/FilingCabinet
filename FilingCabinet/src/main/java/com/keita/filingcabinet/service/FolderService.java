@@ -1,5 +1,7 @@
 package com.keita.filingcabinet.service;
 
+import com.keita.filingcabinet.mapping.FolderMapper;
+import com.keita.filingcabinet.model.dto.FolderDetail;
 import com.keita.filingcabinet.model.entity.Folder;
 import com.keita.filingcabinet.repository.FolderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class FolderService {
@@ -24,8 +27,10 @@ public class FolderService {
         ).getId();
     }
 
-    public List<Folder> getListFolderDetailByPatientId(String patientId){
-        return folderRepository.findAllByPatientId(patientId);
+    public List<FolderDetail> getListFolderDetailByPatientId(String patientId){
+        return folderRepository.findAllByPatientId(patientId).stream()
+                .map(FolderMapper::toFolderDetail)
+                .collect(Collectors.toList());
     }
 
 }

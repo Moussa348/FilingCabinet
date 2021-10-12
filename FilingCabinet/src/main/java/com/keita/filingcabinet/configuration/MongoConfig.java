@@ -12,7 +12,7 @@ import org.springframework.data.mongodb.gridfs.GridFsTemplate;
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
 
 @Configuration
-@EnableAutoConfiguration(exclude = { EmbeddedMongoAutoConfiguration.class })
+@EnableAutoConfiguration(exclude = {EmbeddedMongoAutoConfiguration.class})
 @EnableMongoRepositories(basePackages = "com.keita.filingcabinet.repository")
 public class MongoConfig extends AbstractMongoClientConfiguration {
 
@@ -28,8 +28,8 @@ public class MongoConfig extends AbstractMongoClientConfiguration {
     }
 
     @Bean
-    public GridFsTemplate gridFsTemplate(){
-        return new GridFsTemplate(mongoDbFactory(),mappingMongoConverter);
+    public GridFsTemplate gridFsTemplate() {
+        return new GridFsTemplate(mongoDbFactory(), mappingMongoConverter);
     }
 
 }

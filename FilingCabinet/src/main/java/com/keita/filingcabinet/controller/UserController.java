@@ -1,5 +1,6 @@
 package com.keita.filingcabinet.controller;
 
+import com.keita.filingcabinet.model.dto.CategoryDetailUserView;
 import com.keita.filingcabinet.model.dto.FileDetailUserView;
 import com.keita.filingcabinet.model.dto.PagingRequest;
 import com.keita.filingcabinet.service.UserService;
@@ -24,7 +25,12 @@ public class UserController {
     }
 
     @GetMapping("/getListFileDetailUserView")
-    public List<FileDetailUserView> getListFileDetailUserView(@Valid @ModelAttribute PagingRequest pagingRequest){
+    public List<FileDetailUserView> getListFileDetailUserView(@Valid @ModelAttribute PagingRequest pagingRequest) {
         return userService.getListFileDetailUserView(pagingRequest);
+    }
+
+    @GetMapping("/getListCategoryDetailUserView")
+    public List<CategoryDetailUserView> getListCategoryDetailUserView() {
+        return userService.getListCategoryDetailUserView();
     }
 }

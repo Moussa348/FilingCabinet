@@ -1,9 +1,8 @@
 package com.keita.filingcabinet.service;
 
+import com.keita.filingcabinet.mockData.CategoryMockData;
 import com.keita.filingcabinet.mockData.FileMockData;
-import com.keita.filingcabinet.model.dto.FileDetailSuperUserView;
-import com.keita.filingcabinet.model.dto.FileDetailUserView;
-import com.keita.filingcabinet.model.dto.PagingRequest;
+import com.keita.filingcabinet.model.dto.*;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -23,6 +22,9 @@ public class SuperUserServiceTest {
     @Mock
     FileService fileService;
 
+    @Mock
+    CategoryService categoryService;
+
     @InjectMocks
     SuperUserService superUserService;
 
@@ -39,5 +41,17 @@ public class SuperUserServiceTest {
         //ASSERT
         assertEquals(1, fileDetailUserViews.size());
 
+    }
+
+    @Test
+    void getListCategoryDetailSuperUserView(){
+        //ARRANGE
+        when(categoryService.getListCategory(false)).thenReturn(CategoryMockData.getListCategoryForRepoTest());
+
+        //ACT
+        List<CategoryDetailSuperUserView> categoryDetailUserViews = superUserService.getListCategoryDetailSuperUserView();
+
+        //ASSERT
+        assertEquals(2,categoryDetailUserViews.size());
     }
 }

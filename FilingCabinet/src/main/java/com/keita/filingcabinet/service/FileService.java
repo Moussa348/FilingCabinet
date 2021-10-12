@@ -10,12 +10,14 @@ import com.keita.filingcabinet.util.FileUtil;
 import com.mongodb.client.gridfs.model.GridFSFile;
 import lombok.extern.java.Log;
 import org.apache.commons.io.IOUtils;
+import org.bson.Document;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.gridfs.GridFsTemplate;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -51,6 +53,7 @@ public class FileService {
         throw new AppropriateFileException("THIS IS NOT AN APPROPRIATE FILE!");
     }
 
+    @Transactional
     public ByteArrayResource download(GridFSFile gridFSFile) throws IOException {
         logService.add(gridFSFile.getObjectId().toString(), OperationType.DOWNLOAD);
 
@@ -75,9 +78,10 @@ public class FileService {
 
     public String disable(String id) throws FileNotFoundException, IOException {
         GridFSFile gridFSFile = getGridFsFile(id);
+        Document metaData = gridFSFile.getMetadata();
 
-        gridFSFile.getMetadata().put("isActive", false);
-        gridFSFile.getMetadata().put("deActivationDate", LocalDateTime.now());
+        metaData.put("isActive", false);
+        metaData.put("deActivationDate", LocalDateTime.now());
 
         String newId = gridFsTemplate.store(getInputStreamFromResource(gridFSFile), gridFSFile.getFilename(), gridFSFile.getMetadata()).toString();
 
@@ -85,13 +89,14 @@ public class FileService {
 
         gridFsTemplate.delete(new Query(Criteria.where("_id").is(gridFSFile.getObjectId())));
 
-        return id;
+        return newId;
     }
 
     public String enable(String id) throws FileNotFoundException, IOException {
         GridFSFile gridFSFile = getGridFsFile(id);
+        Document metaData = gridFSFile.getMetadata();
 
-        gridFSFile.getMetadata().put("isActive", true);
+        metaData.put("isActive", true);
 
         String newId = gridFsTemplate.store(getInputStreamFromResource(gridFSFile), gridFSFile.getFilename(), gridFSFile.getMetadata()).toString();
 
@@ -99,7 +104,7 @@ public class FileService {
 
         gridFsTemplate.delete(new Query(Criteria.where("_id").is(gridFSFile.getObjectId())));
 
-        return id;
+        return newId;
     }
 
     private InputStream getInputStreamFromResource(GridFSFile gridFSFile) throws IOException {

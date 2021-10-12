@@ -1,6 +1,8 @@
 package com.keita.filingcabinet.service;
 
+import com.keita.filingcabinet.mapping.CategoryMapper;
 import com.keita.filingcabinet.mapping.FileMapper;
+import com.keita.filingcabinet.model.dto.CategoryDetailSuperUserView;
 import com.keita.filingcabinet.model.dto.FileDetailSuperUserView;
 import com.keita.filingcabinet.model.dto.PagingRequest;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,10 +21,21 @@ public class SuperUserService {
     @Autowired
     private FileService fileService;
 
+    @Autowired
+    private CategoryService categoryService;
+
     public List<FileDetailSuperUserView> getListFileDetailSuperUserView(PagingRequest pagingRequest) {
         return fileService.getListFile(new Query()
                 .addCriteria(Criteria.where("metadata.folderId").is(pagingRequest.getFolderId()))
                 .with(PageRequest.of(pagingRequest.getNoPage(), pagingRequest.getSize(), Sort.by("uploadDate"))))
                 .stream().map(FileMapper::toFileDetailSuperUserView).collect(Collectors.toList());
     }
+
+    public List<CategoryDetailSuperUserView> getListCategoryDetailSuperUserView() {
+        return categoryService.getListCategory(false)
+                .stream()
+                .map(CategoryMapper::toCategoryDetailSuperUserView)
+                .collect(Collectors.toList());
+    }
+
 }

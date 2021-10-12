@@ -1,6 +1,8 @@
 package com.keita.filingcabinet.service;
 
+import com.keita.filingcabinet.mapping.CategoryMapper;
 import com.keita.filingcabinet.mapping.FileMapper;
+import com.keita.filingcabinet.model.dto.CategoryDetailUserView;
 import com.keita.filingcabinet.model.dto.FileDetailUserView;
 import com.keita.filingcabinet.model.dto.PagingRequest;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +21,8 @@ public class UserService {
     @Autowired
     private FileService fileService;
 
+    @Autowired
+    private CategoryService categoryService;
 
     public List<FileDetailUserView> getListFileDetailUserView(PagingRequest pagingRequest) {
         return fileService.getListFile(new Query()
@@ -27,4 +31,12 @@ public class UserService {
                 .with(PageRequest.of(pagingRequest.getNoPage(), pagingRequest.getSize(), Sort.by("uploadDate"))))
                 .stream().map(FileMapper::toFileDetailUserView).collect(Collectors.toList());
     }
+
+    public List<CategoryDetailUserView> getListCategoryDetailUserView(){
+        return categoryService.getListCategory(true)
+                .stream()
+                .map(CategoryMapper::toCategoryDetailUserView)
+                .collect(Collectors.toList());
+    }
+
 }

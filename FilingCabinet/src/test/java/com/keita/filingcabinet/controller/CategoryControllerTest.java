@@ -85,4 +85,16 @@ public class CategoryControllerTest {
         //ASSERT
         assertEquals(MockHttpServletResponse.SC_OK, mvcResult1.getResponse().getStatus());
     }
+
+    @Test
+    void getListCategoryName() throws Exception {
+        //ACT
+        MvcResult mvcResult1 = mockMvc.perform(MockMvcRequestBuilders.get("/category/getListCategoryName/")
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk()).andReturn();
+
+        //ASSERT
+        assertEquals(MockHttpServletResponse.SC_OK, mvcResult1.getResponse().getStatus());
+    }
 }
