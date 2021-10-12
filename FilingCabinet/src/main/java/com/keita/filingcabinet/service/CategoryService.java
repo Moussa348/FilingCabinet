@@ -19,10 +19,10 @@ public class CategoryService {
     @Autowired
     private CategoryRepository categoryRepository;
 
-    public String createCategory(@CategoryExistConstraint String name) {
+    public String createCategory(String name) {
         //TODO --> add the email of user connected
         //TODO --> add FolderService.createFolder for loop in PatientService.getListPatientId
-        return categoryRepository.save(Category.builder()
+        return categoryRepository.existsByName(name) ? "" : categoryRepository.save(Category.builder()
                 .name(name)
                 .createdBy(Collections.singletonMap("employee1", Role.SUDO.toString()))
                 .creationDate(LocalDateTime.now())
@@ -31,11 +31,11 @@ public class CategoryService {
         ).getId();
     }
 
-    public List<Category> getListCategory(Boolean isActive){
-        return isActive ? categoryRepository.findAllByIsActiveTrue(): categoryRepository.findAll();
+    public List<Category> getListCategory(Boolean isActive) {
+        return isActive ? categoryRepository.findAllByIsActiveTrue() : categoryRepository.findAll();
     }
 
-    public List<String> getListCategoryName(){
+    public List<String> getListCategoryName() {
         return getListCategory(true).stream().map(Category::getName).collect(Collectors.toList());
     }
 
@@ -46,7 +46,7 @@ public class CategoryService {
         category.setIsActive(false);
 
         //TODO -> get from securityContextHolder
-        category.setDeactivatedBy(Collections.singletonMap("employee1",Role.SUDO.toString()));
+        category.setDeactivatedBy(Collections.singletonMap("employee1", Role.SUDO.toString()));
 
         category.setDeactivationDate(LocalDateTime.now());
 

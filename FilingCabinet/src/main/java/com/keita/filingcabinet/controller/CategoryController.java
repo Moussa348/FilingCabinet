@@ -4,8 +4,6 @@ import com.keita.filingcabinet.exception.CategoryNotFoundException;
 import com.keita.filingcabinet.service.CategoryService;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
-
 @RestController
 @RequestMapping("/category")
 public class CategoryController {
@@ -17,7 +15,7 @@ public class CategoryController {
     }
 
     @PostMapping("/createCategory/{name}")
-    public String createCategory(@Valid @PathVariable String name) {
+    public String createCategory(@PathVariable String name) {
         return categoryService.createCategory(name);
     }
 

@@ -30,6 +30,7 @@ public class CategoryServiceTest {
         //ARRANGE
         String name = "Prise de sang";
 
+        when(categoryRepository.existsByName(name)).thenReturn(false);
         when(categoryRepository.save(any())).thenReturn(CategoryMockData.getListCategoryForRepoTest().get(0));
 
         //ACT
@@ -37,6 +38,20 @@ public class CategoryServiceTest {
 
         //ASSERT
         assertNotNull(id);
+    }
+
+    @Test
+    void shouldNotCreateCategory() {
+        //ARRANGE
+        String name = "Prise de sang";
+
+        when(categoryRepository.existsByName(name)).thenReturn(true);
+
+        //ACT
+        String id = categoryService.createCategory(name);
+
+        //ASSERT
+        assertEquals("",id);
     }
 
     @Test
