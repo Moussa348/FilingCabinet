@@ -16,7 +16,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Document("persons")
-public class Person implements Serializable {
+public class User implements Serializable {
 
     @Id
     private String id;

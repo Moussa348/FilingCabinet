@@ -2,11 +2,13 @@ package com.keita.filingcabinet.mapping;
 
 import com.keita.filingcabinet.mockData.FileMockData;
 import com.keita.filingcabinet.model.dto.FileCreation;
-import com.keita.filingcabinet.model.dto.FileDetail;
+import com.keita.filingcabinet.model.dto.FileDetailUserView;
 import com.keita.filingcabinet.model.entity.File;
 import com.keita.filingcabinet.util.DateUtil;
 import com.mongodb.client.gridfs.model.GridFSFile;
 import org.junit.jupiter.api.Test;
+
+import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -25,7 +27,6 @@ public class FileMapperTest {
         assertEquals(fileCreation.getDescription(),file.getDescription());
         assertEquals(fileCreation.getUploadBy(),file.getUploadBy());
         assertTrue(file.getIsActive());
-        assertFalse(file.getHasBeenUpdated());
     }
 
     @Test
@@ -34,14 +35,14 @@ public class FileMapperTest {
         GridFSFile gridFSFile = FileMockData.getGridFsFile();
 
         //ACT
-        FileDetail fileDetail = FileMapper.toFileDetail(gridFSFile);
+        FileDetailUserView fileDetailUserView = FileMapper.toFileDetailUserView(gridFSFile);
 
         //ASSERT
-        assertEquals(gridFSFile.getObjectId().toString(),fileDetail.getId());
-        assertEquals(gridFSFile.getFilename(),fileDetail.getFilename());
-        assertEquals(gridFSFile.getMetadata().get("description", String.class),fileDetail.getDescription());
-        assertEquals(gridFSFile.getMetadata().get("uploadBy", String.class),fileDetail.getUploadBy());
-        assertEquals(DateUtil.convertDateToLocalDateTime(gridFSFile.getUploadDate()),fileDetail.getUploadDate());
+        assertEquals(gridFSFile.getObjectId().toString(), fileDetailUserView.getId());
+        assertEquals(gridFSFile.getFilename(), fileDetailUserView.getFilename());
+        assertEquals(gridFSFile.getMetadata().get("description", String.class), fileDetailUserView.getDescription());
+        assertEquals(gridFSFile.getMetadata().get("uploadBy", Map.class), fileDetailUserView.getUploadBy());
+        assertEquals(DateUtil.convertDateToLocalDateTime(gridFSFile.getUploadDate()), fileDetailUserView.getUploadDate());
     }
 
 }

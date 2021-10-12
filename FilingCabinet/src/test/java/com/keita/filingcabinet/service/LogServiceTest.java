@@ -29,7 +29,7 @@ public class LogServiceTest {
         when(logRepository.save(any(Log.class))).thenReturn(log);
         //ACT
 
-        logService.add(log.getBy(), log.getFileId(), log.getOperationType());
+        logService.add(log.getFileId(), log.getOperationType());
     }
 
 }

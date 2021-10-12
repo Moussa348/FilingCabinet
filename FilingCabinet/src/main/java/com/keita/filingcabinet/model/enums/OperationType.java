@@ -1,5 +1,5 @@
 package com.keita.filingcabinet.model.enums;
 
 public enum OperationType {
-    READ,WRITE
+    READ,WRITE,DISABLE,ENABLE
 }

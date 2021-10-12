@@ -1,14 +1,10 @@
 package com.keita.filingcabinet.mockData;
 
 import com.keita.filingcabinet.model.dto.FileCreation;
-import com.keita.filingcabinet.model.dto.FileDetail;
 import com.keita.filingcabinet.model.dto.PagingRequest;
 import com.keita.filingcabinet.model.entity.File;
-import com.mongodb.client.MongoIterable;
-import com.mongodb.client.gridfs.GridFSFindIterable;
+import com.keita.filingcabinet.model.enums.Role;
 import com.mongodb.client.gridfs.model.GridFSFile;
-import org.bson.BsonArray;
-import org.bson.BsonValue;
 import org.bson.Document;
 import org.bson.types.ObjectId;
 import org.springframework.data.mongodb.util.BsonUtils;
@@ -27,7 +23,7 @@ public abstract class FileMockData {
         return FileCreation.builder()
                 .folderId("61621ca50545544ead443f75")
                 .description("test")
-                .uploadBy("employee1")
+                .uploadBy(Collections.singletonMap("employee1", Role.USER.toString()))
                 .multipartFile(mockMultipartFile)
                 .build();
 
@@ -37,7 +33,7 @@ public abstract class FileMockData {
         return File.builder()
                 .folderId("61621ca50545544ead443f75")
                 .description("test")
-                .uploadBy("employee1")
+                .uploadBy(Collections.singletonMap("employee1", Role.USER.toString()))
                 .isActive(true)
                 .build();
     }
@@ -50,9 +46,25 @@ public abstract class FileMockData {
         Map<String,Object> documentMap = new LinkedHashMap<>();
 
         documentMap.put("description","none");
-        documentMap.put("uploadBy", "mark");
+        documentMap.put("uploadBy", Collections.singletonMap("employee1",Role.USER.toString()));
         documentMap.put("isActive", true);
-        documentMap.put("hasBeenUpdated", false);
+
+        return new GridFSFile(
+                BsonUtils.simpleToBsonValue(new ObjectId("507f1f77bcf86cd799439011")),
+                "file.pdf",
+                291980L,
+                261120,
+                new Date(),
+                new Document(documentMap)
+        );
+    }
+
+    public static GridFSFile getGridFsFileDisable(){
+        Map<String,Object> documentMap = new LinkedHashMap<>();
+
+        documentMap.put("description","none");
+        documentMap.put("uploadBy", Collections.singletonMap("employee1",Role.USER.toString()));
+        documentMap.put("isActive", false);
 
         return new GridFSFile(
                 BsonUtils.simpleToBsonValue(new ObjectId("507f1f77bcf86cd799439011")),

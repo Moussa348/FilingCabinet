@@ -4,12 +4,13 @@ import com.keita.filingcabinet.exception.AppropriateFileException;
 import com.keita.filingcabinet.exception.FileNotFoundException;
 import com.keita.filingcabinet.mapping.FileMapper;
 import com.keita.filingcabinet.model.dto.FileCreation;
-import com.keita.filingcabinet.model.dto.FileDetail;
+import com.keita.filingcabinet.model.dto.FileDetailUserView;
 import com.keita.filingcabinet.model.dto.PagingRequest;
 import com.keita.filingcabinet.model.entity.File;
 import com.keita.filingcabinet.model.enums.OperationType;
 import com.keita.filingcabinet.util.FileUtil;
 import com.mongodb.client.gridfs.model.GridFSFile;
+import lombok.extern.java.Log;
 import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ByteArrayResource;
@@ -23,11 +24,13 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
+@Log
 @Service
 public class FileService {
 
@@ -42,11 +45,10 @@ public class FileService {
 
         if (FileUtil.isAnAcceptableFile(Objects.requireNonNull(multipartFile.getOriginalFilename()))) {
             File file = FileMapper.toFile(fileCreation);
-
             String id = gridFsTemplate.store(multipartFile.getInputStream(), multipartFile.getOriginalFilename(), multipartFile.getContentType(), file).toString();
 
             //TODO --> getName from security context
-            logService.add("", id, OperationType.WRITE);
+            logService.add(id, OperationType.WRITE);
 
             return id;
         }
@@ -55,13 +57,14 @@ public class FileService {
     }
 
     public ByteArrayResource download(GridFSFile gridFSFile) throws IOException {
-        logService.add("", gridFSFile.getObjectId().toString(), OperationType.READ);
+        logService.add(gridFSFile.getObjectId().toString(), OperationType.READ);
 
         return new ByteArrayResource(IOUtils.toByteArray(getInputStreamFromResource(gridFSFile)));
     }
 
     public GridFSFile getGridFsFile(String id) throws FileNotFoundException {
         GridFSFile gridFSFile = gridFsTemplate.findOne(new Query(Criteria.where("_id").is(id)));
+
         if (gridFSFile != null) {
             //TODO --> getName from security context
             return gridFSFile;
@@ -70,23 +73,21 @@ public class FileService {
         throw new FileNotFoundException("THE FILE REQUESTED CAN NOT BE FOUND!");
     }
 
-    public List<FileDetail> getListFileDetail(PagingRequest pagingRequest) {
-        List<GridFSFile> gridFSFiles = new ArrayList<>();
+    //TODO --> pass a query in parameter to fetch, all file(enable,disable) for manager or all enable file for employee and return List<File>
+    public List<GridFSFile> getListFile(Query query) {
 
-        return gridFsTemplate.find(
-                new Query(Criteria.where("metadata.folderId").is(pagingRequest.getFolderId()))
-                        .addCriteria(Criteria.where("metadata.isActive").is(true))
-                        .with(PageRequest.of(pagingRequest.getNoPage(), pagingRequest.getSize(), Sort.by("uploadDate")))
-        ).into(gridFSFiles).stream().map(FileMapper::toFileDetail).collect(Collectors.toList());
+        return gridFsTemplate.find(query).into(new ArrayList<>());
     }
 
     public void disable(String id) throws FileNotFoundException, IOException {
         GridFSFile gridFSFile = getGridFsFile(id);
 
         gridFSFile.getMetadata().put("isActive", false);
-        gridFSFile.getMetadata().put("hasBeenUpdated", true);
+        gridFSFile.getMetadata().put("deactivationDate", LocalDateTime.now());
 
-        gridFsTemplate.store(getInputStreamFromResource(gridFSFile), gridFSFile.getFilename(), gridFSFile.getMetadata());
+        String newId = gridFsTemplate.store(getInputStreamFromResource(gridFSFile), gridFSFile.getFilename(), gridFSFile.getMetadata()).toString();
+
+        logService.add(newId, OperationType.DISABLE);
 
         gridFsTemplate.delete(new Query(Criteria.where("_id").is(gridFSFile.getObjectId())));
     }
@@ -95,9 +96,10 @@ public class FileService {
         GridFSFile gridFSFile = getGridFsFile(id);
 
         gridFSFile.getMetadata().put("isActive", true);
-        gridFSFile.getMetadata().put("hasBeenUpdated", true);
 
-        gridFsTemplate.store(getInputStreamFromResource(gridFSFile), gridFSFile.getFilename(), gridFSFile.getMetadata());
+        String newId = gridFsTemplate.store(getInputStreamFromResource(gridFSFile), gridFSFile.getFilename(), gridFSFile.getMetadata()).toString();
+
+        logService.add(newId, OperationType.ENABLE);
 
         gridFsTemplate.delete(new Query(Criteria.where("_id").is(gridFSFile.getObjectId())));
     }

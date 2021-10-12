@@ -11,6 +11,7 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
+import java.util.Map;
 
 @Data
 @Builder
@@ -24,8 +25,8 @@ public class FileCreation implements Serializable {
     @NotNull(message = "the description can't be null") @NotEmpty(message = "the description can't be empty") @NotBlank(message = "the description can't be blank")
     private String description;
 
-    @NotNull(message = "the name of upload can't be null") @NotEmpty(message = "the name of upload can't be empty") @NotBlank(message = "the name of upload can't be blank")
-    private String uploadBy;
+    @NotNull(message = "the name of upload can't be null") @NotEmpty(message = "the name of upload can't be empty")
+    private Map<String, String> uploadBy;
 
     @NotNull(message = "the multipartFile of upload can't be null")
     private MultipartFile multipartFile;

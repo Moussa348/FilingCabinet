@@ -1,10 +1,12 @@
 package com.keita.filingcabinet.mapping;
 
 import com.keita.filingcabinet.model.dto.FileCreation;
-import com.keita.filingcabinet.model.dto.FileDetail;
+import com.keita.filingcabinet.model.dto.FileDetailUserView;
 import com.keita.filingcabinet.model.entity.File;
 import com.keita.filingcabinet.util.DateUtil;
 import com.mongodb.client.gridfs.model.GridFSFile;
+
+import java.util.Map;
 
 public abstract class FileMapper {
 
@@ -14,18 +16,17 @@ public abstract class FileMapper {
                 .description(fileCreation.getDescription())
                 .uploadBy(fileCreation.getUploadBy())
                 .isActive(true)
-                .hasBeenUpdated(false)
                 .build();
 
     }
 
 
-    public static FileDetail toFileDetail(GridFSFile gridFSFile) {
-        return FileDetail.builder()
+    public static FileDetailUserView toFileDetailUserView(GridFSFile gridFSFile) {
+        return FileDetailUserView.builder()
                 .id(gridFSFile.getObjectId().toString())
                 .filename(gridFSFile.getFilename())
                 .description(gridFSFile.getMetadata().get("description", String.class))
-                .uploadBy(gridFSFile.getMetadata().get("uploadBy", String.class))
+                .uploadBy(gridFSFile.getMetadata().get("uploadBy", Map.class))
                 .uploadDate(DateUtil.convertDateToLocalDateTime(gridFSFile.getUploadDate()))
                 .build();
     }

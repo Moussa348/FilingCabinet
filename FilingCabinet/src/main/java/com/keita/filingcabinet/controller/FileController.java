@@ -1,11 +1,8 @@
 package com.keita.filingcabinet.controller;
 
-import com.keita.filingcabinet.ExcludeCoverage;
 import com.keita.filingcabinet.exception.AppropriateFileException;
 import com.keita.filingcabinet.exception.FileNotFoundException;
 import com.keita.filingcabinet.model.dto.FileCreation;
-import com.keita.filingcabinet.model.dto.FileDetail;
-import com.keita.filingcabinet.model.dto.PagingRequest;
 import com.keita.filingcabinet.service.FileService;
 import com.mongodb.client.gridfs.model.GridFSFile;
 import lombok.extern.java.Log;
@@ -17,7 +14,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.io.IOException;
-import java.util.List;
 
 @Log
 @RestController
@@ -46,13 +42,13 @@ public class FileController {
                 .body(fileService.download(gridFSFile));
     }
 
-    @GetMapping("/getListFileDetail")
-    public List<FileDetail> getListFileDetail(@Valid @ModelAttribute PagingRequest pagingRequest){
-        return fileService.getListFileDetail(pagingRequest);
-    }
-
     @PatchMapping("/disable/{id}")
     public void disable(@PathVariable String id) throws FileNotFoundException, IOException {
         fileService.disable(id);
+    }
+
+    @PatchMapping("/enable/{id}")
+    public void enable(@PathVariable String id) throws FileNotFoundException, IOException {
+        fileService.enable(id);
     }
 }
