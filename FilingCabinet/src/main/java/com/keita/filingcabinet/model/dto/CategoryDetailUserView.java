@@ -12,4 +12,7 @@ import java.io.Serializable;
 @NoArgsConstructor
 @AllArgsConstructor
 public class CategoryDetailUserView implements Serializable {
+
+    private String id,name;
+
 }
