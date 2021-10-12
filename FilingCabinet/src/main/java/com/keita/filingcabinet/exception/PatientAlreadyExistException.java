@@ -5,10 +5,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 @NoArgsConstructor
-@ResponseStatus(code = HttpStatus.NOT_FOUND)
-public class FileNotFoundException extends Exception {
+@ResponseStatus(code = HttpStatus.CONFLICT)
+public class PatientAlreadyExistException extends Exception {
 
-    public FileNotFoundException(String message) {
+    public PatientAlreadyExistException(String message) {
         super(message);
     }
 }
