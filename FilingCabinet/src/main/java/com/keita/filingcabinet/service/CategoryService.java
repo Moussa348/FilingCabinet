@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.Collections;
+import java.util.List;
 
 @Service
 public class CategoryService {
@@ -26,6 +27,10 @@ public class CategoryService {
                 .isActive(true)
                 .build()
         ).getId();
+    }
+
+    public List<Category> getListCategory(Boolean isActive){
+        return isActive ? categoryRepository.findAllByIsActiveTrue(): categoryRepository.findAll();
     }
 
     //TODO --> when disable add name of the user that disble it and date

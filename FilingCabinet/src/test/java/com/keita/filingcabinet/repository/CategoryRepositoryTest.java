@@ -1,6 +1,7 @@
 package com.keita.filingcabinet.repository;
 
 import com.keita.filingcabinet.mockData.CategoryMockData;
+import com.keita.filingcabinet.model.entity.Category;
 import lombok.extern.java.Log;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -9,8 +10,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.data.mongo.DataMongoTest;
 import org.springframework.test.context.ActiveProfiles;
 
-import static com.mongodb.assertions.Assertions.assertFalse;
-import static com.mongodb.assertions.Assertions.assertTrue;
+import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 @Log
 @DataMongoTest
@@ -22,12 +24,12 @@ public class CategoryRepositoryTest {
     CategoryRepository categoryRepository;
 
     @BeforeAll
-    void init(){
+    void init() {
         categoryRepository.saveAll(CategoryMockData.getListCategoryForRepoTest());
     }
 
     @Test
-    void shouldExistsByName(){
+    void shouldExistsByName() {
         //ARRANGE
         String name = "evaluation";
 
@@ -39,7 +41,7 @@ public class CategoryRepositoryTest {
     }
 
     @Test
-    void shouldNotExistsByName(){
+    void shouldNotExistsByName() {
         //ARRANGE
         String name = "non_existent";
 
@@ -49,4 +51,14 @@ public class CategoryRepositoryTest {
         //ASSERT
         assertFalse(existByName);
     }
+
+    @Test
+    void shouldFindAllByIsActiveTrue() {
+        //ACT
+        List<Category> categories = categoryRepository.findAllByIsActiveTrue();
+
+        //ASSERT
+        assertEquals(2, categories.size());
+    }
+
 }
