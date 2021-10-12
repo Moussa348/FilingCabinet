@@ -4,6 +4,7 @@ import com.keita.filingcabinet.model.entity.File;
 import com.keita.filingcabinet.model.entity.Folder;
 import com.keita.filingcabinet.model.enums.Role;
 import com.keita.filingcabinet.repository.FolderRepository;
+import com.keita.filingcabinet.repository.LogRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.core.annotation.Order;
 import org.springframework.core.io.ResourceLoader;
@@ -24,23 +25,30 @@ public class DbInit implements CommandLineRunner {
 
     private final FolderRepository folderRepository;
 
+    private final LogRepository logRepository;
+
     private final GridFsTemplate gridFsTemplate;
 
     private final ResourceLoader resourceLoader;
 
     private final MongoTemplate mongoTemplate;
 
-    public DbInit(FolderRepository folderRepository, GridFsTemplate gridFsTemplate, ResourceLoader resourceLoader, MongoTemplate mongoTemplate) {
+    public DbInit(FolderRepository folderRepository, LogRepository logRepository, GridFsTemplate gridFsTemplate, ResourceLoader resourceLoader, MongoTemplate mongoTemplate) {
         this.folderRepository = folderRepository;
+        this.logRepository = logRepository;
         this.gridFsTemplate = gridFsTemplate;
         this.resourceLoader = resourceLoader;
         this.mongoTemplate = mongoTemplate;
     }
-
-    private void insertFolders() {
-
+    private void deleteCollections(){
+        logRepository.deleteAll();
         folderRepository.deleteAll();
 
+        mongoTemplate.dropCollection("fs.files");
+        mongoTemplate.dropCollection("fs.chunks");
+        mongoTemplate.dropCollection("users");
+    }
+    private void insertFolders() {
         List<Folder> folders = Arrays.asList(
                 Folder.builder().id("61621ca50545544ead443f75").build()
         );
@@ -49,9 +57,6 @@ public class DbInit implements CommandLineRunner {
     }
 
     private void insertFiles() throws IOException {
-        mongoTemplate.dropCollection("fs.files");
-        mongoTemplate.dropCollection("fs.chunks");
-
         File file = File.builder()
                 .folderId("61621ca50545544ead443f75")
                 .description("none")
@@ -64,6 +69,7 @@ public class DbInit implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
+        deleteCollections();
         insertFolders();
         insertFiles();
     }

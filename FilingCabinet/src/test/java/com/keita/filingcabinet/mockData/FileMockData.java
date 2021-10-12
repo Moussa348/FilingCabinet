@@ -10,6 +10,7 @@ import org.bson.types.ObjectId;
 import org.springframework.data.mongodb.util.BsonUtils;
 import org.springframework.mock.web.MockMultipartFile;
 
+import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.Date;
 import java.util.LinkedHashMap;
@@ -68,6 +69,7 @@ public abstract class FileMockData {
         documentMap.put("description", "none");
         documentMap.put("uploadBy", Collections.singletonMap("employee1", Role.USER.toString()));
         documentMap.put("isActive", false);
+        documentMap.put("deActivationDate", LocalDateTime.now());
 
         return new GridFSFile(
                 BsonUtils.simpleToBsonValue(new ObjectId("507f1f77bcf86cd799439011")),

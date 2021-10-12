@@ -1,0 +1,20 @@
+[
+  {
+    "firstName": "Kader",
+    "lastName": "Conde",
+    "email" : "KaderConde@gmail.com",
+    "phoneNumber" : "4389076548",
+    "address" : "2394 rue incognito",
+    "role" : "SUDO",
+    "isActive" : true
+  },
+  {
+    "firstName": "Bouba",
+    "lastName": "Conde",
+    "email" : "BoubaConde@gmail.com",
+    "phoneNumber" : "4389076548",
+    "address" : "2394 rue incognito",
+    "role" : "USER",
+    "isActive" : true
+  }
+]

@@ -1,9 +1,9 @@
 package com.keita.filingcabinet.repository;
 
-import com.keita.filingcabinet.model.entity.File;
+import com.keita.filingcabinet.model.entity.User;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface FileRepository extends MongoRepository<File,String> {
+public interface UserRepository extends MongoRepository<User,String> {
 }

@@ -77,7 +77,7 @@ public class FileService {
         GridFSFile gridFSFile = getGridFsFile(id);
 
         gridFSFile.getMetadata().put("isActive", false);
-        gridFSFile.getMetadata().put("deactivationDate", LocalDateTime.now());
+        gridFSFile.getMetadata().put("deActivationDate", LocalDateTime.now());
 
         String newId = gridFsTemplate.store(getInputStreamFromResource(gridFSFile), gridFSFile.getFilename(), gridFSFile.getMetadata()).toString();
 

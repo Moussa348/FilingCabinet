@@ -15,12 +15,12 @@ import java.util.List;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Document("persons")
+@Document("users")
 public class User implements Serializable {
 
     @Id
     private String id;
     private String firstName,lastName,email,phoneNumber,address;
-    private List<Role> roles;
+    private Role role;
     private Boolean isActive;
 }
