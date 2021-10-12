@@ -16,11 +16,13 @@ import java.util.Map;
 @AllArgsConstructor
 public class CategoryDetailSuperUserView implements Serializable {
 
-    private String id,name;
+    private String id, name;
 
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime creationDate;
 
+    private Map<String, String> createdBy;
+
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    private Map<String,LocalDateTime> deactivatedBy;
+    private Map<String, LocalDateTime> deactivatedBy;
 }
