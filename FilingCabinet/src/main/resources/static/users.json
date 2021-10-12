@@ -1,19 +1,13 @@
 [
   {
-    "firstName": "Kader",
-    "lastName": "Conde",
-    "email" : "KaderConde@gmail.com",
-    "phoneNumber" : "4389076548",
-    "address" : "2394 rue incognito",
+    "email" : "employee1@gmail.com",
+    "password" : "employee123",
     "role" : "SUDO",
     "isActive" : true
   },
   {
-    "firstName": "Bouba",
-    "lastName": "Conde",
     "email" : "BoubaConde@gmail.com",
-    "phoneNumber" : "4389076548",
-    "address" : "2394 rue incognito",
+    "password" : "employee123",
     "role" : "USER",
     "isActive" : true
   }
