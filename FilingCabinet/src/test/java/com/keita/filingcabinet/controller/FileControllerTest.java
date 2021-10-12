@@ -1,15 +1,14 @@
 package com.keita.filingcabinet.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.keita.filingcabinet.DbInit;
 import com.keita.filingcabinet.mockData.FileMockData;
 import com.keita.filingcabinet.model.dto.FileCreation;
-import com.keita.filingcabinet.model.dto.PagingRequest;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.data.mongo.AutoConfigureDataMongo;
-import org.springframework.boot.test.autoconfigure.data.mongo.DataMongoTest;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.mongodb.core.MongoTemplate;
@@ -19,7 +18,6 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-import org.springframework.util.CollectionUtils;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 
@@ -74,11 +72,8 @@ public class FileControllerTest {
 
     @Test
     void download() throws Exception {
-        //ARRANGE
-        String id = "61624fd9f3650a5146adb4fc";
-
         //ACT
-        MvcResult mvcResult1 = mockMvc.perform(MockMvcRequestBuilders.get("/file/download/" + id)
+        MvcResult mvcResult1 = mockMvc.perform(MockMvcRequestBuilders.get("/file/download/" + DbInit.FILE_ID_TEST)
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk()).andReturn();
@@ -88,21 +83,33 @@ public class FileControllerTest {
     }
 
     @Test
-    void getListFileDetail() throws Exception {
+    void disable() throws Exception {
         //ARRANGE
-        PagingRequest pagingRequest = FileMockData.getPagingRequest();
+        String id = "61624fd9f3650a5146adb4fc";
 
         //ACT
-        MvcResult mvcResult1 = mockMvc.perform(MockMvcRequestBuilders.get("/file/getListFileDetail")
-                .param("folderId", pagingRequest.getFolderId())
-                .param("noPage", pagingRequest.getNoPage().toString())
-                .param("size", pagingRequest.getSize().toString())
-                .flashAttr("pagingRequest", pagingRequest)
+        MvcResult mvcResult1 = mockMvc.perform(MockMvcRequestBuilders.patch("/file/disable/" + id)
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk()).andReturn();
+                .andExpect(status().isNotFound()).andReturn();
 
         //ASSERT
-        assertEquals(MockHttpServletResponse.SC_OK, mvcResult1.getResponse().getStatus());
+        assertEquals(MockHttpServletResponse.SC_NOT_FOUND, mvcResult1.getResponse().getStatus());
     }
+
+    @Test
+    void enable() throws Exception {
+        //ARRANGE
+        String id = "61624fd9f3650a5146adb4fc";
+
+        //ACT
+        MvcResult mvcResult1 = mockMvc.perform(MockMvcRequestBuilders.patch("/file/enable/" + id)
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isNotFound()).andReturn();
+
+        //ASSERT
+        assertEquals(MockHttpServletResponse.SC_NOT_FOUND, mvcResult1.getResponse().getStatus());
+    }
+
 }

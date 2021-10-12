@@ -3,16 +3,11 @@ package com.keita.filingcabinet;
 import com.keita.filingcabinet.model.entity.File;
 import com.keita.filingcabinet.model.entity.Folder;
 import com.keita.filingcabinet.model.enums.Role;
-import com.keita.filingcabinet.repository.FileRepository;
 import com.keita.filingcabinet.repository.FolderRepository;
-import com.mongodb.BasicDBObject;
-import com.mongodb.DBObject;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.core.annotation.Order;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.data.mongodb.core.MongoTemplate;
-import org.springframework.data.mongodb.core.query.Criteria;
-import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.gridfs.GridFsTemplate;
 import org.springframework.stereotype.Component;
 
@@ -24,6 +19,8 @@ import java.util.List;
 @Order(1)
 @Component
 public class DbInit implements CommandLineRunner {
+
+    public static String FILE_ID_TEST;
 
     private final FolderRepository folderRepository;
 
@@ -62,7 +59,7 @@ public class DbInit implements CommandLineRunner {
                 .isActive(true)
                 .build();
 
-        gridFsTemplate.store(resourceLoader.getResource("classpath:static/cv.txt").getInputStream(), "cv.txt", "text/plain", file);
+        FILE_ID_TEST = gridFsTemplate.store(resourceLoader.getResource("classpath:static/cv.txt").getInputStream(), "cv.txt", "text/plain", file).toString();
     }
 
     @Override
