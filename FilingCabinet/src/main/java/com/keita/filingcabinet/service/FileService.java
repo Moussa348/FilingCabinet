@@ -73,7 +73,7 @@ public class FileService {
         return gridFsTemplate.find(query).into(new ArrayList<>());
     }
 
-    public void disable(String id) throws FileNotFoundException, IOException {
+    public String disable(String id) throws FileNotFoundException, IOException {
         GridFSFile gridFSFile = getGridFsFile(id);
 
         gridFSFile.getMetadata().put("isActive", false);
@@ -84,9 +84,11 @@ public class FileService {
         logService.add(newId, OperationType.DISABLE);
 
         gridFsTemplate.delete(new Query(Criteria.where("_id").is(gridFSFile.getObjectId())));
+
+        return id;
     }
 
-    public void enable(String id) throws FileNotFoundException, IOException {
+    public String enable(String id) throws FileNotFoundException, IOException {
         GridFSFile gridFSFile = getGridFsFile(id);
 
         gridFSFile.getMetadata().put("isActive", true);
@@ -96,6 +98,8 @@ public class FileService {
         logService.add(newId, OperationType.ENABLE);
 
         gridFsTemplate.delete(new Query(Criteria.where("_id").is(gridFSFile.getObjectId())));
+
+        return id;
     }
 
     private InputStream getInputStreamFromResource(GridFSFile gridFSFile) throws IOException {

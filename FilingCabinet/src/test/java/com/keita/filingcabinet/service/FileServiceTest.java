@@ -148,9 +148,10 @@ public class FileServiceTest {
         lenient().doNothing().when(gridFsTemplate).delete(new Query(Criteria.where("_id").is(objectId)));
 
         //ACT
-        fileService.disable(id);
+        String newId = fileService.disable(id);
 
         //ASSERT
+        assertEquals(id,newId);
         assertFalse(gridFSFile.getMetadata().getBoolean("isActive"));
     }
 
@@ -182,9 +183,10 @@ public class FileServiceTest {
         lenient().doNothing().when(gridFsTemplate).delete(new Query(Criteria.where("_id").is(objectId)));
 
         //ACT
-        fileService.enable(id);
+        String newId = fileService.enable(id);
 
         //ASSERT
+        assertEquals(id,newId);
         assertTrue(gridFSFile.getMetadata().getBoolean("isActive"));
     }
 

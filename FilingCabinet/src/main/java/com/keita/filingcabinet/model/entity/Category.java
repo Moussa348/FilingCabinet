@@ -22,6 +22,7 @@ public class Category implements Serializable {
     private String id;
     private String name;
     private Map<String, String> createdBy;
-    private LocalDateTime creationDate;
+    private Map<String, String> deactivatedBy;
+    private LocalDateTime creationDate,deactivationDate;
     private Boolean isActive;
 }

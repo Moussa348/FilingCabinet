@@ -1,5 +1,6 @@
 package com.keita.filingcabinet.service;
 
+import com.keita.filingcabinet.exception.CategoryNotFoundException;
 import com.keita.filingcabinet.model.entity.Category;
 import com.keita.filingcabinet.model.enums.Role;
 import com.keita.filingcabinet.repository.CategoryRepository;
@@ -36,6 +37,29 @@ public class CategoryService {
 
     public List<String> getListCategoryName(){
         return getListCategory(true).stream().map(Category::getName).collect(Collectors.toList());
+    }
+
+    public String disable(String id) throws CategoryNotFoundException {
+        Category category = categoryRepository.findById(id)
+                .orElseThrow(() -> new CategoryNotFoundException("Can't find categgory with this id!"));
+
+        category.setIsActive(false);
+
+        //TODO -> get from securityContextHolder
+        category.setDeactivatedBy(Collections.singletonMap("employee1",Role.SUDO.toString()));
+
+        category.setDeactivationDate(LocalDateTime.now());
+
+        return categoryRepository.save(category).getId();
+    }
+
+    public String enable(String id) throws CategoryNotFoundException {
+        Category category = categoryRepository.findById(id)
+                .orElseThrow(() -> new CategoryNotFoundException("Can't find categgory with this id!"));
+
+        category.setIsActive(true);
+
+        return categoryRepository.save(category).getId();
     }
 
     //TODO --> when disable add name of the user that disble it and date

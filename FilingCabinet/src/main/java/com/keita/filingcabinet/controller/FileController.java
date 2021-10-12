@@ -43,12 +43,12 @@ public class FileController {
     }
 
     @PatchMapping("/disable/{id}")
-    public void disable(@PathVariable String id) throws FileNotFoundException, IOException {
-        fileService.disable(id);
+    public String disable(@PathVariable String id) throws FileNotFoundException, IOException {
+       return fileService.disable(id);
     }
 
     @PatchMapping("/enable/{id}")
-    public void enable(@PathVariable String id) throws FileNotFoundException, IOException {
-        fileService.enable(id);
+    public String enable(@PathVariable String id) throws FileNotFoundException, IOException {
+       return fileService.enable(id);
     }
 }
