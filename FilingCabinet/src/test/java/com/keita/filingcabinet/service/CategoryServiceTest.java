@@ -61,4 +61,16 @@ public class CategoryServiceTest {
         assertEquals(2,categories.size());
     }
 
+    @Test
+    void shouldGetListCategoryName(){
+        //ARRANGE
+        when(categoryRepository.findAllByIsActiveTrue()).thenReturn(CategoryMockData.getListCategoryForRepoTest());
+
+        //ACT
+        List<String> categoriesName = categoryService.getListCategoryName();
+
+        //ASSERT
+        assertEquals(2,categoriesName.size());
+    }
+
 }
