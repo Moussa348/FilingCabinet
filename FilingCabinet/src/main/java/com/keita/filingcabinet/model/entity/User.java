@@ -10,6 +10,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Map;
 
 @Data
 @Builder
@@ -23,4 +24,5 @@ public class User implements Serializable {
     private String email,password;
     private Role role;
     private Boolean isActive;
+    private Map<String,String> registerBy;
 }

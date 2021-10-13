@@ -16,5 +16,6 @@ public class PatientCreation implements Serializable {
 
     @PatientExistConstraint
     private String email;
+
     private String firstName, lastName, phoneNumber, address, socialNumber;
 }

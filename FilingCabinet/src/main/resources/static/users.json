@@ -1,14 +1,20 @@
 [
   {
-    "email" : "employee1@gmail.com",
-    "password" : "employee123",
-    "role" : "SUDO",
-    "isActive" : true
+    "email": "employee1@gmail.com",
+    "password": "employee123",
+    "role": "SUDO",
+    "isActive": true,
+    "registerBy": {
+      "system": "none"
+    }
   },
   {
-    "email" : "BoubaConde@gmail.com",
-    "password" : "employee123",
-    "role" : "USER",
-    "isActive" : true
+    "email": "employee2@gmail.com",
+    "password": "employee123",
+    "role": "USER",
+    "isActive": true,
+    "registerBy": {
+      "system": "none"
+    }
   }
 ]

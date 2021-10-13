@@ -8,6 +8,7 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDateTime;
+import java.util.Map;
 
 @Data
 @Builder
@@ -18,6 +19,7 @@ public class Patient {
 
     @Id
     private String id;
-    private String firstName,lastName,email,phoneNumber,address,socialNumber;
+    private String firstName, lastName, email, phoneNumber, address, socialNumber;
     private LocalDateTime registrationDate;
+    private Map<String, String> registerBy;
 }

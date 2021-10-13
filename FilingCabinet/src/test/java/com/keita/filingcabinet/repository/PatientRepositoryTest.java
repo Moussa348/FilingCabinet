@@ -2,6 +2,7 @@ package com.keita.filingcabinet.repository;
 
 import com.keita.filingcabinet.mockData.PatientMockData;
 import lombok.extern.java.Log;
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
