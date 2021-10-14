@@ -53,7 +53,6 @@ public class FileService {
         throw new AppropriateFileException("THIS IS NOT AN APPROPRIATE FILE!");
     }
 
-    @Transactional
     public ByteArrayResource download(GridFSFile gridFSFile) throws IOException {
         logService.add(gridFSFile.getObjectId().toString(), OperationType.DOWNLOAD);
 

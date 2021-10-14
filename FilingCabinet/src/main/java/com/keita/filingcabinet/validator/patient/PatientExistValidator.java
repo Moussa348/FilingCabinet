@@ -1,6 +1,7 @@
 package com.keita.filingcabinet.validator.patient;
 
 import com.keita.filingcabinet.exception.PatientAlreadyExistException;
+import com.keita.filingcabinet.meta.ExcludeFromGeneratedCoverage;
 import com.keita.filingcabinet.repository.PatientRepository;
 import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 
+@ExcludeFromGeneratedCoverage
 public class PatientExistValidator implements ConstraintValidator<PatientExistConstraint, String> {
 
     @Autowired

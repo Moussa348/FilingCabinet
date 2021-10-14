@@ -3,6 +3,7 @@ package com.keita.filingcabinet.controller;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.keita.filingcabinet.mockData.PatientMockData;
 import com.keita.filingcabinet.model.dto.PatientCreation;
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,6 +39,11 @@ public class PatientControllerTest {
     @Autowired
     MongoTemplate mongoTemplate;
 
+    @AfterAll
+    void clean(){
+        mongoTemplate.dropCollection("patients");
+    }
+
     @Test
     @WithMockUser(authorities = {"SUDO","USER"})
     void shouldCreatePatient() throws Exception {
@@ -49,10 +55,10 @@ public class PatientControllerTest {
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(mapper.writeValueAsString(patientCreation))
                 .accept(MediaType.APPLICATION_JSON))
-                .andExpect(status().isConflict()).andReturn();
+                .andExpect(status().isOk()).andReturn();
 
         //ASSERT
-        assertEquals(MockHttpServletResponse.SC_CONFLICT, mvcResult1.getResponse().getStatus());
+        assertEquals(MockHttpServletResponse.SC_OK, mvcResult1.getResponse().getStatus());
     }
 
     @Test

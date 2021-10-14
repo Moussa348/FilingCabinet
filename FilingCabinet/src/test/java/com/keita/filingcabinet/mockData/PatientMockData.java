@@ -10,9 +10,9 @@ public abstract class PatientMockData {
 
     public static PatientCreation getPatientCreation(){
         return PatientCreation.builder()
-                .firstName("marc")
+                .firstName("mathieu")
                 .lastName("charbonneau")
-                .email("marc@gmail.com")
+                .email("mathieu@gmail.com")
                 .phoneNumber("5149087654")
                 .address("1324 rue Jean")
                 .socialNumber("123133423")
@@ -25,7 +25,7 @@ public abstract class PatientMockData {
                         .id("616614a5c650ebeecd24b0b5")
                         .firstName("marc")
                         .lastName("charbonneau")
-                        .email("marc@gmail.com")
+                        .email("mathieu@gmail.com")
                         .phoneNumber("5149087654")
                         .address("1324 rue Jean")
                         .socialNumber("123133423")

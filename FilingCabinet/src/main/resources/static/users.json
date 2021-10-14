@@ -1,9 +1,10 @@
 [
   {
     "email": "employee1@gmail.com",
-    "password": "employee123",
+    "password": "employee",
     "role": "SUDO",
     "isActive": true,
+    "isAccountVerified": true,
     "registerBy": {
       "system": "none"
     }
@@ -13,6 +14,7 @@
     "password": "employee123",
     "role": "USER",
     "isActive": true,
+    "isAccountVerified": true,
     "registerBy": {
       "system": "none"
     }

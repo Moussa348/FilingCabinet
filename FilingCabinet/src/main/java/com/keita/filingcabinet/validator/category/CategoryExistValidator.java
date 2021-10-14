@@ -1,11 +1,13 @@
 package com.keita.filingcabinet.validator.category;
 
+import com.keita.filingcabinet.meta.ExcludeFromGeneratedCoverage;
 import com.keita.filingcabinet.repository.CategoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 
+@ExcludeFromGeneratedCoverage
 public class CategoryExistValidator implements ConstraintValidator<CategoryExistConstraint,String> {
 
     @Autowired

@@ -1,10 +1,13 @@
 package com.keita.filingcabinet.service;
 
+import com.keita.filingcabinet.exception.WrongCredentialsException;
 import com.keita.filingcabinet.mapping.CategoryMapper;
 import com.keita.filingcabinet.mapping.FileMapper;
 import com.keita.filingcabinet.model.dto.CategoryDetailUserView;
 import com.keita.filingcabinet.model.dto.FileDetailUserView;
 import com.keita.filingcabinet.model.dto.PagingRequest;
+import com.keita.filingcabinet.model.entity.User;
+import com.keita.filingcabinet.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
@@ -17,6 +20,9 @@ import java.util.stream.Collectors;
 
 @Service
 public class UserService {
+
+    @Autowired
+    private UserRepository userRepository;
 
     @Autowired
     private FileService fileService;
@@ -37,6 +43,11 @@ public class UserService {
                 .stream()
                 .map(CategoryMapper::toCategoryDetailUserView)
                 .collect(Collectors.toList());
+    }
+
+    public User findUserByEmailAndPassword(String email,String password) throws WrongCredentialsException {
+        return userRepository.findByEmailAndPasswordAndIsActiveTrueAndIsAccountVerifiedTrue(email,password)
+                .orElseThrow(() -> new WrongCredentialsException("Can't find user with this credentials!"));
     }
 
 }

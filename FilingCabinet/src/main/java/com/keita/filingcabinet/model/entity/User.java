@@ -21,8 +21,8 @@ public class User implements Serializable {
 
     @Id
     private String id;
-    private String email,password;
+    private String email, password;
     private Role role;
-    private Boolean isActive;
-    private Map<String,String> registerBy;
+    private Boolean isActive, isAccountVerified;
+    private Map<String, String> registerBy;
 }

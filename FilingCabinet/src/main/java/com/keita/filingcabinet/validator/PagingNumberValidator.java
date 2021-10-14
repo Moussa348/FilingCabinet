@@ -1,11 +1,13 @@
 package com.keita.filingcabinet.validator;
 
 import com.keita.filingcabinet.exception.InvalidPageRequestException;
+import com.keita.filingcabinet.meta.ExcludeFromGeneratedCoverage;
 import lombok.SneakyThrows;
 
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 
+@ExcludeFromGeneratedCoverage
 public class PagingNumberValidator implements ConstraintValidator<PagingNumberConstraint,Integer> {
 
     @Override

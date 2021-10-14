@@ -30,7 +30,7 @@ public class PatientRepositoryTest {
     @Test
     void shouldExistByEmail(){
         //ARRANGE
-        String email = "marc@gmail.com";
+        String email = "mathieu@gmail.com";
 
         //ACT
         boolean exist = patientRepository.existsByEmail(email);
