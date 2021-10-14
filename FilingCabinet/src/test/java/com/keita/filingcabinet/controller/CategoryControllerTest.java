@@ -12,6 +12,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockHttpServletResponse;
+import org.springframework.security.test.context.support.WithAnonymousUser;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
@@ -42,7 +44,8 @@ public class CategoryControllerTest {
     }
 
     @Test
-    void createCategory() throws Exception {
+    @WithMockUser(authorities = {"SUDO"})
+    void shouldCreateCategory() throws Exception {
         //ARRANGE
         String name = "newCategory";
 
@@ -57,7 +60,24 @@ public class CategoryControllerTest {
     }
 
     @Test
-    void disable() throws Exception {
+    @WithAnonymousUser
+    void createCategory() throws Exception {
+        //ARRANGE
+        String name = "newCategory";
+
+        //ACT
+        MvcResult mvcResult1 = mockMvc.perform(MockMvcRequestBuilders.post("/category/createCategory/" + name)
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isUnauthorized()).andReturn();
+
+        //ASSERT
+        assertEquals(MockHttpServletResponse.SC_UNAUTHORIZED, mvcResult1.getResponse().getStatus());
+    }
+
+    @Test
+    @WithMockUser(authorities = {"SUDO"})
+    void shouldDisable() throws Exception {
         //ARRANGE
         String id = "6165cab909f5a9399b41a94a";
 
@@ -72,7 +92,24 @@ public class CategoryControllerTest {
     }
 
     @Test
-    void enable() throws Exception {
+    @WithAnonymousUser
+    void shouldNotDisable() throws Exception {
+        //ARRANGE
+        String id = "6165cab909f5a9399b41a94a";
+
+        //ACT
+        MvcResult mvcResult1 = mockMvc.perform(MockMvcRequestBuilders.patch("/category/disable/" + id)
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isUnauthorized()).andReturn();
+
+        //ASSERT
+        assertEquals(MockHttpServletResponse.SC_UNAUTHORIZED, mvcResult1.getResponse().getStatus());
+    }
+
+    @Test
+    @WithMockUser(authorities = {"SUDO"})
+    void shouldEnable() throws Exception {
         //ARRANGE
         String id = "6165cab909f5a9399b41a94a";
 
@@ -87,7 +124,24 @@ public class CategoryControllerTest {
     }
 
     @Test
-    void getListCategoryName() throws Exception {
+    @WithAnonymousUser
+    void shouldNotEnable() throws Exception {
+        //ARRANGE
+        String id = "6165cab909f5a9399b41a94a";
+
+        //ACT
+        MvcResult mvcResult1 = mockMvc.perform(MockMvcRequestBuilders.patch("/category/enable/" + id)
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isUnauthorized()).andReturn();
+
+        //ASSERT
+        assertEquals(MockHttpServletResponse.SC_UNAUTHORIZED, mvcResult1.getResponse().getStatus());
+    }
+
+    @Test
+    @WithMockUser(authorities = {"SUDO"})
+    void shouldGetListCategoryName() throws Exception {
         //ACT
         MvcResult mvcResult1 = mockMvc.perform(MockMvcRequestBuilders.get("/category/getListCategoryName/")
                 .contentType(MediaType.APPLICATION_JSON)
@@ -96,5 +150,18 @@ public class CategoryControllerTest {
 
         //ASSERT
         assertEquals(MockHttpServletResponse.SC_OK, mvcResult1.getResponse().getStatus());
+    }
+
+    @Test
+    @WithAnonymousUser
+    void shouldNotGetListCategoryName() throws Exception {
+        //ACT
+        MvcResult mvcResult1 = mockMvc.perform(MockMvcRequestBuilders.get("/category/getListCategoryName/")
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isUnauthorized()).andReturn();
+
+        //ASSERT
+        assertEquals(MockHttpServletResponse.SC_UNAUTHORIZED, mvcResult1.getResponse().getStatus());
     }
 }

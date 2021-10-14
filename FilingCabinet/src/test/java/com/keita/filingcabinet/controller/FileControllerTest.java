@@ -14,6 +14,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockHttpServletResponse;
+import org.springframework.security.test.context.support.WithAnonymousUser;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
@@ -49,7 +51,8 @@ public class FileControllerTest {
     }
 
     @Test
-    void upload() throws Exception {
+    @WithMockUser(authorities = {"SUDO","USER"})
+    void shouldUpload() throws Exception {
         //ARRANGE
         FileCreation fileCreation = FileMockData.getFileCreation(FileMockData.getMockMultipartFile());
         MultiValueMap<String, String> parameters = new LinkedMultiValueMap<>();
@@ -71,7 +74,31 @@ public class FileControllerTest {
     }
 
     @Test
-    void download() throws Exception {
+    @WithAnonymousUser
+    void shouldNotUpload() throws Exception {
+        //ARRANGE
+        FileCreation fileCreation = FileMockData.getFileCreation(FileMockData.getMockMultipartFile());
+        MultiValueMap<String, String> parameters = new LinkedMultiValueMap<>();
+
+        parameters.put("employee1", Collections.singletonList(fileCreation.getUploadBy().get("employee1")));
+
+        //ACT
+        MvcResult mvcResult1 = mockMvc.perform(MockMvcRequestBuilders.multipart("/file/upload").file(FileMockData.getMockMultipartFile())
+                .param("folderId", fileCreation.getFolderId())
+                .param("description", fileCreation.getDescription())
+                .params(parameters)
+                .flashAttr("fileCreation", fileCreation)
+                .contentType(MediaType.MULTIPART_FORM_DATA)
+                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isUnauthorized()).andReturn();
+
+        //ASSERT
+        assertEquals(MockHttpServletResponse.SC_UNAUTHORIZED, mvcResult1.getResponse().getStatus());
+    }
+
+    @Test
+    @WithMockUser(authorities = {"SUDO","USER"})
+    void shouldDownload() throws Exception {
         //ACT
         MvcResult mvcResult1 = mockMvc.perform(MockMvcRequestBuilders.get("/file/download/" + DbInit.FILE_ID_TEST)
                 .contentType(MediaType.APPLICATION_JSON)
@@ -83,7 +110,21 @@ public class FileControllerTest {
     }
 
     @Test
-    void disable() throws Exception {
+    @WithAnonymousUser
+    void shouldNotDownload() throws Exception {
+        //ACT
+        MvcResult mvcResult1 = mockMvc.perform(MockMvcRequestBuilders.get("/file/download/" + DbInit.FILE_ID_TEST)
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isUnauthorized()).andReturn();
+
+        //ASSERT
+        assertEquals(MockHttpServletResponse.SC_UNAUTHORIZED, mvcResult1.getResponse().getStatus());
+    }
+
+    @Test
+    @WithMockUser(authorities = {"SUDO"})
+    void shouldDisable() throws Exception {
         //ARRANGE
         String id = "61624fd9f3650a5146adb4fc";
 
@@ -98,7 +139,24 @@ public class FileControllerTest {
     }
 
     @Test
-    void enable() throws Exception {
+    @WithAnonymousUser
+    void shouldNotDisable() throws Exception {
+        //ARRANGE
+        String id = "61624fd9f3650a5146adb4fc";
+
+        //ACT
+        MvcResult mvcResult1 = mockMvc.perform(MockMvcRequestBuilders.patch("/file/disable/" + id)
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isUnauthorized()).andReturn();
+
+        //ASSERT
+        assertEquals(MockHttpServletResponse.SC_UNAUTHORIZED, mvcResult1.getResponse().getStatus());
+    }
+
+    @Test
+    @WithMockUser(authorities = {"SUDO"})
+    void shouldEnable() throws Exception {
         //ARRANGE
         String id = "61624fd9f3650a5146adb4fc";
 
@@ -110,6 +168,22 @@ public class FileControllerTest {
 
         //ASSERT
         assertEquals(MockHttpServletResponse.SC_NOT_FOUND, mvcResult1.getResponse().getStatus());
+    }
+
+    @Test
+    @WithAnonymousUser
+    void shouldNotEnable() throws Exception {
+        //ARRANGE
+        String id = "61624fd9f3650a5146adb4fc";
+
+        //ACT
+        MvcResult mvcResult1 = mockMvc.perform(MockMvcRequestBuilders.patch("/file/enable/" + id)
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isUnauthorized()).andReturn();
+
+        //ASSERT
+        assertEquals(MockHttpServletResponse.SC_UNAUTHORIZED, mvcResult1.getResponse().getStatus());
     }
 
 }

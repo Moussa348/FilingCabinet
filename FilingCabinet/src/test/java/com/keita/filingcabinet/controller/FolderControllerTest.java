@@ -11,6 +11,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockHttpServletResponse;
+import org.springframework.security.test.context.support.WithAnonymousUser;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
@@ -36,7 +38,8 @@ public class FolderControllerTest {
     MongoTemplate mongoTemplate;
 
     @Test
-    void getListFolderDetailByPatientId() throws Exception {
+    @WithMockUser(authorities = {"SUDO","USER"})
+    void shouldGetListFolderDetailByPatientId() throws Exception {
         //ARRANGE
         String patientId = "61660d5c88c87f5d2835a4ff";
         //ACT
@@ -47,6 +50,21 @@ public class FolderControllerTest {
 
         //ASSERT
         assertEquals(MockHttpServletResponse.SC_OK, mvcResult1.getResponse().getStatus());
+    }
+
+    @Test
+    @WithAnonymousUser
+    void shouldNotGetListFolderDetailByPatientId() throws Exception {
+        //ARRANGE
+        String patientId = "61660d5c88c87f5d2835a4ff";
+        //ACT
+        MvcResult mvcResult1 = mockMvc.perform(MockMvcRequestBuilders.get("/folder/getListFolderDetailByPatientId/" + patientId)
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isUnauthorized()).andReturn();
+
+        //ASSERT
+        assertEquals(MockHttpServletResponse.SC_UNAUTHORIZED, mvcResult1.getResponse().getStatus());
     }
 
 }

@@ -12,6 +12,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockHttpServletResponse;
+import org.springframework.security.test.context.support.WithAnonymousUser;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
@@ -37,7 +39,8 @@ public class PatientControllerTest {
     MongoTemplate mongoTemplate;
 
     @Test
-    void createPatient() throws Exception {
+    @WithMockUser(authorities = {"SUDO","USER"})
+    void shouldCreatePatient() throws Exception {
         //ARRANGE
         PatientCreation patientCreation = PatientMockData.getPatientCreation();
 
@@ -53,7 +56,25 @@ public class PatientControllerTest {
     }
 
     @Test
-    void getListPatientFolder() throws Exception {
+    @WithAnonymousUser
+    void shouldNotCreatePatient() throws Exception {
+        //ARRANGE
+        PatientCreation patientCreation = PatientMockData.getPatientCreation();
+
+        //ACT
+        MvcResult mvcResult1 = mockMvc.perform(MockMvcRequestBuilders.post("/patient/createPatient")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(mapper.writeValueAsString(patientCreation))
+                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isUnauthorized()).andReturn();
+
+        //ASSERT
+        assertEquals(MockHttpServletResponse.SC_UNAUTHORIZED, mvcResult1.getResponse().getStatus());
+    }
+
+    @Test
+    @WithMockUser(authorities = {"SUDO","USER"})
+    void shouldGetListPatientFolder() throws Exception {
         //ACT
         MvcResult mvcResult1 = mockMvc.perform(MockMvcRequestBuilders.get("/patient/getListPatientFolder")
                 .contentType(MediaType.APPLICATION_JSON)
@@ -62,6 +83,19 @@ public class PatientControllerTest {
 
         //ASSERT
         assertEquals(MockHttpServletResponse.SC_OK, mvcResult1.getResponse().getStatus());
+    }
+
+    @Test
+    @WithAnonymousUser
+    void shouldNotGetListPatientFolder() throws Exception {
+        //ACT
+        MvcResult mvcResult1 = mockMvc.perform(MockMvcRequestBuilders.get("/patient/getListPatientFolder")
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isUnauthorized()).andReturn();
+
+        //ASSERT
+        assertEquals(MockHttpServletResponse.SC_UNAUTHORIZED, mvcResult1.getResponse().getStatus());
     }
 
 }

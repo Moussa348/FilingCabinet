@@ -10,6 +10,7 @@ import org.springframework.core.io.ByteArrayResource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -28,11 +29,13 @@ public class FileController {
 
 
     @PostMapping("/upload")
+    @PreAuthorize("hasAnyAuthority('USER','SUDO')")
     public String upload(@Valid @ModelAttribute FileCreation fileCreation) throws IOException, AppropriateFileException {
         return fileService.upload(fileCreation);
     }
 
     @GetMapping("/download/{id}")
+    @PreAuthorize("hasAnyAuthority('USER','SUDO')")
     public ResponseEntity<ByteArrayResource> download(@PathVariable String id) throws IOException, FileNotFoundException {
         GridFSFile gridFSFile = fileService.getGridFsFile(id);
 
@@ -43,12 +46,15 @@ public class FileController {
     }
 
     @PatchMapping("/disable/{id}")
+    @PreAuthorize("hasAuthority('SUDO')")
     public String disable(@PathVariable String id) throws FileNotFoundException, IOException {
-       return fileService.disable(id);
+        return fileService.disable(id);
     }
 
     @PatchMapping("/enable/{id}")
+    @PreAuthorize("hasAuthority('SUDO')")
     public String enable(@PathVariable String id) throws FileNotFoundException, IOException {
-       return fileService.enable(id);
+        return fileService.enable(id);
     }
+
 }
