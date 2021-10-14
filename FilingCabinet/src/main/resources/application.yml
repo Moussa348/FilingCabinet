@@ -9,3 +9,8 @@ spring:
 server:
   error:
     include-stacktrace: never
+
+security:
+  jwt:
+    duration: 2880
+    seed : massou

@@ -45,7 +45,6 @@ public class PatientService {
     }
 
     //TODO --> exist methode for formulaire
-
     public List<String> getListPatientId() {
         return patientRepository.findAll().stream()
                 .map(Patient::getId)
