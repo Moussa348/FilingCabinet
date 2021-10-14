@@ -25,5 +25,5 @@ public class Log implements Serializable {
     private String fileId;
     private OperationType operationType;
     private LocalDateTime date;
-    private Map<String,Role> by;
+    private Map<String,String> by;
 }

@@ -6,6 +6,7 @@ import com.keita.filingcabinet.mapping.FileMapper;
 import com.keita.filingcabinet.model.dto.FileCreation;
 import com.keita.filingcabinet.model.entity.File;
 import com.keita.filingcabinet.model.enums.OperationType;
+import com.keita.filingcabinet.security.OwnershipService;
 import com.keita.filingcabinet.util.FileUtil;
 import com.mongodb.client.gridfs.model.GridFSFile;
 import lombok.extern.java.Log;
@@ -17,7 +18,6 @@ import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.gridfs.GridFsTemplate;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -42,9 +42,11 @@ public class FileService {
 
         if (FileUtil.isAnAcceptableFile(Objects.requireNonNull(multipartFile.getOriginalFilename()))) {
             File file = FileMapper.toFile(fileCreation);
+
+            file.setUploadBy(OwnershipService.getCurrentUserDetails());
+
             String id = gridFsTemplate.store(multipartFile.getInputStream(), multipartFile.getOriginalFilename(), multipartFile.getContentType(), file).toString();
 
-            //TODO --> getName from security context
             logService.add(id, OperationType.UPLOAD);
 
             return id;
@@ -63,7 +65,6 @@ public class FileService {
         GridFSFile gridFSFile = gridFsTemplate.findOne(new Query(Criteria.where("_id").is(id)));
 
         if (gridFSFile != null) {
-            //TODO --> getName from security context
             return gridFSFile;
         }
 

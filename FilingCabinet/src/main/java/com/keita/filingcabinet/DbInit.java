@@ -16,6 +16,7 @@ import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -24,7 +25,7 @@ import java.util.List;
 @Component
 public class DbInit implements CommandLineRunner {
 
-    public static String FILE_ID_TEST;
+    public static List<String> FILE_IDS_TEST = new ArrayList<>();
 
     private final FolderRepository folderRepository;
 
@@ -38,7 +39,12 @@ public class DbInit implements CommandLineRunner {
 
     private final MongoTemplate mongoTemplate;
 
-    public DbInit(FolderRepository folderRepository, LogRepository logRepository, CategoryRepository categoryRepository, GridFsTemplate gridFsTemplate, ResourceLoader resourceLoader, MongoTemplate mongoTemplate) {
+    public DbInit(FolderRepository folderRepository,
+                  LogRepository logRepository,
+                  CategoryRepository categoryRepository,
+                  GridFsTemplate gridFsTemplate,
+                  ResourceLoader resourceLoader,
+                  MongoTemplate mongoTemplate) {
         this.folderRepository = folderRepository;
         this.logRepository = logRepository;
         this.categoryRepository = categoryRepository;
@@ -69,14 +75,22 @@ public class DbInit implements CommandLineRunner {
     }
 
     private void insertFiles() throws IOException {
-        File file = File.builder()
+        File file1 = File.builder()
                 .folderId("61621ca50545544ead443f75")
                 .description("none")
                 .uploadBy(Collections.singletonMap("employee1", Role.USER.toString()))
                 .isActive(true)
                 .build();
 
-        FILE_ID_TEST = gridFsTemplate.store(resourceLoader.getResource("classpath:static/cv.txt").getInputStream(), "cv.txt", "text/plain", file).toString();
+        File file2 = File.builder()
+                .folderId("6167b3c779915b34a681f791")
+                .description("none")
+                .uploadBy(Collections.singletonMap("employee1", Role.USER.toString()))
+                .isActive(false)
+                .build();
+
+        FILE_IDS_TEST.add(gridFsTemplate.store(resourceLoader.getResource("classpath:static/cv.txt").getInputStream(), "cv1.txt", "text/plain", file1).toString());
+        FILE_IDS_TEST.add(gridFsTemplate.store(resourceLoader.getResource("classpath:static/cv.txt").getInputStream(), "cv2.txt", "text/plain", file2).toString());
     }
 
     private void insertCategories() {

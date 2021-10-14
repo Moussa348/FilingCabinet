@@ -25,6 +25,7 @@ import org.springframework.util.MultiValueMap;
 
 import java.util.Collections;
 
+import static com.keita.filingcabinet.DbInit.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -100,7 +101,7 @@ public class FileControllerTest {
     @WithMockUser(authorities = {"SUDO","USER"})
     void shouldDownload() throws Exception {
         //ACT
-        MvcResult mvcResult1 = mockMvc.perform(MockMvcRequestBuilders.get("/file/download/" + DbInit.FILE_ID_TEST)
+        MvcResult mvcResult1 = mockMvc.perform(MockMvcRequestBuilders.get("/file/download/" + FILE_IDS_TEST.get(0))
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk()).andReturn();
@@ -113,7 +114,7 @@ public class FileControllerTest {
     @WithAnonymousUser
     void shouldNotDownload() throws Exception {
         //ACT
-        MvcResult mvcResult1 = mockMvc.perform(MockMvcRequestBuilders.get("/file/download/" + DbInit.FILE_ID_TEST)
+        MvcResult mvcResult1 = mockMvc.perform(MockMvcRequestBuilders.get("/file/download/" + FILE_IDS_TEST.get(0))
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isUnauthorized()).andReturn();
@@ -129,13 +130,13 @@ public class FileControllerTest {
         String id = "61624fd9f3650a5146adb4fc";
 
         //ACT
-        MvcResult mvcResult1 = mockMvc.perform(MockMvcRequestBuilders.patch("/file/disable/" + id)
+        MvcResult mvcResult1 = mockMvc.perform(MockMvcRequestBuilders.patch("/file/disable/" + FILE_IDS_TEST.get(0))
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON))
-                .andExpect(status().isNotFound()).andReturn();
+                .andExpect(status().isOk()).andReturn();
 
         //ASSERT
-        assertEquals(MockHttpServletResponse.SC_NOT_FOUND, mvcResult1.getResponse().getStatus());
+        assertEquals(MockHttpServletResponse.SC_OK, mvcResult1.getResponse().getStatus());
     }
 
     @Test
@@ -145,7 +146,7 @@ public class FileControllerTest {
         String id = "61624fd9f3650a5146adb4fc";
 
         //ACT
-        MvcResult mvcResult1 = mockMvc.perform(MockMvcRequestBuilders.patch("/file/disable/" + id)
+        MvcResult mvcResult1 = mockMvc.perform(MockMvcRequestBuilders.patch("/file/disable/" + FILE_IDS_TEST.get(0))
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isUnauthorized()).andReturn();
@@ -161,13 +162,13 @@ public class FileControllerTest {
         String id = "61624fd9f3650a5146adb4fc";
 
         //ACT
-        MvcResult mvcResult1 = mockMvc.perform(MockMvcRequestBuilders.patch("/file/enable/" + id)
+        MvcResult mvcResult1 = mockMvc.perform(MockMvcRequestBuilders.patch("/file/enable/" + FILE_IDS_TEST.get(1))
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON))
-                .andExpect(status().isNotFound()).andReturn();
+                .andExpect(status().isOk()).andReturn();
 
         //ASSERT
-        assertEquals(MockHttpServletResponse.SC_NOT_FOUND, mvcResult1.getResponse().getStatus());
+        assertEquals(MockHttpServletResponse.SC_OK, mvcResult1.getResponse().getStatus());
     }
 
     @Test
@@ -177,7 +178,7 @@ public class FileControllerTest {
         String id = "61624fd9f3650a5146adb4fc";
 
         //ACT
-        MvcResult mvcResult1 = mockMvc.perform(MockMvcRequestBuilders.patch("/file/enable/" + id)
+        MvcResult mvcResult1 = mockMvc.perform(MockMvcRequestBuilders.patch("/file/enable/" + FILE_IDS_TEST.get(1))
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isUnauthorized()).andReturn();

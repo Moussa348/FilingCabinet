@@ -12,7 +12,7 @@ public abstract class LogMockData {
     public static Log getLog(){
         return Log.builder()
                 .fileId("61627e75c97fd02ce1aaf592")
-                .by(Collections.singletonMap("employee1", Role.USER))
+                .by(Collections.singletonMap(Role.USER.toString(), "employee1"))
                 .date(LocalDateTime.now())
                 .operationType(OperationType.UPLOAD)
                 .build();

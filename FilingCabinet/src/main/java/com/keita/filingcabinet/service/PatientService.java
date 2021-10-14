@@ -4,8 +4,8 @@ import com.keita.filingcabinet.mapping.PatientMapper;
 import com.keita.filingcabinet.model.dto.PatientCreation;
 import com.keita.filingcabinet.model.dto.PatientFolder;
 import com.keita.filingcabinet.model.entity.Patient;
-import com.keita.filingcabinet.model.enums.Role;
 import com.keita.filingcabinet.repository.PatientRepository;
+import com.keita.filingcabinet.security.OwnershipService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -30,8 +30,7 @@ public class PatientService {
     public Map<String, Integer> createPatient(PatientCreation patientCreation) {
         Patient patient = PatientMapper.toEntity(patientCreation);
 
-        //TODO --> add Map<String,String> registerBy to know created this patient
-        patient.setRegisterBy(Collections.singletonMap("employee1", Role.USER.toString()));
+        patient.setRegisterBy(OwnershipService.getCurrentUserDetails());
 
         String id = patientRepository.save(patient).getId();
         AtomicInteger counter = new AtomicInteger(0);

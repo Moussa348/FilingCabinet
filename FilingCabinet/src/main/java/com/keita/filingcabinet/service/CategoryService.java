@@ -2,14 +2,12 @@ package com.keita.filingcabinet.service;
 
 import com.keita.filingcabinet.exception.CategoryNotFoundException;
 import com.keita.filingcabinet.model.entity.Category;
-import com.keita.filingcabinet.model.enums.Role;
 import com.keita.filingcabinet.repository.CategoryRepository;
-import com.keita.filingcabinet.validator.category.CategoryExistConstraint;
+import com.keita.filingcabinet.security.OwnershipService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -20,11 +18,10 @@ public class CategoryService {
     private CategoryRepository categoryRepository;
 
     public String createCategory(String name) {
-        //TODO --> add the email of user connected
         //TODO --> add FolderService.createFolder for loop in PatientService.getListPatientId
         return categoryRepository.existsByName(name) ? "" : categoryRepository.save(Category.builder()
                 .name(name)
-                .createdBy(Collections.singletonMap("employee1", Role.SUDO.toString()))
+                .createdBy(OwnershipService.getCurrentUserDetails())
                 .creationDate(LocalDateTime.now())
                 .isActive(true)
                 .build()
@@ -45,8 +42,7 @@ public class CategoryService {
 
         category.setIsActive(false);
 
-        //TODO -> get from securityContextHolder
-        category.setDeactivatedBy(Collections.singletonMap("employee1", Role.SUDO.toString()));
+        category.setDeactivatedBy(OwnershipService.getCurrentUserDetails());
 
         category.setDeactivationDate(LocalDateTime.now());
 
@@ -62,5 +58,4 @@ public class CategoryService {
         return categoryRepository.save(category).getId();
     }
 
-    //TODO --> when disable add name of the user that disble it and date
 }

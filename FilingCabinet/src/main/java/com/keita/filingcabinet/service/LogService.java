@@ -2,13 +2,12 @@ package com.keita.filingcabinet.service;
 
 import com.keita.filingcabinet.model.entity.Log;
 import com.keita.filingcabinet.model.enums.OperationType;
-import com.keita.filingcabinet.model.enums.Role;
 import com.keita.filingcabinet.repository.LogRepository;
+import com.keita.filingcabinet.security.OwnershipService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.Collections;
 
 @Service
 public class LogService {
@@ -20,7 +19,7 @@ public class LogService {
         logRepository.save(
                 Log.builder()
                         .fileId(fileId)
-                        .by(Collections.singletonMap("", Role.USER))//TODO --> getLoggedUser
+                        .by(OwnershipService.getCurrentUserDetails())
                         .date(LocalDateTime.now())
                         .operationType(operationType)
                         .build());
