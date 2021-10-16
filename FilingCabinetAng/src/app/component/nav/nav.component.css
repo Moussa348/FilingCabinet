@@ -1,0 +1,36 @@
+.sidenav-container {
+    height: 100%;
+  }
+  
+  .sidenav {
+    width: 200px;
+  }
+  
+  .sidenav .mat-toolbar {
+    background: inherit;
+  }
+  
+  .mat-toolbar.mat-primary {
+    position: sticky;
+    top: 0;
+    z-index: 1;
+  }
+  
+  a:hover{
+    opacity: 0.5;
+  }
+  
+  i:hover{
+    opacity: 0.5;
+  }
+  .dropdown-menu {
+    width: 350px !important;
+    height: auto;
+    max-height: 300px !important;
+  }
+  
+  ::ng-deep .dropdown-menu{
+    margin: 0px !important;
+    padding: 0px !important;
+  }
+  
