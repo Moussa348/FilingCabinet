@@ -1,7 +1,9 @@
+
 spring:
   data:
     mongodb:
       host: localhost
       port: 27017
-      database: FilingCabinet
-
+      database: FilingCabinetDev
+server:
+  port: 4444

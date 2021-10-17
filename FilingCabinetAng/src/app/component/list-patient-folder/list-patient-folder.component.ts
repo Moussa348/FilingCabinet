@@ -1,14 +1,19 @@
 import { Component, OnInit } from '@angular/core';
 import { PatientFolder } from 'src/app/model/patient-folder';
 import { PatientService } from 'src/app/service/patient.service';
-import {NestedTreeControl} from '@angular/cdk/tree';
-import {MatTreeNestedDataSource} from '@angular/material/tree';
+import {FlatTreeControl, NestedTreeControl} from '@angular/cdk/tree';
+import {MatTreeFlatDataSource, MatTreeFlattener, MatTreeNestedDataSource} from '@angular/material/tree';
 
 /**
  * Food data with nested structure.
  * Each node has a name and an optional list of children.
  */
  interface FoodNode {
+  name: string;
+  children?: FoodNode[];
+}
+
+interface FoodNode {
   name: string;
   children?: FoodNode[];
 }
@@ -21,29 +26,71 @@ const TREE_DATA: FoodNode[] = [
       {name: 'Banana'},
       {name: 'Fruit loops'},
     ]
-  }
+  }, {
+    name: 'Vegetables',
+    children: [
+      {
+        name: 'Green',
+        children: [
+          {name: 'Broccoli'},
+          {name: 'Brussels sprouts'},
+        ]
+      }, {
+        name: 'Orange',
+        children: [
+          {name: 'Pumpkins'},
+          {name: 'Carrots'},
+        ]
+      },
+    ]
+  },
 ];
+
+/** Flat node with expandable and level information */
+interface ExampleFlatNode {
+  expandable: boolean;
+  name: string;
+  level: number;
+}
 @Component({
   selector: 'app-list-patient-folder',
   templateUrl: './list-patient-folder.component.html',
   styleUrls: ['./list-patient-folder.component.css']
 })
 export class ListPatientFolderComponent implements OnInit {
-  treeControl = new NestedTreeControl<FoodNode>(node => node.children);
-  dataSource = new MatTreeNestedDataSource<FoodNode>();
+
+  private _transformer = (node: FoodNode, level: number) => {
+    return {
+      expandable: !!node.children && node.children.length > 0,
+      name: node.name,
+      level: level,
+    };
+  }
 
   listPatientFolder: PatientFolder[] = new Array();
 
-  constructor(private patientService: PatientService) {
-    this.dataSource.data = TREE_DATA;
-  }
+  treeControl = new FlatTreeControl<ExampleFlatNode>(
+    node => node.level, node => node.expandable);
 
+treeFlattener = new MatTreeFlattener(
+    this._transformer, node => node.level, node => node.expandable, node => node.children);
+
+dataSource = new MatTreeFlatDataSource(this.treeControl, this.treeFlattener);
+
+constructor(
+  private patientService:PatientService
+) {
+  this.dataSource.data = TREE_DATA;
+}
+
+hasChild = (_: number, node: ExampleFlatNode) => node.expandable;
+  
   ngOnInit(): void {
     this.getListPatientFolder();
   }
 
-  hasChild = (_: number, node: FoodNode) => !!node.children && node.children.length > 0;
-
+  
+  
   getListPatientFolder() {
     this.patientService.getListPatientFolder().subscribe(
       (data) => {

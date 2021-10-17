@@ -8,7 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @Service
@@ -27,10 +29,16 @@ public class FolderService {
         ).getId();
     }
 
-    public List<FolderDetail> getListFolderDetailByPatientId(String patientId){
-        return folderRepository.findAllByPatientId(patientId).stream()
-                .map(FolderMapper::toFolderDetail)
-                .collect(Collectors.toList());
+    public List<Folder> getListFolderByPatientId(String patientId) {
+        return folderRepository.findAllByPatientId(patientId);
+    }
+
+    public Map<String, String> getMapFolderByPatientId(String patientId) {
+        Map<String, String> mapFolders = new HashMap<>();
+
+        getListFolderByPatientId(patientId).forEach(folder -> mapFolders.put(folder.getId(), folder.getCategoryName()));
+
+        return mapFolders;
     }
 
 }

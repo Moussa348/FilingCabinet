@@ -9,4 +9,5 @@ import java.util.List;
 @Repository
 public interface FolderRepository extends MongoRepository<Folder,String> {
     List<Folder> findAllByPatientId(String patientId);
+
 }

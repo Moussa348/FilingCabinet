@@ -3,6 +3,7 @@ package com.keita.filingcabinet;
 import com.keita.filingcabinet.model.entity.Category;
 import com.keita.filingcabinet.model.entity.File;
 import com.keita.filingcabinet.model.entity.Folder;
+import com.keita.filingcabinet.model.entity.Patient;
 import com.keita.filingcabinet.model.enums.Role;
 import com.keita.filingcabinet.repository.CategoryRepository;
 import com.keita.filingcabinet.repository.FolderRepository;
@@ -78,14 +79,14 @@ public class DbInit implements CommandLineRunner {
         File file1 = File.builder()
                 .folderId("61621ca50545544ead443f75")
                 .description("none")
-                .uploadBy(Collections.singletonMap("employee1", Role.USER.toString()))
+                .uploadBy(Collections.singletonMap(Role.USER.toString(), "employee1"))
                 .isActive(true)
                 .build();
 
         File file2 = File.builder()
-                .folderId("6167b3c779915b34a681f791")
+                .folderId("61621ca50545544ead443f75")
                 .description("none")
-                .uploadBy(Collections.singletonMap("employee1", Role.USER.toString()))
+                .uploadBy(Collections.singletonMap(Role.USER.toString(), "employee1"))
                 .isActive(false)
                 .build();
 

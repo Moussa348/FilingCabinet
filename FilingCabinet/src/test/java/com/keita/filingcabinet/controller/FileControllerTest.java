@@ -16,6 +16,7 @@ import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.security.test.context.support.WithAnonymousUser;
 import org.springframework.security.test.context.support.WithMockUser;
+import org.springframework.security.test.context.support.WithSecurityContext;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
@@ -31,7 +32,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @SpringBootTest
 @AutoConfigureMockMvc
-@ActiveProfiles("test")
+@ActiveProfiles("dev")
 @AutoConfigureDataMongo
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class FileControllerTest {
@@ -56,15 +57,11 @@ public class FileControllerTest {
     void shouldUpload() throws Exception {
         //ARRANGE
         FileCreation fileCreation = FileMockData.getFileCreation(FileMockData.getMockMultipartFile());
-        MultiValueMap<String, String> parameters = new LinkedMultiValueMap<>();
-
-        parameters.put("employee1", Collections.singletonList(fileCreation.getUploadBy().get("employee1")));
 
         //ACT
         MvcResult mvcResult1 = mockMvc.perform(MockMvcRequestBuilders.multipart("/file/upload").file(FileMockData.getMockMultipartFile())
                 .param("folderId", fileCreation.getFolderId())
                 .param("description", fileCreation.getDescription())
-                .params(parameters)
                 .flashAttr("fileCreation", fileCreation)
                 .contentType(MediaType.MULTIPART_FORM_DATA)
                 .accept(MediaType.APPLICATION_JSON))
@@ -80,8 +77,6 @@ public class FileControllerTest {
         //ARRANGE
         FileCreation fileCreation = FileMockData.getFileCreation(FileMockData.getMockMultipartFile());
         MultiValueMap<String, String> parameters = new LinkedMultiValueMap<>();
-
-        parameters.put("employee1", Collections.singletonList(fileCreation.getUploadBy().get("employee1")));
 
         //ACT
         MvcResult mvcResult1 = mockMvc.perform(MockMvcRequestBuilders.multipart("/file/upload").file(FileMockData.getMockMultipartFile())
@@ -156,7 +151,7 @@ public class FileControllerTest {
     }
 
     @Test
-    @WithMockUser(authorities = {"SUDO"})
+    @WithMockUser(username = "incognito", authorities = {"SUDO"})
     void shouldEnable() throws Exception {
         //ARRANGE
         String id = "61624fd9f3650a5146adb4fc";

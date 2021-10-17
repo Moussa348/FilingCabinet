@@ -3,7 +3,10 @@ spring:
     mongodb:
       host: localhost
       port: 27017
-      database: FilingCabinetTest
+      database: FilingCabinetProd
+
+server:
+  port: 4445
 
 
 

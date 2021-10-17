@@ -19,7 +19,7 @@ public class FolderExistValidator implements ConstraintValidator<FolderExistCons
     @Override
     @SneakyThrows
     public boolean isValid(@Valid String id, ConstraintValidatorContext constraintValidatorContext) {
-        if(folderRepository.existsById(id))
+        if(id != null && !id.isBlank() && folderRepository.existsById(id))
             return true;
         throw new FolderNotFoundException("NO FOLDER FOUND WITH THIS ID");
     }

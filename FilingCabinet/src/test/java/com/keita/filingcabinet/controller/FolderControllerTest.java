@@ -23,7 +23,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @SpringBootTest
 @AutoConfigureMockMvc
-@ActiveProfiles("test")
+@ActiveProfiles("dev")
 @AutoConfigureDataMongo
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class FolderControllerTest {

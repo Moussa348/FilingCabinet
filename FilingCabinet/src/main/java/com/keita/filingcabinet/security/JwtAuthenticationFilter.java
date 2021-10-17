@@ -1,6 +1,7 @@
 package com.keita.filingcabinet.security;
 
 import com.auth0.jwt.interfaces.DecodedJWT;
+import com.keita.filingcabinet.meta.ExcludeFromGeneratedCoverage;
 import lombok.extern.java.Log;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -15,6 +16,7 @@ import java.io.IOException;
 
 @Log
 @Component
+@ExcludeFromGeneratedCoverage
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     @Autowired

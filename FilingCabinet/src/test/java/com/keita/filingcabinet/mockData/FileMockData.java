@@ -27,7 +27,6 @@ public abstract class FileMockData {
         return FileCreation.builder()
                 .folderId("61621ca50545544ead443f75")
                 .description("test")
-                .uploadBy(Collections.singletonMap("employee1", Role.USER.toString()))
                 .multipartFile(mockMultipartFile)
                 .build();
 

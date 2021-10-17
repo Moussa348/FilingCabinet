@@ -26,7 +26,6 @@ public class FileMapperTest {
         //ASSERT
         assertEquals(fileCreation.getFolderId(), file.getFolderId());
         assertEquals(fileCreation.getDescription(), file.getDescription());
-        assertEquals(fileCreation.getUploadBy(), file.getUploadBy());
         assertTrue(file.getIsActive());
     }
 

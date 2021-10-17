@@ -11,6 +11,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.List;
+import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.BDDMockito.*;
@@ -40,17 +41,31 @@ public class FolderServiceTest {
 
 
     @Test
-    void shouldGetListFolderDetailByPatientId(){
+    void shouldGetListFolderByPatientId(){
         //ARRANGE
         String patientId = "61660d5c88c87f5d2835a4ff";
 
         when(folderRepository.findAllByPatientId(patientId)).thenReturn(FolderMockData.getListFolder());
 
         //ACT
-        List<FolderDetail> folderDetails = folderService.getListFolderDetailByPatientId(patientId);
+        List<Folder> folders = folderService.getListFolderByPatientId(patientId);
 
         //ASSERT
-        assertEquals(3,folderDetails.size());
+        assertEquals(3,folders.size());
+    }
+
+    @Test
+    void shouldGetMapFolderByPatientId(){
+        //ARRANGE
+        String patientId = "61660d5c88c87f5d2835a4ff";
+
+        when(folderRepository.findAllByPatientId(patientId)).thenReturn(FolderMockData.getListFolder());
+
+        //ACT
+        Map<String, String> mapFolders = folderService.getMapFolderByPatientId(patientId);
+
+        //ASSERT
+        assertEquals(3,mapFolders.size());
     }
 
 }

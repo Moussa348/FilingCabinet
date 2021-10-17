@@ -19,14 +19,11 @@ import java.util.Map;
 @AllArgsConstructor
 public class FileCreation implements Serializable {
 
-    @NotNull(message = "the folder id can't be null") @NotEmpty(message = "the folder id can't be empty") @NotBlank(message = "the folder id can't be blank") @FolderExistConstraint
+    @FolderExistConstraint
     private String folderId;
 
-    @NotNull(message = "the description can't be null") @NotEmpty(message = "the description can't be empty") @NotBlank(message = "the description can't be blank")
+    @NotBlank(message = "the description can't be blank")
     private String description;
-
-    @NotNull(message = "the name of upload can't be null") @NotEmpty(message = "the name of upload can't be empty")
-    private Map<String, String> uploadBy;
 
     @NotNull(message = "the multipartFile of upload can't be null")
     private MultipartFile multipartFile;

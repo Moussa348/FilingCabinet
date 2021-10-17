@@ -17,7 +17,6 @@ public abstract class FileMapper {
         return File.builder()
                 .folderId(fileCreation.getFolderId())
                 .description(fileCreation.getDescription())
-                .uploadBy(fileCreation.getUploadBy())
                 .isActive(true)
                 .build();
 
