@@ -26,23 +26,33 @@
   </div>
 </div>
 
-
 <div class="container-fluid">
-    <div class="row">
-        <div class="col-4">
-            <app-list-patient-folder></app-list-patient-folder>
-        </div>
-
-        <div class="col-8">
-
-        </div>
+  <div class="row">
+    <div class="col-1"></div>
+    <div class="col-3">
+      <app-list-patient-folder></app-list-patient-folder>
     </div>
+
+    <div class="col-8">
+      <div class="container-fluid">
+        <div class="flex-row d-flex justify-content-around">
+          <button 
+          class="btn btn-info rounded-pill shadow border text-light"
+          (click)="openUpload()"
+          >TÉLÉVERSER <i class="fas fa-file-upload"></i>
+        </button>
+          <app-download-file
+            [id]="'616bb7dce438652de6e4a04f'"
+            [fileName]="'cv1.txt'"
+          ></app-download-file>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
 
-
-
 <div class="flex-row">
-    <div class="p-5"></div>
-    <div class="p-5"></div>
-  </div>
-  <app-footer class="position-sticky"></app-footer>
+  <div class="p-5"></div>
+  <div class="p-5"></div>
+</div>
+<app-footer class="position-sticky"></app-footer>

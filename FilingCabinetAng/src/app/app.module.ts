@@ -12,6 +12,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { WelcomeComponent } from './component/welcome/welcome.component';
 import { Error404Component } from './component/error404/error404.component';
 import {MatGridListModule} from '@angular/material/grid-list';
+import {MatTreeModule} from '@angular/material/tree';
 import { AuthComponent } from './component/auth/auth.component';
 import { NavComponent } from './component/nav/nav.component';
 import { ListPatientFolderComponent } from './component/list-patient-folder/list-patient-folder.component';
@@ -19,6 +20,8 @@ import { FooterComponent } from './component/footer/footer.component';
 import { HomeComponent } from './component/home/home.component';
 import {MatDividerModule} from '@angular/material/divider';
 import { CatalogComponent } from './component/catalog/catalog.component';
+import { UploadFileComponent } from './component/upload-file/upload-file.component';
+import { DownloadFileComponent } from './component/download-file/download-file.component';
 
 @NgModule({
   declarations: [
@@ -30,7 +33,9 @@ import { CatalogComponent } from './component/catalog/catalog.component';
     ListPatientFolderComponent,
     FooterComponent,
     HomeComponent,
-    CatalogComponent
+    CatalogComponent,
+    UploadFileComponent,
+    DownloadFileComponent
   ],
   imports: [
     BrowserModule,
@@ -41,6 +46,7 @@ import { CatalogComponent } from './component/catalog/catalog.component';
     BrowserAnimationsModule,
     MatGridListModule,
     MatDividerModule,
+    MatTreeModule,
     JwtModule.forRoot({
       config:{
         tokenGetter: () => {

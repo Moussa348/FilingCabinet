@@ -6,6 +6,8 @@ import {
   transition,
   trigger,
 } from '@angular/animations';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { UploadFileComponent } from '../upload-file/upload-file.component';
 
 @Component({
   selector: 'app-catalog',
@@ -21,9 +23,20 @@ import {
 })
 export class CatalogComponent implements OnInit {
 
-  constructor() {}
+  constructor(
+    private modalService: NgbModal,
+  ) {}
 
   ngOnInit(): void {
+  }
+
+  openUpload(){
+    const modalRef = this.modalService.open(UploadFileComponent,{
+      centered:true,
+      scrollable:true
+    });
+
+    modalRef.componentInstance.folderId = "61621ca50545544ead443f75";
   }
 
 }
