@@ -3,7 +3,7 @@
     <mat-tree
       [dataSource]="dataSource"
       [treeControl]="treeControl"
-      class="border blur bg-transparent shadow-lg"
+      class="border rounded blur bg-dark shadow-lg m-2"
     >
       <!-- This is the tree node template for leaf nodes -->
       <mat-tree-node
@@ -12,7 +12,17 @@
         class="text-light"
       >
         <!-- use a disabled button to provide padding for tree leaf -->
-        <button mat-icon-button disabled></button>
+        <button
+          mat-icon-button
+          matTreeNodeToggle
+          class="
+            btn btn-light btn-sm
+            border border-dark
+            rounded-pill
+            shadow
+            m-3
+          "
+        ></button>
         {{ node.name }}
       </mat-tree-node>
       <!-- This is the tree node template for expandable nodes -->
@@ -24,7 +34,13 @@
         <button
           mat-icon-button
           matTreeNodeToggle
-          class="btn btn-light btn-sm border rounded-pill m-3"
+          class="
+            btn btn-light btn-sm
+            border border-dark
+            rounded-pill
+            shadow
+            m-3
+          "
         >
           <i
             class="fas {{
