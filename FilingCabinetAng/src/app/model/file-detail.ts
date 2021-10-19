@@ -1,4 +1,3 @@
-import { StringLiteralLike } from "typescript";
 
 export class FileDetail {
     id:string;

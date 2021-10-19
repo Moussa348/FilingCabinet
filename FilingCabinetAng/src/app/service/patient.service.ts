@@ -1,5 +1,6 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { PagingRequest } from '../model/paging-request';
 import { PatientFolder } from '../model/patient-folder';
 
 @Injectable({
@@ -10,8 +11,11 @@ export class PatientService {
 
   constructor(private http: HttpClient) { }
 
-  getListPatientFolder(){
-    return this.http.get<PatientFolder[]>(this.url + '/getListPatientFolder');
+  getListPatientFolder(pagingRequest : PagingRequest){
+    const params = new HttpParams()
+    .set('noPage',pagingRequest.noPage.toString())
+    .set('size',pagingRequest.size.toString())
+    return this.http.get<PatientFolder[]>(this.url + '/getListPatientFolder',{params:params});
   }
 
 }

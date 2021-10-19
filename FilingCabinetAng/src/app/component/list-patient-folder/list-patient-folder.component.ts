@@ -7,15 +7,12 @@ import {
   MatTreeFlattener,
   MatTreeNestedDataSource,
 } from '@angular/material/tree';
+import { PagingRequest } from 'src/app/model/paging-request';
 
 /**
  * Food data with nested structure.
  * Each node has a name and an optional list of children.
  */
-interface FoodNode {
-  name: string;
-  children?: FoodNode[];
-}
 
 interface FoodNode {
   name: string;
@@ -45,7 +42,10 @@ interface ExampleFlatNode {
   styleUrls: ['./list-patient-folder.component.css'],
 })
 export class ListPatientFolderComponent implements OnInit {
-  
+  pagingRequest: PagingRequest = new PagingRequest();
+
+  TREE_DATA2: PatientFolder[];
+  /*
   private _transformer = (node: FoodNode, level: number) => {
     return {
       expandable: !!node.children && node.children.length > 0,
@@ -53,38 +53,62 @@ export class ListPatientFolderComponent implements OnInit {
       level: level,
     };
   };
+  */
+
+  private _transformer = (node: any, level: number) => {
+    console.log(node);
+    return {
+      expandable: true,
+      name: node.patientName ? node.patientName : node,
+      level: level
+    };
+  };
 
   listPatientFolder: PatientFolder[] = new Array();
 
-  treeControl = new FlatTreeControl<ExampleFlatNode>(
-    (node) => node.level,
-    (node) => node.expandable
-  );
+  treeControl;
 
-  treeFlattener = new MatTreeFlattener(
-    this._transformer,
-    (node) => node.level,
-    (node) => node.expandable,
-    (node) => node.children
-  );
+  treeFlattener;
 
-  dataSource = new MatTreeFlatDataSource(this.treeControl, this.treeFlattener);
+  dataSource ;
 
   constructor(private patientService: PatientService) {
-    this.dataSource.data = TREE_DATA;
+    //this.dataSource.data = TREE_DATA;
   }
 
   hasChild = (_: number, node: ExampleFlatNode) => node.expandable;
 
   ngOnInit(): void {
-    this.getListPatientFolder();
+    this.getListPatientFolder(0,10);
   }
 
-  getListPatientFolder() {
-    this.patientService.getListPatientFolder().subscribe(
+  setPagingRequest(noPage: number, size: number) {
+    this.pagingRequest.noPage = noPage;
+    this.pagingRequest.size = size;
+  }
+
+  getListPatientFolder(noPage: number, size: number) {
+    this.setPagingRequest(noPage, size);
+    this.patientService.getListPatientFolder(this.pagingRequest).subscribe(
       (data) => {
-        this.listPatientFolder = data;
+        this.listPatientFolder.push.apply(this.listPatientFolder,data);
         console.log(this.listPatientFolder);
+        
+        this.treeControl = new FlatTreeControl<ExampleFlatNode>(
+          (node) => node.level,
+          (node) => node.expandable
+        );
+
+        this.treeFlattener = new MatTreeFlattener(
+          this._transformer,
+          (node) => node.level,
+          (node) => node.expandable,
+          (node) => node.mapFolders ? Object.keys(node.mapFolders):null
+        );
+        this.dataSource = new MatTreeFlatDataSource(this.treeControl, this.treeFlattener);
+
+        this.dataSource.data = this.listPatientFolder;
+        console.log(Object.keys(this.listPatientFolder[0].mapFolders));
       },
       (err) => {
         console.log(err);

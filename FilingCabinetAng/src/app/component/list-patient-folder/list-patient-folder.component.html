@@ -3,47 +3,30 @@
     <mat-tree
       [dataSource]="dataSource"
       [treeControl]="treeControl"
-      class="border rounded blur bg-dark shadow-lg m-2"
+      class="border rounded blur bg-dark shadow-lg"
     >
       <!-- This is the tree node template for leaf nodes -->
-      <mat-tree-node
-        *matTreeNodeDef="let node"
-        matTreeNodePadding
-        class="text-light"
-      >
-        <!-- use a disabled button to provide padding for tree leaf -->
-        <button
-          mat-icon-button
-          matTreeNodeToggle
-          class="
-            btn btn-light btn-sm
-            border border-dark
-            rounded-pill
-            shadow
-            m-3
-          "
-        ></button>
-        {{ node.name }}
-      </mat-tree-node>
       <!-- This is the tree node template for expandable nodes -->
       <mat-tree-node
-        *matTreeNodeDef="let node; when: hasChild"
+        *matTreeNodeDef="let node;"
         matTreeNodePadding
-        class="text-light"
+        class="text-light m-2"
       >
         <button
           mat-icon-button
           matTreeNodeToggle
           class="
-            btn btn-light btn-sm
+            btn btn-secondary btn-sm
             border border-dark
             rounded-pill
             shadow
             m-3
           "
+
+          (click)="nodeEvent(node)"
         >
           <i
-            class="fas {{
+            class="fas fa-2x {{
               treeControl.isExpanded(node) ? 'fa-folder-open' : 'fa-folder'
             }} "
           ></i>

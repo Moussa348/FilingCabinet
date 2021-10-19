@@ -22,6 +22,8 @@ import {MatDividerModule} from '@angular/material/divider';
 import { CatalogComponent } from './component/catalog/catalog.component';
 import { UploadFileComponent } from './component/upload-file/upload-file.component';
 import { DownloadFileComponent } from './component/download-file/download-file.component';
+import { ShowFileDetailComponent } from './component/show-file-detail/show-file-detail.component';
+import { ShowPatientFolderComponent } from './component/show-patient-folder/show-patient-folder.component';
 
 @NgModule({
   declarations: [
@@ -35,7 +37,9 @@ import { DownloadFileComponent } from './component/download-file/download-file.c
     HomeComponent,
     CatalogComponent,
     UploadFileComponent,
-    DownloadFileComponent
+    DownloadFileComponent,
+    ShowFileDetailComponent,
+    ShowPatientFolderComponent
   ],
   imports: [
     BrowserModule,
