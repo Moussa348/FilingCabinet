@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { PatientFolder } from 'src/app/model/patient-folder';
 import { PatientService } from 'src/app/service/patient.service';
 import { FlatTreeControl, NestedTreeControl } from '@angular/cdk/tree';
@@ -22,16 +22,25 @@ interface FoodNode {
 const TREE_DATA: FoodNode[] = [
   {
     name: 'Fofana Conde',
-    children: [{ name: 'EVALUATION' }, { name: 'PRISE DE SANG' }, { name: 'CHIRURGIE' }],
+    children: [
+      { name: 'EVALUATION' },
+      { name: 'PRISE DE SANG' },
+      { name: 'CHIRURGIE' },
+    ],
   },
   {
     name: 'Mamady Blaise',
-    children: [{ name: 'EVALUATION' }, { name: 'PRISE DE SANG' }, { name: 'CHIRURGIE' }],
+    children: [
+      { name: 'EVALUATION' },
+      { name: 'PRISE DE SANG' },
+      { name: 'CHIRURGIE' },
+    ],
   },
 ];
 
 /** Flat node with expandable and level information */
-interface ExampleFlatNode {
+interface FlatNode {
+  id: string;
   expandable: boolean;
   name: string;
   level: number;
@@ -43,24 +52,18 @@ interface ExampleFlatNode {
 })
 export class ListPatientFolderComponent implements OnInit {
   pagingRequest: PagingRequest = new PagingRequest();
+  currentPatientId;
+  @Output() folderId = new EventEmitter();
 
   TREE_DATA2: PatientFolder[];
-  /*
-  private _transformer = (node: FoodNode, level: number) => {
-    return {
-      expandable: !!node.children && node.children.length > 0,
-      name: node.name,
-      level: level,
-    };
-  };
-  */
 
   private _transformer = (node: any, level: number) => {
-    console.log(node);
+    this.currentPatientId = node.patientName ? node.patientId : '';
     return {
+      id: node.patientName ? node.patientId : '',
       expandable: true,
       name: node.patientName ? node.patientName : node,
-      level: level
+      level: level,
     };
   };
 
@@ -70,16 +73,16 @@ export class ListPatientFolderComponent implements OnInit {
 
   treeFlattener;
 
-  dataSource ;
+  dataSource;
 
   constructor(private patientService: PatientService) {
     //this.dataSource.data = TREE_DATA;
   }
 
-  hasChild = (_: number, node: ExampleFlatNode) => node.expandable;
+  hasChild = (_: number, node: FlatNode) => node.expandable;
 
   ngOnInit(): void {
-    this.getListPatientFolder(0,10);
+    this.getListPatientFolder(0, 10);
   }
 
   setPagingRequest(noPage: number, size: number) {
@@ -91,10 +94,9 @@ export class ListPatientFolderComponent implements OnInit {
     this.setPagingRequest(noPage, size);
     this.patientService.getListPatientFolder(this.pagingRequest).subscribe(
       (data) => {
-        this.listPatientFolder.push.apply(this.listPatientFolder,data);
-        console.log(this.listPatientFolder);
-        
-        this.treeControl = new FlatTreeControl<ExampleFlatNode>(
+        this.listPatientFolder.push.apply(this.listPatientFolder, data);
+
+        this.treeControl = new FlatTreeControl<FlatNode>(
           (node) => node.level,
           (node) => node.expandable
         );
@@ -103,12 +105,14 @@ export class ListPatientFolderComponent implements OnInit {
           this._transformer,
           (node) => node.level,
           (node) => node.expandable,
-          (node) => node.mapFolders ? Object.keys(node.mapFolders):null
+          (node) => (node.mapFolders ? Object.keys(node.mapFolders) : null)
         );
-        this.dataSource = new MatTreeFlatDataSource(this.treeControl, this.treeFlattener);
+        this.dataSource = new MatTreeFlatDataSource(
+          this.treeControl,
+          this.treeFlattener
+        );
 
         this.dataSource.data = this.listPatientFolder;
-        console.log(Object.keys(this.listPatientFolder[0].mapFolders));
       },
       (err) => {
         console.log(err);
@@ -116,7 +120,18 @@ export class ListPatientFolderComponent implements OnInit {
     );
   }
 
-  nodeEvent($event){
-    console.log($event)
+  nodeEvent($event) {
+    if ($event.id != '') {
+      this.currentPatientId = $event.id;
+      //console.log(this.currentPatientId);
+    }
+    const patientFolder = this.listPatientFolder.filter(
+      (patientFolder) => patientFolder.patientId == this.currentPatientId
+    );
+    const folderId = patientFolder[0].mapFolders[$event.name];
+
+    if (folderId != undefined) {
+      this.folderId.emit(folderId);
+    }
   }
 }

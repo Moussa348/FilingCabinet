@@ -8,6 +8,7 @@ import {
 } from '@angular/animations';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { UploadFileComponent } from '../upload-file/upload-file.component';
+import { getRole } from 'src/app/util/jwtUtil';
 
 @Component({
   selector: 'app-catalog',
@@ -23,6 +24,8 @@ import { UploadFileComponent } from '../upload-file/upload-file.component';
 })
 export class CatalogComponent implements OnInit {
 
+  folderId;
+  role = getRole();
   constructor(
     private modalService: NgbModal,
   ) {}
@@ -36,7 +39,12 @@ export class CatalogComponent implements OnInit {
       scrollable:true
     });
 
-    modalRef.componentInstance.folderId = "61621ca50545544ead443f75";
+    modalRef.componentInstance.folderId = "616fad76ef68983dc605f08b";
+  }
+
+  outputFolderId($event){
+    this.folderId = $event;
+    console.log($event);
   }
 
 }

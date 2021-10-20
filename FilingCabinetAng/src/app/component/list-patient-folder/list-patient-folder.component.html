@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container-fluid">
   <div class="row d-flex justify-content-center">
     <mat-tree
       [dataSource]="dataSource"
@@ -26,7 +26,7 @@
           (click)="nodeEvent(node)"
         >
           <i
-            class="fas fa-2x {{
+            class="fas p-1 fa-2x {{
               treeControl.isExpanded(node) ? 'fa-folder-open' : 'fa-folder'
             }} "
           ></i>
