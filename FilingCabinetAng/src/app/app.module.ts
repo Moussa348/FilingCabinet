@@ -20,10 +20,11 @@ import { FooterComponent } from './component/footer/footer.component';
 import { HomeComponent } from './component/home/home.component';
 import {MatDividerModule} from '@angular/material/divider';
 import { CatalogComponent } from './component/catalog/catalog.component';
-import { UploadFileComponent } from './component/upload-file/upload-file.component';
+import { UploadFileComponent } from './component/upload/upload-file/upload-file.component';
 import { DownloadFileComponent } from './component/download-file/download-file.component';
 import { ShowFileDetailComponent } from './component/show-file-detail/show-file-detail.component';
 import { ShowPatientFolderComponent } from './component/show-patient-folder/show-patient-folder.component';
+import { UploadStatusComponent } from './component/upload/upload-status/upload-status.component';
 
 @NgModule({
   declarations: [
@@ -39,7 +40,8 @@ import { ShowPatientFolderComponent } from './component/show-patient-folder/show
     UploadFileComponent,
     DownloadFileComponent,
     ShowFileDetailComponent,
-    ShowPatientFolderComponent
+    ShowPatientFolderComponent,
+    UploadStatusComponent
   ],
   imports: [
     BrowserModule,

@@ -13,7 +13,7 @@ import {
   transition,
   trigger,
 } from '@angular/animations';
-import { UploadFileComponent } from '../upload-file/upload-file.component';
+import { UploadFileComponent } from '../upload/upload-file/upload-file.component';
 
 @Component({
   selector: 'app-show-patient-folder',

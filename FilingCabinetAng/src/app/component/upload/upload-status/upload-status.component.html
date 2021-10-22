@@ -1,0 +1,49 @@
+<div
+  class="bg-dark border text-light container-fluid modal-dialog-scrollable"
+  style="overflow-x: auto; overflow-y: auto"
+>
+  <div class="modal-header">
+    <h4 class="modal-title text-center">
+      <u> Statut du téléversement <i class="fas fa-file-contract"></i> </u>
+    </h4>
+  </div>
+
+  <div class="modal-body">
+    <div
+      class="flex-row d-flex justify-content-center m-5"
+      *ngIf="state == 'done'"
+    >
+      <h1 class="lead text-nowrap text-justify">
+        {{ status }}
+        <i
+          class="fas {{ isGood ? 'fa-smile-wink' : 'fa-sad-tear' }} text-{{
+            isGood ? 'success' : 'danger'
+          }}"
+        ></i>
+      </h1>
+    </div>
+
+    <div
+      class="
+        flex-row
+        d-flex
+        justify-content-center
+        text-center text-justify text-light
+        m-5
+        text-wrap text-break text-justify
+      "
+      *ngIf="state == 'pending'"
+    >
+      <h1 class="text-capitalize">
+        Wait a moment...
+        <i class="fas fa-meh-rolling-eyes text-warning fa-2x"></i>
+      </h1>
+
+      <div class="d-flex justify-content-center">
+        <div class="spinner-border text-warning" role="status">
+          <span class="visually-hidden">Loading...</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

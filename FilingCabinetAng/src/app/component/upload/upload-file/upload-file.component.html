@@ -1,0 +1,48 @@
+<div
+  class="bg-dark border text-light container-fluid modal-dialog-scrollable"
+  style="overflow-x: auto; overflow-y: auto"
+>
+  <div class="modal-header">
+    <h4 class="modal-title text-center">
+      <u> Téléverser un fichier <i class="fas fa-file-contract"></i> </u>
+    </h4>
+
+    <button
+      type="button"
+      class="close"
+      aria-label="Close"
+      (click)="activeModal.dismiss('Cross click')"
+    >
+      <span aria-hidden="true"><i class="fas fa-times text-danger"></i></span>
+    </button>
+  </div>
+
+  <div class="modal-body">
+    <div class="card border bg-dark shadow rounded m-4">
+      <div class="row d-flex justify-content-center m-2">
+        <div class="form-group">
+          <label for="description">Description</label>
+          <textarea class="form-control" [formControl]="description" id="description" rows="3"></textarea>
+        </div>
+      </div>
+      <div class="flex-row m-4">
+        <input
+          class="form-control"
+          (change)="onFileChanged($event)"
+          type="file"
+          id="picture"
+        />
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-footer flex-row d-flex justify-content-center mt-4">
+      <div class="flex-row d-flex justify-content-center">
+        <button 
+        class="btn btn-info rounded-pill shadow border text-light"
+        (click)="upload()"
+        >TÉLÉVERSER <i class="fas fa-file-upload"></i>
+      </button>
+      </div>
+  </div>
+</div>

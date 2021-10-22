@@ -7,7 +7,7 @@ import {
   trigger,
 } from '@angular/animations';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { UploadFileComponent } from '../upload-file/upload-file.component';
+import { UploadFileComponent } from '../upload/upload-file/upload-file.component';
 import { getRole } from 'src/app/util/jwtUtil';
 
 @Component({

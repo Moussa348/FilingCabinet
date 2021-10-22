@@ -1,4 +1,4 @@
-<div class="container-fluid">
+<div class="container">
   <div class="row d-flex justify-content-center">
     <mat-tree
       [dataSource]="dataSource"
@@ -8,8 +8,9 @@
       <!-- This is the tree node template for leaf nodes -->
       <!-- This is the tree node template for expandable nodes -->
       <mat-tree-node
-        *matTreeNodeDef="let node;"
+        *matTreeNodeDef="let node"
         matTreeNodePadding
+        matTreeNodePaddingIndent="20"
         class="text-light m-2"
       >
         <button
@@ -22,13 +23,12 @@
             shadow
             m-3
           "
-
           (click)="nodeEvent(node)"
         >
           <i
-            class="fas p-1 fa-2x {{
+            class="fas p-1  {{
               treeControl.isExpanded(node) ? 'fa-folder-open' : 'fa-folder'
-            }} "
+            }} {{ node.level >= 1 ? 'text-dark' : null }} "
           ></i>
         </button>
         {{ node.name }}
