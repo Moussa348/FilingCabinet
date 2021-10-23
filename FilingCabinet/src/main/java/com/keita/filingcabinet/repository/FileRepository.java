@@ -6,5 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface FileRepository extends MongoRepository<File,String> {
-    boolean existsByFileName(String fileName);
+    boolean existsByFileNameAndFolderId(String fileName,String folderId);
 }

@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.Map;
 
 @Service
 public class LogService {
@@ -15,10 +16,10 @@ public class LogService {
     @Autowired
     private LogRepository logRepository;
 
-    public void add(String fileId, OperationType operationType) {
+    public void add(Map<String,String> onFile, OperationType operationType) {
         logRepository.save(
                 Log.builder()
-                        .fileId(fileId)
+                        .onFile(onFile)
                         .by(OwnershipService.getCurrentUserDetails())
                         .date(LocalDateTime.now())
                         .operationType(operationType)

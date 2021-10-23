@@ -58,7 +58,7 @@ public class FileServiceTest {
         when(gridFsTemplate.store(any(), any(), any(), any(File.class)))
                 .thenReturn(objectId);
 
-        doNothing().when(logService).add(anyString(), any(OperationType.class));
+        doNothing().when(logService).add(any(), any());
 
         //ACT
         String returnedId = fileService.upload(fileCreation);
@@ -83,7 +83,7 @@ public class FileServiceTest {
         GridFSFile gridFSFile = FileMockData.getGridFsFile();
         GridFsResource gridFsResource = new GridFsResource(gridFSFile, FileMockData.getMockMultipartFile().getInputStream());
 
-        doNothing().when(logService).add(anyString(), any(OperationType.class));
+        doNothing().when(logService).add(any(), any());
         when(gridFsTemplate.getResource(gridFSFile)).thenReturn(gridFsResource);
 
         //ACT
@@ -148,7 +148,7 @@ public class FileServiceTest {
         when((gridFsTemplate.getResource(gridFSFile))).thenReturn(gridFsResource);
 
         when(gridFsTemplate.store(byteArrayInputStream, gridFSFile.getFilename(), gridFSFile.getMetadata())).thenReturn(objectId);
-        doNothing().when(logService).add(objectId.toString(), OperationType.DISABLE);
+        doNothing().when(logService).add(any(), any());
         lenient().doNothing().when(gridFsTemplate).delete(new Query(Criteria.where("_id").is(objectId)));
 
         //ACT
@@ -182,7 +182,7 @@ public class FileServiceTest {
         when((gridFsTemplate.getResource(gridFSFile))).thenReturn(gridFsResource);
 
         when(gridFsTemplate.store(byteArrayInputStream, gridFSFile.getFilename(), gridFSFile.getMetadata())).thenReturn(objectId);
-        doNothing().when(logService).add(objectId.toString(), OperationType.ENABLE);
+        doNothing().when(logService).add(any(), any());
         lenient().doNothing().when(gridFsTemplate).delete(new Query(Criteria.where("_id").is(objectId)));
 
         //ACT
@@ -207,10 +207,12 @@ public class FileServiceTest {
     void shouldExistByFileName() {
         //ARRANGE
         String filename = "test.txt";
-        when(fileRepository.existsByFileName(filename)).thenReturn(true);
+        String folderId = "61621ca50545544ead443f75";
+
+        when(fileRepository.existsByFileNameAndFolderId(filename,folderId)).thenReturn(true);
 
         //ACT
-        boolean exist = fileService.existByFileName(filename);
+        boolean exist = fileService.existsByFileNameAndFolderId(filename,folderId);
 
         //ASSERT
         assertTrue(exist);
@@ -220,10 +222,12 @@ public class FileServiceTest {
     void shouldNotExistByFileName() {
         //ARRANGE
         String filename = "non_existent.txt";
-        when(fileRepository.existsByFileName(filename)).thenReturn(false);
+        String folderId = "61621ca50545544ead443f75";
+
+        when(fileRepository.existsByFileNameAndFolderId(filename,folderId)).thenReturn(false);
 
         //ACT
-        boolean exist = fileRepository.existsByFileName(filename);
+        boolean exist = fileRepository.existsByFileNameAndFolderId(filename,folderId);
 
         //ASSERT
         assertFalse(exist);

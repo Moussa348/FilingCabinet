@@ -184,13 +184,16 @@ public class FileControllerTest {
 
     @Test
     @WithMockUser(username = "incognito", authorities = {"USER"})
-    void shouldExistByFileName() throws Exception {
+    void shouldExistByFileNameAndFolderId() throws Exception {
         //ARRANGE
         String fileName = "cv.txt";
+        String folderId = "61621ca50545544ead443f75";
 
         //ACT
-        MvcResult mvcResult1 = mockMvc.perform(MockMvcRequestBuilders.get("/file/existByFileName/" + fileName)
+        MvcResult mvcResult1 = mockMvc.perform(MockMvcRequestBuilders.get("/file/existsByFileNameAndFolderId/")
                 .contentType(MediaType.APPLICATION_JSON)
+                .param("fileName",fileName)
+                .param("folderId",folderId)
                 .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk()).andReturn();
 
@@ -200,13 +203,16 @@ public class FileControllerTest {
 
     @Test
     @WithAnonymousUser
-    void shouldNotExistByFileName() throws Exception {
+    void shouldNotExistByFileNameAndFolderId() throws Exception {
         //ARRANGE
         String fileName = "cv.txt";
+        String folderId = "61621ca50545544ead443f75";
 
         //ACT
-        MvcResult mvcResult1 = mockMvc.perform(MockMvcRequestBuilders.get("/file/existByFileName/" + fileName)
+        MvcResult mvcResult1 = mockMvc.perform(MockMvcRequestBuilders.get("/file/existsByFileNameAndFolderId/")
                 .contentType(MediaType.APPLICATION_JSON)
+                .param("fileName",fileName)
+                .param("folderId",folderId)
                 .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isUnauthorized()).andReturn();
 

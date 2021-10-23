@@ -22,7 +22,7 @@ public class Log implements Serializable {
 
     @Id
     private String id;
-    private String fileId;
+    private Map<String,String> onFile;
     private OperationType operationType;
     private LocalDateTime date;
     private Map<String,String> by;

@@ -54,10 +54,10 @@ public class FileController {
         return fileService.enable(id);
     }
 
-    @GetMapping("/existByFileName/{fileName}")
+    @GetMapping("/existsByFileNameAndFolderId/")
     @PreAuthorize("hasAnyAuthority('USER','SUDO')")
-    public Boolean existByFileName(@PathVariable String fileName) {
-        return fileService.existByFileName(fileName);
+    public Boolean existsByFileNameAndFolderId(@RequestParam("fileName") String fileName, @RequestParam("folderId") String folderId) {
+        return fileService.existsByFileNameAndFolderId(fileName,folderId);
     }
 
 }

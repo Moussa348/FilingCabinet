@@ -25,6 +25,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
@@ -51,7 +52,7 @@ public class FileService {
 
             String id = gridFsTemplate.store(multipartFile.getInputStream(), multipartFile.getOriginalFilename(), multipartFile.getContentType(), file).toString();
 
-            logService.add(id, OperationType.UPLOAD);
+            logService.add(Collections.singletonMap(id,file.getFileName()), OperationType.UPLOAD);
 
             return id;
         }
@@ -60,7 +61,7 @@ public class FileService {
     }
 
     public ByteArrayResource download(GridFSFile gridFSFile) throws IOException {
-        logService.add(gridFSFile.getObjectId().toString(), OperationType.DOWNLOAD);
+        logService.add(Collections.singletonMap(gridFSFile.getObjectId().toString(),gridFSFile.getFilename()), OperationType.DOWNLOAD);
 
         return new ByteArrayResource(IOUtils.toByteArray(getInputStreamFromResource(gridFSFile)));
     }
@@ -89,7 +90,7 @@ public class FileService {
 
         String newId = gridFsTemplate.store(getInputStreamFromResource(gridFSFile), gridFSFile.getFilename(), gridFSFile.getMetadata()).toString();
 
-        logService.add(newId, OperationType.DISABLE);
+        logService.add(Collections.singletonMap(newId,gridFSFile.getFilename()), OperationType.DISABLE);
 
         gridFsTemplate.delete(new Query(Criteria.where("_id").is(gridFSFile.getObjectId())));
 
@@ -104,15 +105,15 @@ public class FileService {
 
         String newId = gridFsTemplate.store(getInputStreamFromResource(gridFSFile), gridFSFile.getFilename(), gridFSFile.getMetadata()).toString();
 
-        logService.add(newId, OperationType.ENABLE);
+        logService.add(Collections.singletonMap(newId,gridFSFile.getFilename()), OperationType.ENABLE);
 
         gridFsTemplate.delete(new Query(Criteria.where("_id").is(gridFSFile.getObjectId())));
 
         return newId;
     }
 
-    public Boolean existByFileName(String filename){
-        return fileRepository.existsByFileName(filename);
+    public Boolean existsByFileNameAndFolderId(String filename,String folderId){
+        return fileRepository.existsByFileNameAndFolderId(filename,folderId);
     }
 
     private InputStream getInputStreamFromResource(GridFSFile gridFSFile) throws IOException {

@@ -28,9 +28,10 @@ public class FileRepositoryTest {
     void shouldExistByFileName() {
         //ARRANGE
         String filename = "test.txt";
+        String folderId = "61621ca50545544ead443f75";
 
         //ACT
-        boolean exist = fileRepository.existsByFileName(filename);
+        boolean exist = fileRepository.existsByFileNameAndFolderId(filename,folderId);
 
         //ASSERT
         assertTrue(exist);
@@ -40,9 +41,10 @@ public class FileRepositoryTest {
     void shouldNotExistByFileName() {
         //ARRANGE
         String filename = "non_existent.txt";
+        String folderId = "61621ca50545544ead443f75";
 
         //ACT
-        boolean exist = fileRepository.existsByFileName(filename);
+        boolean exist = fileRepository.existsByFileNameAndFolderId(filename,folderId);
 
         //ASSERT
         assertFalse(exist);
