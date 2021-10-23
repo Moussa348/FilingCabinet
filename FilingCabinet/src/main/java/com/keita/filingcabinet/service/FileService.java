@@ -52,7 +52,7 @@ public class FileService {
 
             String id = gridFsTemplate.store(multipartFile.getInputStream(), multipartFile.getOriginalFilename(), multipartFile.getContentType(), file).toString();
 
-            logService.add(Collections.singletonMap(id,file.getFileName()), OperationType.UPLOAD);
+            logService.add(Collections.singletonMap(id,multipartFile.getOriginalFilename()), OperationType.UPLOAD);
 
             return id;
         }

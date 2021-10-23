@@ -7,4 +7,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface FileRepository extends MongoRepository<File,String> {
     boolean existsByFileNameAndFolderId(String fileName,String folderId);
+    int countAllByFolderId(String folderId);//TODO --> test
 }

@@ -26,6 +26,8 @@ import { ShowFileDetailComponent } from './component/show-file-detail/show-file-
 import { ShowPatientFolderComponent } from './component/show-patient-folder/show-patient-folder.component';
 import { UploadStatusComponent } from './component/upload/upload-status/upload-status.component';
 import { DatePipe } from '@angular/common';
+import {MatPaginatorModule} from '@angular/material/paginator';
+import { PaginationComponent } from './component/pagination/pagination.component';
 
 @NgModule({
   declarations: [
@@ -42,7 +44,8 @@ import { DatePipe } from '@angular/common';
     DownloadFileComponent,
     ShowFileDetailComponent,
     ShowPatientFolderComponent,
-    UploadStatusComponent
+    UploadStatusComponent,
+    PaginationComponent
   ],
   imports: [
     BrowserModule,
@@ -54,6 +57,7 @@ import { DatePipe } from '@angular/common';
     MatGridListModule,
     MatDividerModule,
     MatTreeModule,
+    MatPaginatorModule,
     JwtModule.forRoot({
       config:{
         tokenGetter: () => {
