@@ -35,7 +35,9 @@ export class UploadFileComponent implements OnInit {
   }
 
   onFileChanged($event) {
-    this.formData.append('multipartFile', $event.target.files[0]);
+    const file = $event.target.files[0];
+    console.log(file.name);
+    this.formData.append('multipartFile', file);
   }
 
   upload() {

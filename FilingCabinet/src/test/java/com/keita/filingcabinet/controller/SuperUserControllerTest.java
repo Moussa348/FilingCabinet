@@ -38,11 +38,11 @@ public class SuperUserControllerTest {
     @WithMockUser(authorities = {"SUDO"})
     void shouldGetListFileDetailSuperUserView() throws Exception {
         //ARRANGE
+        String folderId = "61621ca50545544ead443f75";
         PagingRequest pagingRequest = FileMockData.getPagingRequest();
 
         //ACT
-        MvcResult mvcResult1 = mockMvc.perform(MockMvcRequestBuilders.get("/superUser/getListFileDetailSuperUserView")
-                .param("folderId", pagingRequest.getFolderId())
+        MvcResult mvcResult1 = mockMvc.perform(MockMvcRequestBuilders.get("/superUser/getListFileDetailSuperUserView/" + folderId)
                 .param("noPage", pagingRequest.getNoPage().toString())
                 .param("size", pagingRequest.getSize().toString())
                 .flashAttr("pagingRequest", pagingRequest)
@@ -57,11 +57,11 @@ public class SuperUserControllerTest {
     @WithAnonymousUser
     void shouldNotGetListFileDetailSuperUserView() throws Exception {
         //ARRANGE
+        String folderId = "61621ca50545544ead443f75";
         PagingRequest pagingRequest = FileMockData.getPagingRequest();
 
         //ACT
-        MvcResult mvcResult1 = mockMvc.perform(MockMvcRequestBuilders.get("/superUser/getListFileDetailSuperUserView")
-                .param("folderId", pagingRequest.getFolderId())
+        MvcResult mvcResult1 = mockMvc.perform(MockMvcRequestBuilders.get("/superUser/getListFileDetailSuperUserView/" + folderId)
                 .param("noPage", pagingRequest.getNoPage().toString())
                 .param("size", pagingRequest.getSize().toString())
                 .flashAttr("pagingRequest", pagingRequest)

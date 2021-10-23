@@ -1,18 +1,27 @@
-<div class="row d-flex justify-content-center">
-  <div *ngFor="let file of files; let i = index">
-    <app-show-file-detail
-      @fade
-      [file]="file"
-      style="padding-bottom: 10px"
-    ></app-show-file-detail>
+<div class="container">
+  <div class="row d-flex justify-content-center">
+    <div *ngFor="let file of files; let i = index">
+      <app-show-file-detail
+        @fade
+        [file]="file"
+        style="padding-bottom: 10px"
+      ></app-show-file-detail>
+    </div>
   </div>
-</div>
 
-<div class="flex-row d-flex justify-content-around m-5" *ngIf="folderId">
-  <button
-    class="btn btn-info rounded-pill shadow-lg border border-dark text-light p-3"
-    (click)="openUpload()"
-  >
-    TÉLÉVERSER <i class="fas fa-file-upload"></i>
-  </button>
+  <div class="flex-row d-flex justify-content-around m-5" *ngIf="folderId">
+    <button
+      class="
+        btn btn-info
+        rounded-pill
+        shadow-lg
+        border border-dark
+        text-light
+        p-3
+      "
+      (click)="openUpload()"
+    >
+      TÉLÉVERSER <i class="fas fa-file-upload"></i>
+    </button>
+  </div>
 </div>

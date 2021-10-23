@@ -3,11 +3,8 @@ package com.keita.filingcabinet;
 import com.keita.filingcabinet.model.entity.Category;
 import com.keita.filingcabinet.model.entity.File;
 import com.keita.filingcabinet.model.entity.Folder;
-import com.keita.filingcabinet.model.entity.Patient;
 import com.keita.filingcabinet.model.enums.Role;
-import com.keita.filingcabinet.repository.CategoryRepository;
-import com.keita.filingcabinet.repository.FolderRepository;
-import com.keita.filingcabinet.repository.LogRepository;
+import com.keita.filingcabinet.repository.*;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.core.annotation.Order;
 import org.springframework.core.io.ResourceLoader;
@@ -32,6 +29,8 @@ public class DbInit implements CommandLineRunner {
 
     private final LogRepository logRepository;
 
+    private final FileRepository fileRepository;
+
     private final CategoryRepository categoryRepository;
 
     private final GridFsTemplate gridFsTemplate;
@@ -42,12 +41,13 @@ public class DbInit implements CommandLineRunner {
 
     public DbInit(FolderRepository folderRepository,
                   LogRepository logRepository,
-                  CategoryRepository categoryRepository,
+                  FileRepository fileRepository, CategoryRepository categoryRepository,
                   GridFsTemplate gridFsTemplate,
                   ResourceLoader resourceLoader,
                   MongoTemplate mongoTemplate) {
         this.folderRepository = folderRepository;
         this.logRepository = logRepository;
+        this.fileRepository = fileRepository;
         this.categoryRepository = categoryRepository;
         this.gridFsTemplate = gridFsTemplate;
         this.resourceLoader = resourceLoader;
@@ -62,6 +62,7 @@ public class DbInit implements CommandLineRunner {
         mongoTemplate.dropCollection("fs.files");
         mongoTemplate.dropCollection("fs.chunks");
         mongoTemplate.dropCollection("users");
+        mongoTemplate.dropCollection("patients");
     }
 
     private void insertFolders() {

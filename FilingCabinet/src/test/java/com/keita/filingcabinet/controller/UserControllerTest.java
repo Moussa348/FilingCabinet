@@ -38,11 +38,11 @@ public class UserControllerTest {
     @WithMockUser(authorities = {"USER"})
     void shouldGetListFileDetailUserView() throws Exception {
         //ARRANGE
+        String folderId = "61621ca50545544ead443f75";
         PagingRequest pagingRequest = FileMockData.getPagingRequest();
 
         //ACT
-        MvcResult mvcResult1 = mockMvc.perform(MockMvcRequestBuilders.get("/user/getListFileDetailUserView")
-                .param("folderId", pagingRequest.getFolderId())
+        MvcResult mvcResult1 = mockMvc.perform(MockMvcRequestBuilders.get("/user/getListFileDetailUserView/"+folderId)
                 .param("noPage", pagingRequest.getNoPage().toString())
                 .param("size", pagingRequest.getSize().toString())
                 .flashAttr("pagingRequest", pagingRequest)
@@ -57,11 +57,11 @@ public class UserControllerTest {
     @WithAnonymousUser
     void shouldNotGetListFileDetailUserView() throws Exception {
         //ARRANGE
+        String folderId = "61621ca50545544ead443f75";
         PagingRequest pagingRequest = FileMockData.getPagingRequest();
 
         //ACT
-        MvcResult mvcResult1 = mockMvc.perform(MockMvcRequestBuilders.get("/user/getListFileDetailUserView")
-                .param("folderId", pagingRequest.getFolderId())
+        MvcResult mvcResult1 = mockMvc.perform(MockMvcRequestBuilders.get("/user/getListFileDetailUserView/"+folderId)
                 .param("noPage", pagingRequest.getNoPage().toString())
                 .param("size", pagingRequest.getSize().toString())
                 .flashAttr("pagingRequest", pagingRequest)

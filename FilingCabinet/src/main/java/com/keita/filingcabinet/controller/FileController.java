@@ -5,6 +5,7 @@ import com.keita.filingcabinet.exception.FileNotFoundException;
 import com.keita.filingcabinet.model.dto.FileCreation;
 import com.keita.filingcabinet.service.FileService;
 import com.mongodb.client.gridfs.model.GridFSFile;
+import lombok.AllArgsConstructor;
 import lombok.extern.java.Log;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.http.HttpHeaders;
@@ -18,15 +19,11 @@ import java.io.IOException;
 
 @Log
 @RestController
+@AllArgsConstructor
 @RequestMapping("/file")
 public class FileController {
 
     private final FileService fileService;
-
-    public FileController(FileService fileService) {
-        this.fileService = fileService;
-    }
-
 
     @PostMapping("/upload")
     @PreAuthorize("hasAnyAuthority('USER','SUDO')")

@@ -6,6 +6,7 @@ import com.keita.filingcabinet.mapping.FileMapper;
 import com.keita.filingcabinet.model.dto.FileCreation;
 import com.keita.filingcabinet.model.entity.File;
 import com.keita.filingcabinet.model.enums.OperationType;
+import com.keita.filingcabinet.repository.FileRepository;
 import com.keita.filingcabinet.security.OwnershipService;
 import com.keita.filingcabinet.util.FileUtil;
 import com.mongodb.client.gridfs.model.GridFSFile;
@@ -33,6 +34,9 @@ public class FileService {
 
     @Autowired
     private GridFsTemplate gridFsTemplate;
+
+    @Autowired
+    private FileRepository fileRepository;
 
     @Autowired
     private LogService logService;
@@ -92,6 +96,7 @@ public class FileService {
         return newId;
     }
 
+
     public String enable(String id) throws FileNotFoundException, IOException {
         GridFSFile gridFSFile = getGridFsFile(id);
         Document metaData = gridFSFile.getMetadata();
@@ -106,6 +111,7 @@ public class FileService {
 
         return newId;
     }
+
 
     private InputStream getInputStreamFromResource(GridFSFile gridFSFile) throws IOException {
         return gridFsTemplate.getResource(gridFSFile).getInputStream();

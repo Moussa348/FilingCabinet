@@ -4,7 +4,9 @@ import com.keita.filingcabinet.model.entity.Folder;
 
 import java.time.LocalDateTime;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public abstract class FolderMockData {
 
@@ -38,6 +40,16 @@ public abstract class FolderMockData {
                         .creationDate(LocalDateTime.now())
                         .build()
         );
+    }
+
+    public static Map<String,String> getMapFolders(){
+        Map<String,String> mapFolders = new HashMap<>();
+
+        mapFolders.put("6165d321a68e3070e01c44cb","EVALUATION");
+        mapFolders.put("6165d3293def0ed1a068d2eb","EVALUATION");
+        mapFolders.put("6165d32f61047c7e904e8b2b","CHIRURGIE");
+
+        return mapFolders;
     }
 
 }

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { getEmail } from 'src/app/util/jwtUtil';
+import { getEmail, getRole } from 'src/app/util/jwtUtil';
 
 @Component({
   selector: 'app-nav',
@@ -8,6 +8,7 @@ import { getEmail } from 'src/app/util/jwtUtil';
 })
 export class NavComponent implements OnInit {
   email = getEmail();
+  role = getRole();
   public isMenuCollapsed = true;
 
   constructor() { }

@@ -25,16 +25,16 @@
           <div class="flex-row d-flex justify-content-start">
             <p>
               <u class="text-capitalize"> uploadDate :</u>
-              {{ file.uploadDate | date }} <i class="fas fa-clock"></i>
+              {{ file.uploadDate | date:'short' }} <i class="fas fa-clock"></i>
             </p>
           </div>
           <div
-            *ngIf="file.deactivationDate"
+            *ngIf="file.deactivationDate && role == 'SUDO' "
             class="flex-row d-flex justify-content-start"
           >
             <p>
               <u class="text-capitalize">deactivationDate :</u>
-              {{ file.deactivationDate | date }}
+              {{ file.deactivationDate | date:'short' }}
             </p>
           </div>
           <div class="row d-flex justify-content-start">

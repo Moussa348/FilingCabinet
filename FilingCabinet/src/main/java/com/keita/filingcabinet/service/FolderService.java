@@ -36,7 +36,7 @@ public class FolderService {
     public Map<String, String> getMapFolderByPatientId(String patientId) {
         Map<String, String> mapFolders = new HashMap<>();
 
-        getListFolderByPatientId(patientId).forEach(folder -> mapFolders.put(folder.getId(), folder.getCategoryName()));
+        getListFolderByPatientId(patientId).forEach(folder -> mapFolders.put(folder.getCategoryName(), folder.getId()));
 
         return mapFolders;
     }

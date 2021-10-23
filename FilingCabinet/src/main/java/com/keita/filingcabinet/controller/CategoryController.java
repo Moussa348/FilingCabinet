@@ -2,20 +2,18 @@ package com.keita.filingcabinet.controller;
 
 import com.keita.filingcabinet.exception.CategoryNotFoundException;
 import com.keita.filingcabinet.service.CategoryService;
+import lombok.AllArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
+@AllArgsConstructor
 @RequestMapping("/category")
 public class CategoryController {
 
     private final CategoryService categoryService;
-
-    public CategoryController(CategoryService categoryService) {
-        this.categoryService = categoryService;
-    }
 
     @PostMapping("/createCategory/{name}")
     @PreAuthorize("hasAuthority('SUDO')")

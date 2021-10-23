@@ -1,7 +1,10 @@
 package com.keita.filingcabinet.service;
 
 import com.keita.filingcabinet.mockData.CategoryMockData;
+import com.keita.filingcabinet.mockData.FileMockData;
+import com.keita.filingcabinet.mockData.FolderMockData;
 import com.keita.filingcabinet.mockData.PatientMockData;
+import com.keita.filingcabinet.model.dto.PagingRequest;
 import com.keita.filingcabinet.model.dto.PatientCreation;
 import com.keita.filingcabinet.model.dto.PatientFolder;
 import com.keita.filingcabinet.model.entity.Category;
@@ -12,6 +15,8 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
 
 import java.util.List;
 import java.util.Map;
@@ -69,13 +74,16 @@ public class PatientServiceTest {
     @Test
     void shouldGetListPatientFolder(){
         //ARRANGE
-        when(patientRepository.findAll()).thenReturn(PatientMockData.getListPatients());
+        PagingRequest pagingRequest = FileMockData.getPagingRequest();
+        when(patientRepository.findAll(PageRequest.of(pagingRequest.getNoPage(),pagingRequest.getSize()))).thenReturn(new PageImpl<>(PatientMockData.getListPatients()));
+        when(folderService.getMapFolderByPatientId(any())).thenReturn(FolderMockData.getMapFolders());
 
         //ACT
-        List<PatientFolder> patientFolders = patientService.getListPatientFolder();
+        List<PatientFolder> patientFolders = patientService.getListPatientFolder(pagingRequest);
 
         //ASSERT
         assertEquals(1,patientFolders.size());
+        patientFolders.forEach( patientFolder -> assertEquals(3,patientFolder.getMapFolders().size()));
     }
 
 }

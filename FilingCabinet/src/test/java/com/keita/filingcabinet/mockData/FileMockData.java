@@ -36,6 +36,7 @@ public abstract class FileMockData {
         return File.builder()
                 .folderId("61621ca50545544ead443f75")
                 .description("test")
+                .fileName("test.txt")
                 .uploadBy(Collections.singletonMap("employee1", Role.USER.toString()))
                 .isActive(true)
                 .build();
@@ -82,7 +83,6 @@ public abstract class FileMockData {
 
     public static PagingRequest getPagingRequest() {
         return PagingRequest.builder()
-                .folderId("61621ca50545544ead443f75")
                 .noPage(3)
                 .size(10)
                 .build();

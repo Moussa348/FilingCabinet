@@ -16,4 +16,8 @@ export class FileService {
   download(id){
     return this.http.get(this.url + "/download/" + id,{responseType:"blob"});
   }
+
+  existByName(name){
+    return this.http.get<boolean>(this.url + "/existByName/" + name);
+  }
 }

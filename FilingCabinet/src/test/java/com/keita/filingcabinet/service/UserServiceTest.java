@@ -43,12 +43,13 @@ public class UserServiceTest {
     @Test
     void getListFileDetailUserView() {
         //ARRANGE
+        String folderId = "616e5e16b9243e9c5d0f95cd";
         PagingRequest pagingRequest = FileMockData.getPagingRequest();
 
         when(fileService.getListFile(any())).thenReturn(Arrays.asList(FileMockData.getGridFsFile()));
 
         //ACT
-        List<FileDetailUserView> fileDetailUserViews = userService.getListFileDetailUserView(pagingRequest);
+        List<FileDetailUserView> fileDetailUserViews = userService.getListFileDetailUserView(pagingRequest,folderId);
 
         //ASSERT
         assertEquals(1, fileDetailUserViews.size());

@@ -15,5 +15,5 @@ import java.util.Map;
 public class PatientFolder implements Serializable {
 
     private String patientId,patientName;
-    private Map<String,String> folders;
+    private Map<String,String> mapFolders;
 }

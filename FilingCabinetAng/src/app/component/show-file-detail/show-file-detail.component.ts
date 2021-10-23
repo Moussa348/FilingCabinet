@@ -7,6 +7,7 @@ import {
   transition,
   trigger,
 } from '@angular/animations';
+import { getRole } from 'src/app/util/jwtUtil';
 
 @Component({
   selector: 'app-show-file-detail',
@@ -21,7 +22,7 @@ import {
   ]
 })
 export class ShowFileDetailComponent implements OnInit {
-
+  role = getRole();
   @Input() file:FileDetail = new FileDetail();
 
   constructor() { }

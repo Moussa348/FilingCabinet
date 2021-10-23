@@ -8,6 +8,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.io.File;
+import java.io.IOException;
 import java.io.Serializable;
 
 @Data
@@ -16,12 +18,10 @@ import java.io.Serializable;
 @AllArgsConstructor
 public class PagingRequest implements Serializable {
 
-    @FolderExistConstraint
-    private String folderId;
-
     @PagingNumberConstraint
     private Integer noPage;
 
     @PagingSizeConstraint
     private Integer size;
+
 }

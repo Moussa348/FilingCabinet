@@ -3,6 +3,7 @@ package com.keita.filingcabinet.controller;
 import com.keita.filingcabinet.mapping.FolderMapper;
 import com.keita.filingcabinet.model.dto.FolderDetail;
 import com.keita.filingcabinet.service.FolderService;
+import lombok.AllArgsConstructor;
 import lombok.extern.java.Log;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,13 +17,10 @@ import java.util.stream.Collectors;
 @Log
 @RestController
 @RequestMapping("/folder")
+@AllArgsConstructor
 public class FolderController {
 
     private final FolderService folderService;
-
-    public FolderController(FolderService folderService) {
-        this.folderService = folderService;
-    }
 
     @GetMapping("/getListFolderDetailByPatientId/{patientId}")
     @PreAuthorize("hasAnyAuthority('SUDO','USER')")

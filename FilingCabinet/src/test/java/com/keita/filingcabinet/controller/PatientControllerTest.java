@@ -1,7 +1,9 @@
 package com.keita.filingcabinet.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.keita.filingcabinet.mockData.FileMockData;
 import com.keita.filingcabinet.mockData.PatientMockData;
+import com.keita.filingcabinet.model.dto.PagingRequest;
 import com.keita.filingcabinet.model.dto.PatientCreation;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.Test;
@@ -81,8 +83,13 @@ public class PatientControllerTest {
     @Test
     @WithMockUser(authorities = {"SUDO","USER"})
     void shouldGetListPatientFolder() throws Exception {
+        //ARRANGE
+        PagingRequest pagingRequest = FileMockData.getPagingRequest();
+
         //ACT
         MvcResult mvcResult1 = mockMvc.perform(MockMvcRequestBuilders.get("/patient/getListPatientFolder")
+                .param("noPage", pagingRequest.getNoPage().toString())
+                .param("size", pagingRequest.getSize().toString())
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk()).andReturn();
