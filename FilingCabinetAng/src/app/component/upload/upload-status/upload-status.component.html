@@ -4,8 +4,16 @@
 >
   <div class="modal-header">
     <h4 class="modal-title text-center">
-      <u> Statut du Téléversement <i class="fas fa-file-contract"></i> </u>
+      <u> Statut du Téléversement <i class="fas fa-cloud-upload-alt text-info"></i> </u>
     </h4>
+    <button
+    type="button"
+    class="close"
+    aria-label="Close"
+    (click)="activeModal.dismiss('Cross click')"
+  >
+    <span aria-hidden="true"><i class="fas fa-times text-danger"></i></span>
+  </button>
   </div>
 
   <div class="modal-body">

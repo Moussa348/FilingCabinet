@@ -53,8 +53,8 @@ export class ShowPatientFolderComponent implements OnInit {
 
   ngDoCheck(): void {
     if (
-      (this.folderId != undefined &&
-      this.isUndefined) ||  (this.oldFolderId != this.folderId)
+      (this.folderId != undefined && this.isUndefined) ||
+      this.oldFolderId != this.folderId
     ) {
       this.setup();
       return;
@@ -85,9 +85,11 @@ export class ShowPatientFolderComponent implements OnInit {
     modalRef.componentInstance.name = this.name;
     modalRef.componentInstance.role = this.role;
 
-    modalRef.componentInstance.pushFile.subscribe( (file) => {
+    modalRef.componentInstance.pushFile.subscribe((file) => {
       console.log(file);
-      this.files.push(file);
+      setTimeout(() => {
+        this.files.push(file);
+      }, 1000);
     });
   }
 

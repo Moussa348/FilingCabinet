@@ -16,32 +16,50 @@ export class UploadFileComponent implements OnInit {
   @Input() name;
   @Input() role;
 
+  uploadForm: FormGroup;
+
   formData: FormData = new FormData();
   fileNameExist = false;
   isUploading = true;
+  hasFile = false;
   file;
-  
+
   @Output() pushFile = new EventEmitter();
-  
-  description = new FormControl('', [
-    Validators.required,
-    Validators.minLength(8),
-  ]);
 
   constructor(
     public activeModal: NgbActiveModal,
     private modalService: NgbModal,
-    private fileService: FileService,
+    private fileService: FileService
   ) {}
 
   ngOnInit(): void {
+    this.setFormGroup();
     console.log(this.folderId);
+  }
+
+  ngDoCheck(): void {
+    //Called every time that the input properties of a component or a directive are checked. Use it to extend change detection by performing a custom check.
+    //Add 'implements DoCheck' to the class.
+    if (this.file && this.hasFile == false) {
+      console.log('HAS FILE');
+      this.hasFile = true;
+    }
+  }
+
+  setFormGroup() {
+    this.uploadForm = new FormGroup({
+      description: new FormControl('', [
+        Validators.required,
+        Validators.min(8),
+      ]),
+      fileControl: new FormControl('', Validators.required),
+    });
   }
 
   setFormData() {
     this.formData.append('folderId', this.folderId);
     //this.formData.append("description",this.description.value);
-    this.formData.append('description', this.description.value);
+    this.formData.append('description', this.uploadForm.get('description').value);
     this.formData.append('multipartFile', this.file);
   }
 
@@ -70,11 +88,11 @@ export class UploadFileComponent implements OnInit {
     );
   }
 
-  createFile(id){
-    let file : FileDetail = new FileDetail();
+  createFile(id) {
+    let file: FileDetail = new FileDetail();
     file.id = id;
     file.filename = this.file.name;
-    file.description = this.formData.get("description").toString();
+    file.description = this.formData.get('description').toString();
     file.uploadBy = this.name;
     file.uploadDate = new Date().toString();
     //file.uploadDate = this.datePipe.transform(new Date(),"yyyy-MM-dd HH:mm:ss")
@@ -93,5 +111,17 @@ export class UploadFileComponent implements OnInit {
 
   isFileNameExist() {
     return this.fileNameExist;
+  }
+
+  getHasFile() {
+    return this.hasFile;
+  }
+
+  isFieldTouched(name) {
+    return this.uploadForm.get(name).touched;
+  }
+
+  validateField(name) {
+    return this.uploadForm.get(name).valid;
   }
 }

@@ -11,16 +11,13 @@ export class UploadStatusComponent implements OnInit {
   @Input() isGood;
   state = 'pending';
 
-  constructor(private activeModal: NgbActiveModal) {}
+  constructor(public activeModal: NgbActiveModal) {}
 
   ngOnInit(): void {
     console.log(this.isGood);
     console.log(this.status);
     setTimeout(() => {
       this.state = 'done';
-      setTimeout(() => {
-        this.activeModal.close();
-      }, 1500);
-    }, 2000);
+    }, 1000);
   }
 }
