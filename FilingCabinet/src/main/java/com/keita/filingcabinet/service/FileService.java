@@ -112,6 +112,9 @@ public class FileService {
         return newId;
     }
 
+    public Boolean existByFileName(String filename){
+        return fileRepository.existsByFileName(filename);
+    }
 
     private InputStream getInputStreamFromResource(GridFSFile gridFSFile) throws IOException {
         return gridFsTemplate.getResource(gridFSFile).getInputStream();

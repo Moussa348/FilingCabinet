@@ -6,6 +6,7 @@ import com.keita.filingcabinet.mockData.FileMockData;
 import com.keita.filingcabinet.model.dto.FileCreation;
 import com.keita.filingcabinet.model.entity.File;
 import com.keita.filingcabinet.model.enums.OperationType;
+import com.keita.filingcabinet.repository.FileRepository;
 import com.mongodb.client.gridfs.GridFSFindIterable;
 import com.mongodb.client.gridfs.model.GridFSFile;
 import lombok.extern.java.Log;
@@ -36,6 +37,9 @@ public class FileServiceTest {
 
     @Mock
     GridFsTemplate gridFsTemplate;
+
+    @Mock
+    FileRepository fileRepository;
 
     @Mock
     LogService logService;
@@ -197,6 +201,32 @@ public class FileServiceTest {
 
         //ASSERT
         assertThrows(FileNotFoundException.class, () -> fileService.enable(id));
+    }
+
+    @Test
+    void shouldExistByFileName() {
+        //ARRANGE
+        String filename = "test.txt";
+        when(fileRepository.existsByFileName(filename)).thenReturn(true);
+
+        //ACT
+        boolean exist = fileService.existByFileName(filename);
+
+        //ASSERT
+        assertTrue(exist);
+    }
+
+    @Test
+    void shouldNotExistByFileName() {
+        //ARRANGE
+        String filename = "non_existent.txt";
+        when(fileRepository.existsByFileName(filename)).thenReturn(false);
+
+        //ACT
+        boolean exist = fileRepository.existsByFileName(filename);
+
+        //ASSERT
+        assertFalse(exist);
     }
 
 }

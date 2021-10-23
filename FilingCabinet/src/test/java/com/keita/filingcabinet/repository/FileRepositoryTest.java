@@ -25,7 +25,7 @@ public class FileRepositoryTest {
     }
 
     @Test
-    void shouldExistByFilename() {
+    void shouldExistByFileName() {
         //ARRANGE
         String filename = "test.txt";
 
@@ -37,7 +37,7 @@ public class FileRepositoryTest {
     }
 
     @Test
-    void shouldNotExistByFilename() {
+    void shouldNotExistByFileName() {
         //ARRANGE
         String filename = "non_existent.txt";
 
@@ -47,5 +47,5 @@ public class FileRepositoryTest {
         //ASSERT
         assertFalse(exist);
     }
-    
+
 }
