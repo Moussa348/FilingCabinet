@@ -1,1 +1,12 @@
-<p>show-patient-folder works!</p>
+
+<div *ngFor="let file of files; let i = index">
+  <app-show-file-detail @fade [file]="file" style="padding-bottom: 10px;"></app-show-file-detail>
+</div>
+
+<div class="flex-row d-flex justify-content-around m-3">
+    <button 
+    class="btn btn-info rounded-pill shadow border text-light"
+    (click)="openUpload()"
+    >TÉLÉVERSER <i class="fas fa-file-upload"></i>
+  </button>
+</div>

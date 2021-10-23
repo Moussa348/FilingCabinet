@@ -10,7 +10,7 @@ export class FileService {
   constructor(private http: HttpClient) { }
 
   upload(data){
-    return this.http.post(this.url + "/upload",data);
+    return this.http.post(this.url + "/upload",data,{responseType:'text'});
   }
 
   download(id){
