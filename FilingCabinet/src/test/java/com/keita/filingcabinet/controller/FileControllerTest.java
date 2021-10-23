@@ -182,4 +182,36 @@ public class FileControllerTest {
         assertEquals(MockHttpServletResponse.SC_UNAUTHORIZED, mvcResult1.getResponse().getStatus());
     }
 
+    @Test
+    @WithMockUser(username = "incognito", authorities = {"USER"})
+    void shouldExistByFileName() throws Exception {
+        //ARRANGE
+        String fileName = "cv.txt";
+
+        //ACT
+        MvcResult mvcResult1 = mockMvc.perform(MockMvcRequestBuilders.get("/file/existByFileName/" + fileName)
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk()).andReturn();
+
+        //ASSERT
+        assertEquals(MockHttpServletResponse.SC_OK, mvcResult1.getResponse().getStatus());
+    }
+
+    @Test
+    @WithAnonymousUser
+    void shouldNotExistByFileName() throws Exception {
+        //ARRANGE
+        String fileName = "cv.txt";
+
+        //ACT
+        MvcResult mvcResult1 = mockMvc.perform(MockMvcRequestBuilders.get("/file/existByFileName/" + fileName)
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isUnauthorized()).andReturn();
+
+        //ASSERT
+        assertEquals(MockHttpServletResponse.SC_UNAUTHORIZED, mvcResult1.getResponse().getStatus());
+    }
+
 }

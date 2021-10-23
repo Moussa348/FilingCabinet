@@ -96,7 +96,6 @@ public class FileService {
         return newId;
     }
 
-
     public String enable(String id) throws FileNotFoundException, IOException {
         GridFSFile gridFSFile = getGridFsFile(id);
         Document metaData = gridFSFile.getMetadata();
