@@ -21,10 +21,10 @@
       class="flex-row d-flex justify-content-center m-5"
       *ngIf="state == 'done'"
     >
-      <h1 class="lead text-nowrap text-justify">
+      <h1 class="lead text-justify">
         {{ status }}
         <i
-          class="fas {{ isGood ? 'fa-smile-wink' : 'fa-surprise' }} text-{{
+          class="fas fa-2x {{ isGood ? 'fa-smile-wink' : 'fa-frown-open' }} text-{{
             isGood ? 'success' : 'danger'
           }}"
         ></i>

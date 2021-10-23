@@ -6,10 +6,12 @@
   <ngb-panel title="{{ file.filename }}" class="text-light">
     <ng-template ngbPanelContent class="bg-transparent">
       <div class="card border border-dark shadow rounded m-4 p-4">
+      
         <div class="card-body">
           <div class="flex-row d-flex justify-content-start">
             <p>
-              <u class="text-capitalize"> Filename :</u> {{ file.filename }}
+              <u class="text-capitalize"> Nom du fichier :</u>
+              {{ file.filename }}
               <i class="fas fa-file"></i>
             </p>
           </div>
@@ -18,23 +20,23 @@
             *ngFor="let item of file.uploadBy | keyvalue"
           >
             <p>
-              <u class="text-capitalize">uploadBy : </u> {{ item.value }}
+              <u class="text-capitalize">Téléverser par : </u> {{ item.value }}
               <i class="fas fa-cloud-upload-alt"></i>
             </p>
           </div>
           <div class="flex-row d-flex justify-content-start">
             <p>
-              <u class="text-capitalize"> uploadDate :</u>
-              {{ file.uploadDate | date:'short' }} <i class="fas fa-clock"></i>
+              <u class="text-capitalize"> Date de téléversement :</u>
+              {{ file.uploadDate | date: "short" }} <i class="fas fa-clock"></i>
             </p>
           </div>
           <div
-            *ngIf="file.deactivationDate && role == 'SUDO' "
+            *ngIf="file.deactivationDate && role == 'SUDO'"
             class="flex-row d-flex justify-content-start"
           >
             <p>
-              <u class="text-capitalize">deactivationDate :</u>
-              {{ file.deactivationDate | date:'short' }}
+              <u class="text-capitalize">date de déactivation :</u>
+              {{ file.deactivationDate | date: "short" }}
             </p>
           </div>
           <div class="row d-flex justify-content-start">

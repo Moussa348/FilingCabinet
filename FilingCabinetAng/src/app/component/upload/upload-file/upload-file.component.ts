@@ -70,6 +70,7 @@ export class UploadFileComponent implements OnInit {
 
   upload() {
     this.setFormData();
+    console.log("FOLDER ID = " + this.folderId);
 
     this.fileService.upload(this.formData).subscribe(
       (data) => {
@@ -80,9 +81,10 @@ export class UploadFileComponent implements OnInit {
       },
       (err) => {
         this.openUploadStatus(
-          'UNE ERREUR À ÉTÉ RENCONTRÉ LORS DU TÉLÉVERSÉ DU FICHIER...',
+          'UNE ERREUR C\'EST PRODUITE CONTACTER L\'ADMIN, VOUS AVEZ PROBABLEMENT MIS UN FICHIER NON PERMIS!',
           false
         );
+        this.activeModal.close();
         console.log(err);
       }
     );

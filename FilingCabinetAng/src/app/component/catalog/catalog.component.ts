@@ -34,15 +34,6 @@ export class CatalogComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  openUpload(){
-    const modalRef = this.modalService.open(UploadFileComponent,{
-      centered:true,
-      scrollable:true
-    });
-
-    modalRef.componentInstance.folderId = "616fad76ef68983dc605f08b";
-  }
-
   outputFolderId($event){
     this.folderId = $event;
     console.log($event);
