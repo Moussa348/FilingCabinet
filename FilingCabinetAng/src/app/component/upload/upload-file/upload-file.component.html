@@ -39,6 +39,7 @@
   <div class="modal-footer flex-row d-flex justify-content-center mt-4">
       <div class="flex-row d-flex justify-content-center">
         <button 
+        [disabled]="isFileNameExist()"
         class="btn btn-info rounded-pill shadow border text-light"
         (click)="upload()"
         >TÉLÉVERSER <i class="fas fa-file-upload"></i>

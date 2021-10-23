@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
@@ -17,7 +17,8 @@ export class FileService {
     return this.http.get(this.url + "/download/" + id,{responseType:"blob"});
   }
 
-  existByName(name){
-    return this.http.get<boolean>(this.url + "/existByName/" + name);
+  existsByFileNameAndFolderId(fileName,folderId){
+    const params = new HttpParams().set("fileName",fileName).set("folderId",folderId);
+    return this.http.get<boolean>(this.url + "/existsByFileNameAndFolderId/",{params:params});
   }
 }

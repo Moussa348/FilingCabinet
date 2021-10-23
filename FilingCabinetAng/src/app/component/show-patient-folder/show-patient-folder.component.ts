@@ -82,6 +82,13 @@ export class ShowPatientFolderComponent implements OnInit {
     });
 
     modalRef.componentInstance.folderId = this.folderId;
+    modalRef.componentInstance.name = this.name;
+    modalRef.componentInstance.role = this.role;
+
+    modalRef.componentInstance.pushFile.subscribe( (file) => {
+      console.log(file);
+      this.files.push(file);
+    });
   }
 
   setPagingRequest(noPage: number, size: number) {

@@ -25,6 +25,7 @@ import { DownloadFileComponent } from './component/download-file/download-file.c
 import { ShowFileDetailComponent } from './component/show-file-detail/show-file-detail.component';
 import { ShowPatientFolderComponent } from './component/show-patient-folder/show-patient-folder.component';
 import { UploadStatusComponent } from './component/upload/upload-status/upload-status.component';
+import { DatePipe } from '@angular/common';
 
 @NgModule({
   declarations: [
@@ -64,7 +65,7 @@ import { UploadStatusComponent } from './component/upload/upload-status/upload-s
     NgbModule
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent,DatePipe]
 })
 export class AppModule { }
 

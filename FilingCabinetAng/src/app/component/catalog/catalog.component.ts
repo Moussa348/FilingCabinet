@@ -8,7 +8,7 @@ import {
 } from '@angular/animations';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { UploadFileComponent } from '../upload/upload-file/upload-file.component';
-import { getRole } from 'src/app/util/jwtUtil';
+import { getEmail, getRole } from 'src/app/util/jwtUtil';
 
 @Component({
   selector: 'app-catalog',
@@ -26,6 +26,7 @@ export class CatalogComponent implements OnInit {
 
   folderId;
   role = getRole();
+  email = getEmail();
   constructor(
     private modalService: NgbModal,
   ) {}
