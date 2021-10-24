@@ -55,7 +55,9 @@
             nesciunt you probably haven't heard of them accusamus labore
             sustainable VHS.
           </div>
-          <p class="lead"><a href="#" class="link-primary text-capitalize" *ngIf="role == 'SUDO'">Voir les Logs<i class="fas fa-clipboard-list"></i></a></p>
+          <div class="flex-row d-flex justify-content-start">
+            <p class="lead"><a (click)="openLogs()" class="link-primary text-capitalize" *ngIf="role == 'SUDO'">Voir les Logs <i class="fas fa-fingerprint text-warning"></i></a></p>
+          </div>
         </div>
       </div>
       <div class="flex-row d-flex justify-content-center m-3">

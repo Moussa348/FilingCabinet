@@ -1,0 +1,45 @@
+<div
+  class="bg-dark border text-light container-fluid modal-dialog-scrollable"
+  style="overflow-x: auto; overflow-y: auto"
+>
+  <div class="modal-header">
+    <h4 class="modal-title text-center">
+      <u>
+        Les Logs
+        <i class="fas fa-fingerprint text-warning"></i>
+      </u>
+    </h4>
+    <button
+      type="button"
+      class="close"
+      aria-label="Close"
+      (click)="activeModal.dismiss('Cross click')"
+    >
+      <span aria-hidden="true"><i class="fas fa-times text-danger"></i></span>
+    </button>
+  </div>
+
+  <div class="modal-body"
+  >
+    <div
+      class="card border bg-transparent border-light rounded shadow-lg m-4"
+      *ngFor="let log of logs"
+    >
+      <div class="p-4">
+        <div class="flex-row d-flex justify-content-start">
+          <p><u class="text-capitalize">Nom du fichier :</u> {{ log.fileName }}</p>
+        </div>
+        <div class="flex-row d-flex justify-content-start" *ngFor="let item of log.by | keyvalue">
+          <p><u class="text-capitalize">Effectué par :</u> {{ item.value }}</p>
+        </div>
+        <div class="flex-row d-flex justify-content-start">
+          <p><u class="text-capitalize">Type d'opération éffectuées :</u> {{ log.operationType }}</p>
+        </div>
+
+        <div class="flex-row d-flex justify-content-start">
+          <p><u class="text-capitalize">Date :</u> {{ log.date | date: "short" }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

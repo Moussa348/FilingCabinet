@@ -28,6 +28,7 @@ import { UploadStatusComponent } from './component/upload/upload-status/upload-s
 import { DatePipe } from '@angular/common';
 import {MatPaginatorModule} from '@angular/material/paginator';
 import { PaginationComponent } from './component/pagination/pagination.component';
+import { ListLogComponent } from './component/list-log/list-log.component';
 
 @NgModule({
   declarations: [
@@ -45,7 +46,8 @@ import { PaginationComponent } from './component/pagination/pagination.component
     ShowFileDetailComponent,
     ShowPatientFolderComponent,
     UploadStatusComponent,
-    PaginationComponent
+    PaginationComponent,
+    ListLogComponent
   ],
   imports: [
     BrowserModule,
