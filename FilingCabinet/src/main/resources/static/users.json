@@ -11,7 +11,7 @@
   },
   {
     "email": "employee2@gmail.com",
-    "password": "employee123",
+    "password": "employee",
     "role": "USER",
     "isActive": true,
     "isAccountVerified": true,

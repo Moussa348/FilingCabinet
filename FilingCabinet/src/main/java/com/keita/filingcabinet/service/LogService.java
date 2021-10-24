@@ -31,13 +31,13 @@ public class LogService {
                         .build());
     }
 
-    public List<Log> findAllByFileId(String fileId, PagingRequest pagingRequest) {
+    public List<Log> getListLogByFileId(String fileId, PagingRequest pagingRequest) {
         return logRepository.findAllByFileId(
                 fileId,
                 PageRequest.of(
                         pagingRequest.getNoPage(),
                         pagingRequest.getSize(),
-                        Sort.by("date")
+                        Sort.by("date").descending()
                 )
         );
     }

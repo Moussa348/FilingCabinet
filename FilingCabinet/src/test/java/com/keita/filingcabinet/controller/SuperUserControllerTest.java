@@ -99,13 +99,13 @@ public class SuperUserControllerTest {
 
     @Test
     @WithMockUser(authorities = {"SUDO"})
-    void shouldFindAllByFileId() throws Exception {
+    void shouldGetListLogByFileId() throws Exception {
         //ARRANGE
         String fileId = DbInit.FILE_IDS_TEST.get(0);
         PagingRequest pagingRequest = FileMockData.getPagingRequest();
 
         //ACT
-        MvcResult mvcResult1 = mockMvc.perform(MockMvcRequestBuilders.get("/superUser/findAllByFileId/" + fileId)
+        MvcResult mvcResult1 = mockMvc.perform(MockMvcRequestBuilders.get("/superUser/getListLogByFileId/" + fileId)
                 .param("noPage", pagingRequest.getNoPage().toString())
                 .param("size", pagingRequest.getSize().toString())
                 .flashAttr("pagingRequest", pagingRequest)
@@ -118,13 +118,13 @@ public class SuperUserControllerTest {
 
     @Test
     @WithAnonymousUser
-    void shouldFindNotAllByFileId() throws Exception {
+    void shouldNotGetListLogByFileId() throws Exception {
         //ARRANGE
         String fileId = DbInit.FILE_IDS_TEST.get(0);
         PagingRequest pagingRequest = FileMockData.getPagingRequest();
 
         //ACT
-        MvcResult mvcResult1 = mockMvc.perform(MockMvcRequestBuilders.get("/superUser/findAllByFileId/" + fileId)
+        MvcResult mvcResult1 = mockMvc.perform(MockMvcRequestBuilders.get("/superUser/getListLogByFileId/" + fileId)
                 .param("noPage", pagingRequest.getNoPage().toString())
                 .param("size", pagingRequest.getSize().toString())
                 .flashAttr("pagingRequest", pagingRequest)

@@ -2,20 +2,14 @@ package com.keita.filingcabinet.service;
 
 import com.keita.filingcabinet.mockData.FileMockData;
 import com.keita.filingcabinet.mockData.LogMockData;
-import com.keita.filingcabinet.mockData.OwnershipMockData;
-import com.keita.filingcabinet.mockData.UserMockData;
 import com.keita.filingcabinet.model.dto.PagingRequest;
 import com.keita.filingcabinet.model.entity.Log;
 import com.keita.filingcabinet.repository.LogRepository;
-import com.keita.filingcabinet.security.OwnershipService;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.BDDMockito;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.security.test.context.support.WithSecurityContext;
 
 import java.util.List;
 
@@ -44,7 +38,7 @@ public class LogServiceTest {
     }
 
     @Test
-    void shouldFindAllByFileId() {
+    void shouldGetListLogByFileId() {
         //ARRANGE
         String fileId = "6174bbc818e35e6a8653f37f";
         PagingRequest pagingRequest = FileMockData.getPagingRequest();
@@ -52,7 +46,7 @@ public class LogServiceTest {
         when(logRepository.findAllByFileId(anyString(), any())).thenReturn(LogMockData.getListLog());
 
         //ACT
-        List<Log> logs = logService.findAllByFileId(fileId, pagingRequest);
+        List<Log> logs = logService.getListLogByFileId(fileId, pagingRequest);
 
         //ASSERT
         assertEquals(3, logs.size());

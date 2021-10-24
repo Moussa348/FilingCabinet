@@ -35,9 +35,10 @@ public class SuperUserController {
         return superUserService.getListCategoryDetailSuperUserView();
     }
 
-    @GetMapping("/findAllByFileId/{fileId}")
-    public List<Log> findAllByFileId(@PathVariable String fileId,
+    @GetMapping("/getListLogByFileId/{fileId}")
+    public List<Log> getListLogByFileId(@PathVariable String fileId,
                                      @Valid @ModelAttribute PagingRequest pagingRequest) {
-        return logService.findAllByFileId(fileId, pagingRequest);
+        return logService.getListLogByFileId(fileId, pagingRequest);
     }
+
 }
