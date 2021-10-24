@@ -3,7 +3,7 @@ export class FileDetail {
     id:string;
     filename:string;
     description:string;
-    uploadBy:string;
+    uploadBy:Map<string,string>;
     uploadDate:string;
     deactivationDate:string;
 }

@@ -59,7 +59,10 @@ export class UploadFileComponent implements OnInit {
   setFormData() {
     this.formData.append('folderId', this.folderId);
     //this.formData.append("description",this.description.value);
-    this.formData.append('description', this.uploadForm.get('description').value);
+    this.formData.append(
+      'description',
+      this.uploadForm.get('description').value
+    );
     this.formData.append('multipartFile', this.file);
   }
 
@@ -70,7 +73,7 @@ export class UploadFileComponent implements OnInit {
 
   upload() {
     this.setFormData();
-    console.log("FOLDER ID = " + this.folderId);
+    console.log('FOLDER ID = ' + this.folderId);
 
     this.fileService.upload(this.formData).subscribe(
       (data) => {
@@ -81,7 +84,7 @@ export class UploadFileComponent implements OnInit {
       },
       (err) => {
         this.openUploadStatus(
-          'UNE ERREUR C\'EST PRODUITE CONTACTER L\'ADMIN, VOUS AVEZ PROBABLEMENT MIS UN FICHIER NON PERMIS!',
+          "UNE ERREUR C'EST PRODUITE CONTACTER L'ADMIN, VOUS AVEZ PROBABLEMENT MIS UN FICHIER NON PERMIS!",
           false
         );
         this.activeModal.close();
@@ -91,11 +94,13 @@ export class UploadFileComponent implements OnInit {
   }
 
   createFile(id) {
+    let by: any = new Map();
+    by.set(id, this.name);
     let file: FileDetail = new FileDetail();
     file.id = id;
     file.filename = this.file.name;
     file.description = this.formData.get('description').toString();
-    file.uploadBy = this.name;
+    file.uploadBy = by;
     file.uploadDate = new Date().toString();
     //file.uploadDate = this.datePipe.transform(new Date(),"yyyy-MM-dd HH:mm:ss")
 
