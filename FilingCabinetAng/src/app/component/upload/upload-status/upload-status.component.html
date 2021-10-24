@@ -20,6 +20,7 @@
     <div
       class="flex-row d-flex justify-content-center m-5"
       *ngIf="state == 'done'"
+      @fade
     >
       <h1 class="lead text-justify">
         {{ status }}
@@ -43,13 +44,13 @@
       *ngIf="state == 'pending'"
     >
       <h1 class="text-capitalize">
-        Wait a moment...
+        Veuillez attendre un instant...
         <i class="fas fa-smile-beam text-warning fa-2x"></i>
       </h1>
 
       <div class="d-flex justify-content-center">
         <div class="spinner-border text-warning" role="status">
-          <span class="visually-hidden">Loading...</span>
+          <span class="visually-hidden">Chargement...</span>
         </div>
       </div>
     </div>

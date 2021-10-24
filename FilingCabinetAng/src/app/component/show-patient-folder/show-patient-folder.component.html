@@ -2,7 +2,6 @@
   <div class="row d-flex justify-content-center">
     <div *ngFor="let file of files; let i = index">
       <app-show-file-detail
-        @fade
         [file]="file"
         style="padding-bottom: 10px"
       ></app-show-file-detail>

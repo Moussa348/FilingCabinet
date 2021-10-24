@@ -20,7 +20,7 @@
   </div>
 
   <form [formGroup]="uploadForm" (ngSubmit)="upload()">
-    <div class="modal-body">
+    <div class="modal-body" @fade>
       <div class="card border bg-dark shadow-lg rounded m-4">
         <div class="card-header border border-light shadow">
           <div class="flex-row d-flex justify-content-center">

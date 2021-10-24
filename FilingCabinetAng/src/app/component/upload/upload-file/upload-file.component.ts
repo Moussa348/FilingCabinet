@@ -5,11 +5,24 @@ import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { FileDetail } from 'src/app/model/file-detail';
 import { FileService } from 'src/app/service/file.service';
 import { UploadStatusComponent } from '../upload-status/upload-status.component';
+import {
+  animate,
+  state,
+  style,
+  transition,
+  trigger,
+} from '@angular/animations';
 
 @Component({
   selector: 'app-upload-file',
   templateUrl: './upload-file.component.html',
   styleUrls: ['./upload-file.component.css'],
+  animations: [
+    trigger('fade', [
+      state('void', style({ opacity: 0 })),
+      transition(':enter, :leave', [animate(1000)]),
+    ]),
+  ]
 })
 export class UploadFileComponent implements OnInit {
   @Input() folderId;

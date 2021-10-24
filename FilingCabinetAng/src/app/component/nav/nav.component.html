@@ -17,7 +17,7 @@
     >
       <i
         class="fas fa-folder-open fa-3x text-light btn"
-        [routerLink]="['/welcome']"
+        [routerLink]="['/bienvenue']"
       ></i>
       <!--
 
@@ -37,8 +37,8 @@
                 font-weight-bold
                 text-light
               "
-              [routerLink]="['/home']"
-              >HOME<i class="fas fa-home"></i
+              [routerLink]="['/accueil']"
+              >ACCUEIL<i class="fas fa-home"></i
             ></a>
           </li>
           <li class="nav-item" *ngIf="isLoggedIn()">
@@ -51,8 +51,8 @@
                 font-weight-bold
                 text-light
               "
-              [routerLink]="['/catalog']"
-              >CATALOG <i class="fab fa-accusoft"></i></a>
+              [routerLink]="['/catalogue']"
+              >CATALOGUE <i class="fab fa-accusoft"></i></a>
           </li>
         </ul>
       </div>
@@ -72,15 +72,15 @@
                 font-weight-bold
                 text-light
               "
-              [routerLink]="['/home']"
-              >REGISTRATION <i class="fas fa-hospital-user"></i
+              [routerLink]="['/accueil']"
+              >ENREGISTREMENT <i class="fas fa-hospital-user"></i
             ></a>
           </li>
           <li class="nav-item">
             <a
-              [routerLink]="['/auth']"
+              [routerLink]="['/connexion']"
               class="nav-link text-uppercase px-3 text-light"
-              >{{ isLoggedIn() ? "LOGOUT" : "LOGIN"
+              >{{ isLoggedIn() ? "DÉCONNEXION" : "CONNEXION"
               }}<i
                 class="fas {{ isLoggedIn() ? 'fa-lock-open' : 'fa-lock' }}"
               ></i

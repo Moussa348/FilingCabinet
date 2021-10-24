@@ -60,7 +60,7 @@ export class AuthComponent implements OnInit {
           (data) => {
             if (data != null) {
               this.authGuardService.login(data);
-              this.router.navigate(['/home']);
+              this.router.navigate(['/accueil']);
             } 
           },
           (err) => {

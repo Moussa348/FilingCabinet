@@ -13,7 +13,7 @@ export class AuthGuardService {
     const url = route.url.join('');
     
     if(!this.isLoggedIn()){
-      this.router.navigate(['/auth']);
+      this.router.navigate(['/connexion']);
       return false;
     }
     return true;

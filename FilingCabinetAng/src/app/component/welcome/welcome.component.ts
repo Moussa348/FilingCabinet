@@ -32,7 +32,7 @@ export class WelcomeComponent implements OnInit {
   rotate() {
     this.state = this.state === 'default' ? 'rotated' : 'default';
     setTimeout(() => {
-      this.router.navigate(['/auth']);
+      this.router.navigate(['/connexion']);
     }, 1800);
   }
 

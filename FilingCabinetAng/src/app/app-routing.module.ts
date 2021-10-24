@@ -11,12 +11,12 @@ import { AuthGuardService } from './service/auth-guard.service';
 
 const routes: Routes = [
   {path:'pagination',component:PaginationComponent},
-  {path:'catalog',component:CatalogComponent,canActivate:[AuthGuardService]},
-  {path:'home',component:HomeComponent,canActivate:[AuthGuardService]},
+  {path:'catalogue',component:CatalogComponent,canActivate:[AuthGuardService]},
+  {path:'accueil',component:HomeComponent,canActivate:[AuthGuardService]},
   {path:'listPatientFolder',component:ListPatientFolderComponent,canActivate:[AuthGuardService]},
-  {path:'auth',component:AuthComponent},
-  {path:'welcome',component:WelcomeComponent},
-  {path:'',redirectTo: 'welcome', pathMatch: 'full'},
+  {path:'connexion',component:AuthComponent},
+  {path:'bienvenue',component:WelcomeComponent},
+  {path:'',redirectTo: 'bienvenue', pathMatch: 'full'},
   {path:'**', component:Error404Component}
 ];
 

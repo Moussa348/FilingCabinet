@@ -5,7 +5,7 @@
 >
   <ngb-panel title="{{ file.filename }}" class="text-light">
     <ng-template ngbPanelContent class="bg-transparent">
-      <div class="card border border-dark shadow rounded m-4 p-4">
+      <div class="card border border-dark shadow rounded m-4 p-4"  @fade>
       
         <div class="card-body">
           <div class="flex-row d-flex justify-content-start">
@@ -56,7 +56,7 @@
             sustainable VHS.
           </div>
           <div class="flex-row d-flex justify-content-start">
-            <p class="lead"><a (click)="openLogs()" class="link-primary text-capitalize" *ngIf="role == 'SUDO'">Voir les Logs <i class="fas fa-fingerprint text-warning"></i></a></p>
+            <p class="lead"><a (click)="openLogs()" class="link-primary text-capitalize" *ngIf="role == 'SUDO'">Voir les Entrées <i class="fas fa-fingerprint text-warning"></i></a></p>
           </div>
         </div>
       </div>

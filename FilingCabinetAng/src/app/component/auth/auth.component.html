@@ -107,7 +107,7 @@
                 type="submit"
                 [disabled]="!isFormValid()"
               >
-                Login <i class="fas fa-sign-in-alt"></i>
+                Connexion <i class="fas fa-sign-in-alt"></i>
               </button>
             </div>
             <div class="row d-flex justify-content-center text-light" 
@@ -127,7 +127,7 @@
                 "
                 (click)="open()"
               >
-                Reset Password <i class="fas fa-key"></i>
+                Réinitialiser votre mot de passe <i class="fas fa-key"></i>
               </button>
             </div>
           </div>
@@ -144,7 +144,7 @@
             "
             *ngIf="isLoggedIn()"
           >
-            <h1>You are already logged! Do you want to log out?</h1>
+            <h1>Vous êtes connecté, voulez-vous vous déconnecter</h1>
             <button
               type="submit"
               class="
@@ -155,7 +155,7 @@
               "
               (click)="logout()"
             >
-              Logout<i class="fas fa-sign-out-alt pl-1"></i>
+              Déconnexion<i class="fas fa-sign-out-alt pl-1"></i>
             </button>
           </div>
         </div>
