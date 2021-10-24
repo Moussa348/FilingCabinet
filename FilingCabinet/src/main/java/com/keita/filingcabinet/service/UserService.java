@@ -35,7 +35,7 @@ public class UserService {
         return fileService.getListFile(new Query()
                 .addCriteria(Criteria.where("metadata.folderId").is(folderId))
                 .addCriteria(Criteria.where("metadata.isActive").is(true))
-                .with(PageRequest.of(pagingRequest.getNoPage(), pagingRequest.getSize(), Sort.by("uploadDate"))))
+                .with(PageRequest.of(pagingRequest.getNoPage(), pagingRequest.getSize(), Sort.by("uploadDate").descending())))
                 .stream().map(FileMapper::toFileDetailUserView).collect(Collectors.toList());
     }
 

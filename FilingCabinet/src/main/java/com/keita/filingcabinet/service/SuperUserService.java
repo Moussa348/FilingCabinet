@@ -27,7 +27,7 @@ public class SuperUserService {
     public List<FileDetailSuperUserView> getListFileDetailSuperUserView(PagingRequest pagingRequest,String folderId) {
         return fileService.getListFile(new Query()
                 .addCriteria(Criteria.where("metadata.folderId").is(folderId))
-                .with(PageRequest.of(pagingRequest.getNoPage(), pagingRequest.getSize(), Sort.by("uploadDate"))))
+                .with(PageRequest.of(pagingRequest.getNoPage(), pagingRequest.getSize(), Sort.by("uploadDate").descending())))
                 .stream().map(FileMapper::toFileDetailSuperUserView).collect(Collectors.toList());
     }
 
