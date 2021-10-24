@@ -88,7 +88,7 @@ export class ShowPatientFolderComponent implements OnInit {
     modalRef.componentInstance.pushFile.subscribe((file) => {
       console.log(file);
       setTimeout(() => {
-        this.files.push(file);
+        this.files.unshift(file);
       }, 1000);
     });
   }
