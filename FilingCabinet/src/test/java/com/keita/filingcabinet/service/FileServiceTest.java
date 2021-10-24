@@ -58,7 +58,7 @@ public class FileServiceTest {
         when(gridFsTemplate.store(any(), any(), any(), any(File.class)))
                 .thenReturn(objectId);
 
-        doNothing().when(logService).add(any(), any());
+        doNothing().when(logService).add(any(),any(), any());
 
         //ACT
         String returnedId = fileService.upload(fileCreation);
@@ -83,7 +83,7 @@ public class FileServiceTest {
         GridFSFile gridFSFile = FileMockData.getGridFsFile();
         GridFsResource gridFsResource = new GridFsResource(gridFSFile, FileMockData.getMockMultipartFile().getInputStream());
 
-        doNothing().when(logService).add(any(), any());
+        doNothing().when(logService).add(any(),any(), any());
         when(gridFsTemplate.getResource(gridFSFile)).thenReturn(gridFsResource);
 
         //ACT
@@ -148,7 +148,7 @@ public class FileServiceTest {
         when((gridFsTemplate.getResource(gridFSFile))).thenReturn(gridFsResource);
 
         when(gridFsTemplate.store(byteArrayInputStream, gridFSFile.getFilename(), gridFSFile.getMetadata())).thenReturn(objectId);
-        doNothing().when(logService).add(any(), any());
+        doNothing().when(logService).add(any(),any(), any());
         lenient().doNothing().when(gridFsTemplate).delete(new Query(Criteria.where("_id").is(objectId)));
 
         //ACT
@@ -182,7 +182,7 @@ public class FileServiceTest {
         when((gridFsTemplate.getResource(gridFSFile))).thenReturn(gridFsResource);
 
         when(gridFsTemplate.store(byteArrayInputStream, gridFSFile.getFilename(), gridFSFile.getMetadata())).thenReturn(objectId);
-        doNothing().when(logService).add(any(), any());
+        doNothing().when(logService).add(any(),any(), any());
         lenient().doNothing().when(gridFsTemplate).delete(new Query(Criteria.where("_id").is(objectId)));
 
         //ACT

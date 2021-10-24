@@ -52,7 +52,7 @@ public class FileService {
 
             String id = gridFsTemplate.store(multipartFile.getInputStream(), multipartFile.getOriginalFilename(), multipartFile.getContentType(), file).toString();
 
-            logService.add(Collections.singletonMap(id,multipartFile.getOriginalFilename()), OperationType.UPLOAD);
+            logService.add(id,multipartFile.getOriginalFilename(), OperationType.UPLOAD);
 
             return id;
         }
@@ -61,7 +61,7 @@ public class FileService {
     }
 
     public ByteArrayResource download(GridFSFile gridFSFile) throws IOException {
-        logService.add(Collections.singletonMap(gridFSFile.getObjectId().toString(),gridFSFile.getFilename()), OperationType.DOWNLOAD);
+        logService.add(gridFSFile.getObjectId().toString(),gridFSFile.getFilename(), OperationType.DOWNLOAD);
 
         return new ByteArrayResource(IOUtils.toByteArray(getInputStreamFromResource(gridFSFile)));
     }
@@ -90,7 +90,7 @@ public class FileService {
 
         String newId = gridFsTemplate.store(getInputStreamFromResource(gridFSFile), gridFSFile.getFilename(), gridFSFile.getMetadata()).toString();
 
-        logService.add(Collections.singletonMap(newId,gridFSFile.getFilename()), OperationType.DISABLE);
+        logService.add(newId,gridFSFile.getFilename(), OperationType.DISABLE);
 
         gridFsTemplate.delete(new Query(Criteria.where("_id").is(gridFSFile.getObjectId())));
 
@@ -105,7 +105,7 @@ public class FileService {
 
         String newId = gridFsTemplate.store(getInputStreamFromResource(gridFSFile), gridFSFile.getFilename(), gridFSFile.getMetadata()).toString();
 
-        logService.add(Collections.singletonMap(newId,gridFSFile.getFilename()), OperationType.ENABLE);
+        logService.add(newId,gridFSFile.getFilename(), OperationType.ENABLE);
 
         gridFsTemplate.delete(new Query(Criteria.where("_id").is(gridFSFile.getObjectId())));
 
