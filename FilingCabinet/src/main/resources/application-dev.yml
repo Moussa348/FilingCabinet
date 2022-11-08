@@ -1,9 +1,0 @@
-
-spring:
-  data:
-    mongodb:
-      host: localhost
-      port: 27017
-      database: FilingCabinetDev
-server:
-  port: 4444
